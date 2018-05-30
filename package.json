@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "webpack": "./node_modules/webpack/bin/webpack.js",
-    "start:dev": "npm run webpack -- -w & nodemon --ignore src/ --ignore dist/ server/index.js"
+    "start:dev": "npm run webpack -- -w & nodemon --ignore src/ --ignore dist/ server/index.js",
+    "server-dev": "nodemon server/index.js",
+    "react-dev": "webpack -d --watch"
   },
   "author": "",
   "license": "ISC",
