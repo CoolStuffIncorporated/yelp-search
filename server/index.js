@@ -1,6 +1,7 @@
 const chalk = require('chalk');
 const express = require('express');
 const bodyParser = require('body-parser');
+const { getRestaurantsIds, getRestaurantDetails } = require('./apiHelpers');
 
 /* we should straighten out if we want API_KEY or API_TOKEN
 we refer to both here and in */
