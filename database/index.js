@@ -24,18 +24,23 @@ db.once('open', () => {
   log(succ('Connected to Mongo database successfully'))
 })
 
+// if is_closed, don't store
 
-let BusinessesSchema = new Schema({
-  businessId: { type: String, required: true },
-  name: { type: String, required: true },
-});
-
-let BusinessSchema = new Schema({
-  businessId: { type: String, required: true },
+let Favorites = new Schema({
+  id: { type: String, required: true, unique: true },
+  name: { type: String, required: true, unique: true },
+  photos: [Array],
+  display_phone: [String],
+  location: [Object],
+  price: [String],
+  url: [String],
+  // url
+  // price
+  // hours
+  // rating
+  // 
 
 })
-
-let Favorites = 
 
 let Businesses = mongoose.model('Business', )
 // business
