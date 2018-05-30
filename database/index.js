@@ -35,7 +35,6 @@ let FavoritesSchema = new Schema({
   price: [String],
   url: [String],
   image_url: [String],
-  price: [String],
   hours: [Array],
   rating: [Number],
   transactions: [Array],
