@@ -1,6 +1,7 @@
 const chalk = require('chalk');
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const { getRestaurantsIds, getRestaurantDetails } = require('./apiHelpers');
 
 /* we should straighten out if we want API_KEY or API_TOKEN
@@ -19,7 +20,7 @@ const searchRequest = {
 };
 
 // chalk logging
-const log = console.log;
+const { log } = console.log;
 const succ = chalk.bold.green.bgWhite; // use to log success
 const errc = chalk.bold.red.bgBlack; // UH OH
 const warc = chalk.underline.orange; // log concerning but non-breaking
@@ -29,22 +30,22 @@ const infoc = chalk.blue.bgBlack; // log general information
 const app = express();
 
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/../react-client/dist'));
+app.use(express.static(path.join(__dirname, '/../react-client/dist')));
 
 app.get('/faves', (req, res) => {
   // use database helper here
   res.send('received your request to get faves!');
-})
+});
 
 app.post('/faves', (req, res) => {
   const data = req.body;
-    // use database helper here
+  // use database helper here
   log(succ('successfully added restaurant to faves!'));
   res.send('successfully added restaurant to faves!');
-})
+});
 
 app.delete('/faves', (req, res) => {
-    // use database helper here
+  // use database helper here
   log(succ('deleted restaurant from faves!'));
   res.send('deleted restaurant from faves!');
 });
