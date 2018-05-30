@@ -2,23 +2,26 @@ const axios = require('axios');
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { API_TOKEN } = require('./env/config.js').API_TOKEN; 
+const { API_TOKEN } = require('./env/config.js').API_TOKEN;
 
-const getRestaurantsIds = (term, location, callback) => {
+const getRestaurantsIds = (requestObj, callback) => {
   // use API helper here to make a request to Yelp API to grab list of 50 restaurants by id
   // send back array of ids
+  const { term } = requestObj.term;
+  const { loc } = requestObj.loc;
+
   const options = {
     // need to incorpirate term && location into this url somehow
-    url: `https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`,
+    url: `https://api.yelp.com/v3/businesses/search?term=${term}&location=${loc}`,
     headers: {
       'User-Agent': 'request',
       Authorization: API_TOKEN,
     },
   };
-  axios.get('/restaurants')
-    .then(({ data }) => {
-    // console.log(response)
-      callback(data);
+  axios.get(options)
+    .then((response) => {
+      console.log(response.business);
+      callback(response.businesses);
     })
     .catch((err) => {
       console.error(err);
@@ -34,11 +37,11 @@ const getRestaurantDetails = (restaurantId, callback) => {
       'User-Agent': 'request',
       Authorization: API_TOKEN,
     },
-  }
+  };
   axios.get(options)
-    .then(({data}) => {
-      // console.log(response);
-      callback(data);
+    .then((restaurant) => {
+      console.log(restaurant);
+      callback(restaurant);
     })
     .catch((err) => {
       console.error(err);
