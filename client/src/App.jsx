@@ -41,7 +41,7 @@ class App extends Component {
     this.state = {
       favorites: [dummyBiz],
       restaurants: [dummyBiz],
-      currentRestaurant: dummyBiz,
+      currentIndex: 0,
       restaurantID: "x7hsZRd_MyrUgAW91FM9qA"
     }
     // this.fetchDetails = this.fetchDetails.bind(this);
@@ -73,7 +73,7 @@ class App extends Component {
       <div className="app">
         <header className="navbar">The Amazing Restaurant Finder</header>
         {/* <Search /> */}
-        <Display restaurant={this.state.currentRestaurant} />
+        <Display restaurant={this.state.restaurants[this.state.currentIndex]} />
       </div>
     )
   }
