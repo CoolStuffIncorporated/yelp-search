@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Search from '../Components/Search';
-import Display from '../Components/Display';
+import Search from './Components/Search.jsx';
+import Display from './Components/Display.jsx';
 import axios from 'axios';
 
 class App extends Component {
@@ -57,3 +57,5 @@ class App extends Component {
     )
   }
 }
+
+ReactDOM.render(<App />, document.getElementById('root'));

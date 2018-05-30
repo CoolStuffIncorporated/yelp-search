@@ -30,7 +30,7 @@ const infoc = chalk.blue.bgBlack; // log general information
 const app = express();
 
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/../react-client/dist'));
+app.use(express.static(__dirname + '/../client/dist'));
 
 app.get('/faves', (req, res) => {
   // use database helper here
