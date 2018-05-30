@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 class Display extends React.Component {
   constructor(props) {
