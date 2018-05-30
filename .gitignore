@@ -21,6 +21,7 @@ lib-cov
 *.out
 *.pid
 *.gz
+package-lock.json
 
 pids
 logs
