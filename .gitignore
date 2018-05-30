@@ -56,4 +56,4 @@ client/env/config.js
 # Travis client.travis.yml
 codecov.yml
 
-./client/dist/bundle.js
+client/dist/bundle.js
