@@ -51,7 +51,7 @@ node_modules
 .flooignore
 
 ## API keys
-client/env/config.js
+server/env/config.js
 
 # Travis client.travis.yml
 codecov.yml
