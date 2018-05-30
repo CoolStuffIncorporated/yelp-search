@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
+class Display extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-export const Display = (props) => {
 
-render () {
-  return (
-    <div className="display">
-      <img src={} />
-    </div>
-  );
-}
+
+  render () {
+      //
+  }
 
 }
