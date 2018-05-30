@@ -7,7 +7,10 @@
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "start:dev": "npm run webpack -- -w & nodemon --ignore src/ --ignore dist/ server/index.js",
     "server-dev": "nodemon server/index.js",
-    "react-dev": "webpack -d --watch"
+    "react-dev": "webpack -d --watch",
+    "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
+    "standard": "standard index.js",
+    "test": "nyc ./node_modules/.bin/ava -v"
   },
   "author": "CoolStuffIncorporated",
   "license": "ISC",
@@ -24,7 +27,13 @@
     "nodemon": "^1.17.5",
     "webpack": "^4.10.1",
     "webpack-cli": "^2.1.4",
-    "yelp-fusion": "^2.0.3"
+    "yelp-fusion": "^2.0.3",
+    "ava": "^0.16.0",
+    "co-exec": "^1.0",
+    "codecov": "^1.0.1",
+    "ghooks": "^1.2.4",
+    "nyc": "^10.0.0",
+    "standard": "^8.4.0"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -42,5 +51,10 @@
     "type": "git",
     "url": "https://github.com/CoolStuffIncorporated/yelp-search.git"
   },
-  "homepage": "https://github.com/CoolStuffIncorporated/yelp-search"
+  "homepage": "https://github.com/CoolStuffIncorporated/yelp-search",
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run standard"
+    }
+  }
 }

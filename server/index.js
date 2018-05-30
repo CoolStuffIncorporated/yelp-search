@@ -5,11 +5,11 @@ const bodyParser = require('body-parser');
 /* we should straighten out if we want API_KEY or API_TOKEN
 we refer to both here and in */
 
-let API_KEY;
+let API_TOKEN;
 try {
-  API_KEY = require('./config.js').API_KEY;
+  API_TOKEN = require('./config.js').API_KEY;
 } catch (err) {
-  API_KEY = process.env.API_KEY;
+  API_TOKEN = process.env.API_KEY;
 }
 
 const searchRequest = {
