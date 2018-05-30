@@ -9,20 +9,20 @@ const infoc = chalk.blue.bgBlack; // log general information
 
 let config;
 try {
-  config = require('../config.js').MONGO;
+  config = require('../server/env/config.example.js').MONGO;
 } catch (err) {
   config = process.env.MONGO;
 }
 
 // mongoose housekeeping
-const Schema = mongoose.schema;
+const Schema = mongoose.Schema;
 
-mongoose.connnect(process.env.MONGO || 'mongodb://localhost');
+mongoose.connect(process.env.MONGO || 'mongodb://localhost');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   log(succ('Connected to Mongo database successfully'))
-})
+});
 
 // if is_closed, don't store
 
@@ -46,10 +46,13 @@ let FavoritesSchema = new Schema({
 const Favorites = mongoose.model('Favorites', FavoritesSchema);
 
 const save = (restaurants) => {
+  console.log('SAVE restaurants', restaurants);
   restaurants.forEach((restaurantObj) => {
     const restaurant = new Favorites(restaurantObj);
     log(succ(`Saved ${restaurant} to database`));
-    restaurant.save();
+    restaurant.save(((err) => {
+      console.log(err);
+    }));
   });
 };
 
