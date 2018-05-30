@@ -6,13 +6,10 @@ const bodyParser = require('body-parser');
 const { API_TOKEN } = require('./env/config.example.js');
 
 const getRestaurantsIds = (requestObj, callback) => {
-  // use API helper here to make a request to Yelp API to grab list of 50 restaurants by id
-  // send back array of ids
   const { term } = requestObj;
   const { loc } = requestObj;
 
   const options = {
-    // need to incorpirate term && location into this url somehow
     url: `https://api.yelp.com/v3/businesses/search?term=${term}&location=${loc}`,
     headers: {
       'User-Agent': 'request',
@@ -37,8 +34,6 @@ const getRestaurantsIds = (requestObj, callback) => {
 };
 
 const getRestaurantDetails = (restaurantId, callback) => {
-  // use another api helper here to make a request to API to grab details of selected restaurant
-  // send back restaurant data
   const options = {
     url: `https://api.yelp.com/v3/businesses/${restaurantId}`,
     headers: {
