@@ -26,30 +26,32 @@ db.once('open', () => {
 
 // if is_closed, don't store
 
-let Favorites = new Schema({
+let FavoritesSchema = new Schema({
   id: { type: String, required: true, unique: true },
-  name: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
   photos: [Array],
   display_phone: [String],
   location: [Object],
   price: [String],
   url: [String],
-  // url
-  // price
-  // hours
-  // rating
-  // 
+  image_url: [String],
+  price: [String],
+  hours: [Array],
+  rating: [Number],
+  transactions: [Array],
+  categories: [Array],
+  // could also build a validator to forbid any entries where
+  // "is_closed": true
+});
 
-})
+const Favorites = mongoose.model('Favorites', FavoritesSchema);
 
-let Businesses = mongoose.model('Business', )
-// business
-// id - grab id
-// in an array
+const save = (restaurants) => {
+  restaurants.forEach((restaurantObj) => {
+    const restaurant = new Favorites(restaurantObj);
+    log(succ(`Saved ${restaurant} to database`));
+    restaurant.save();
+  });
+};
 
-// restaurants
-
-
-
-// favorites
-
+module.exports.save = save;
