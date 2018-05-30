@@ -1,4 +1,5 @@
 const axios = require('axios');
+const request = require('request');
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -18,14 +19,21 @@ const getRestaurantsIds = (requestObj, callback) => {
       Authorization: API_TOKEN,
     },
   };
-  axios.get(options)
-    .then((response) => {
-      console.log(response.business);
-      callback(response.businesses);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  request.get(options, (error, response, body) => {
+    if (error) {
+      console.error(error);
+    } else {
+      callback(JSON.parse(body.business));
+    }
+  });
+  // axios.get(options)
+  //   .then((response) => {
+  //     console.log(response.business);
+  //     callback(response.businesses);
+  //   })
+  //   .catch((err) => {
+  //     console.error(err);
+  //   });
 };
 
 const getRestaurantDetails = (restaurantId, callback) => {
@@ -38,14 +46,22 @@ const getRestaurantDetails = (restaurantId, callback) => {
       Authorization: API_TOKEN,
     },
   };
-  axios.get(options)
-    .then((restaurant) => {
-      console.log(restaurant);
-      callback(restaurant);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  request.get(options, (error, response, body) => {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log(body);
+      callback(JSON.parse(body));
+    }
+  });
+  // axios.get(options)
+  //   .then((restaurant) => {
+  //     console.log(restaurant);
+  //     callback(restaurant);
+  //   })
+  //   .catch((err) => {
+  //     console.error(err);
+  //   });
 };
 
 module.exports = {
