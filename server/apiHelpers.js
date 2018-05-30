@@ -2,13 +2,13 @@ const axios = require('axios');
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { API_TOKEN } = require('./env/config.js').API_TOKEN;
+const { API_TOKEN } = require('./env/config.example.js');
 
 const getRestaurantsIds = (requestObj, callback) => {
   // use API helper here to make a request to Yelp API to grab list of 50 restaurants by id
   // send back array of ids
-  const { term } = requestObj.term;
-  const { loc } = requestObj.loc;
+  const { term } = requestObj;
+  const { loc } = requestObj;
 
   const options = {
     // need to incorpirate term && location into this url somehow
