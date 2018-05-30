@@ -1,3 +1,10 @@
+const chalk = require('chalk');
+const express = require('express');
+const bodyParser = require('body-parser');
+
+/* we should straighten out if we want API_KEY or API_TOKEN
+we refer to both here and in */
+
 let API_KEY;
 try {
   API_KEY = require('./config.js').API_KEY;
@@ -7,12 +14,17 @@ try {
 
 const searchRequest = {
   term:'Four Barrel Coffee',
-  location: 'san francisco, ca'
+  location: 'san francisco, ca',
 };
 
+// chalk logging
+const log = console.log;
+const succ = chalk.bold.green.bgWhite; // use to log success
+const errc = chalk.bold.red.bgBlack; // UH OH
+const warc = chalk.underline.orange; // log concerning but non-breaking
+const infoc = chalk.blue.bgBlack; // log general information
 
-const express = require('express');
-const bodyParser = require('body-parser');
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -24,31 +36,35 @@ app.get('/faves', (req, res) => {
 })
 
 app.post('/faves', (req, res) => {
-  let data = req.body;
+  const data = req.body;
     // use database helper here
+  log(succ('successfully added restaurant to faves!'));
   res.send('successfully added restaurant to faves!');
 })
 
 app.delete('/faves', (req, res) => {
     // use database helper here
+  log(succ('deleted restaurant from faves!'));
   res.send('deleted restaurant from faves!');
-})
+});
 
 app.get('/restaurants', (req, res) => {
-  let {term, loc} = req.body;
+  const { term, loc } = req.body;
   // use API helper here to make a request to Yelp API to grab list of 50 restaurants by id
   // send back array of ids
-  res.send(`here's your list of restaurant ids`);
+  log(succ('Retrieved restaurant ids'));
+  res.send('here\'s your list of restaurant ids');
 });
 
 app.get('/restaurant', (req, res) => {
-  let {id} = req.body;
+  const { id } = req.body;
   // use another api helper here to make a request to API to grab details of selected restaurant
   // send back restaurant data
-  res.send(`here's your restaurant data with the pics too`);
+  log(succ('Retrieved restaurant data and pics'));
+  res.send('here\'s your restaurant data with the pics too');
 });
 
-let port = process.env.PORT || 3000;
-app.listen(port, function() {
-  console.log('listening on port 3000!');
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  log(succ('listening on port 3000!'));
 });
