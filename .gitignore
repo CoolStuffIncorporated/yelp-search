@@ -57,3 +57,4 @@ client/env/config.js
 codecov.yml
 
 ./client/dist/bundle.js
+client/dist/bundle\.js
