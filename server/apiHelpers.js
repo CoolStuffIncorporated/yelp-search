@@ -14,16 +14,16 @@ const getRestaurantsIds = (term, location, callback) => {
       'User-Agent': 'request',
       Authorization: API_TOKEN,
     },
-  }
-  axios.get('')
-  .then(({data}) => {
+  };
+  axios.get('/restaurants')
+    .then(({ data }) => {
     // console.log(response)
-    callback(data);
-  })
-  .catch((err) => { 
-    console.error(err);
-  })
-}
+      callback(data);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
 
 const getRestaurantDetails = (restaurantId, callback) => {
   // use another api helper here to make a request to API to grab details of selected restaurant
