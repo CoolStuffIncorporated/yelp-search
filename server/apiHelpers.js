@@ -1,49 +1,46 @@
 const axios = require('axios');
 const request = require('request');
+const yelp = require('yelp-fusion');
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { API_TOKEN } = require('./env/config.example.js');
 
-const getRestaurantsIds = (requestObj, callback) => {
-  const { term } = requestObj;
-  const { loc } = requestObj;
+const apiKey = API_TOKEN;
+const client = yelp.client(apiKey);
 
-  const options = {
-    url: `https://api.yelp.com/v3/businesses/search?term=${term}&location=${loc}`,
-    headers: {
-      'User-Agent': 'request',
-      Authorization: API_TOKEN,
-    },
+const getRestaurantsIds = (searchObj, callback) => {
+
+  const searchRequest = {
+    term: searchObj.term,
+    loc: searchObj.loc,
   };
-  request.get(options, (error, response, body) => {
-    if (error) {
-      console.error(error);
-    } else {
-      callback(JSON.parse(body.business));
-    }
-  });
+
+  client.search(searchRequest)
+    .then((response) => {
+      const firstResult = response.jsonBody.businesses[0];
+      const prettyJson = JSON.stringify(firstResult, null, 4);
+      console.log(prettyJson);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 };
 
-const getRestaurantDetails = (restaurantId, callback) => {
-  const options = {
-    url: `https://api.yelp.com/v3/businesses/${restaurantId}`,
-    headers: {
-      'User-Agent': 'request',
-      Authorization: API_TOKEN,
-    },
-  };
-  request.get(options, (error, response, body) => {
-    if (error) {
-      console.error(error);
-    } else {
-      console.log(body);
-      callback(JSON.parse(body));
-    }
-  });
+const getRestaurantDetails = (restaurantIdObj, callback) => {
+  client.search(restaurantIdObj)
+    .then((response) => {
+      const firstResult = response.jsonBody.businesses[0];
+      const prettyJson = JSON.stringify(firstResult, null, 4);
+      console.log(prettyJson);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 };
 
 module.exports = {
   getRestaurantsIds: getRestaurantsIds,
   getRestaurantDetails: getRestaurantDetails,
 };
+ 
