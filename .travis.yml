@@ -4,3 +4,12 @@ node_js:
   - stable
 script: 
   - npm run server-dev
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: 
+  secret_access_key:
+    secure: "Encrypted <secret-access-key>="
+  region: "us-east-1"
+  app: "yelp-searcher"
+  env: "yelp-searcher-env"
+  bucket_name: "arn:aws:s3:::yelp-searcher"
