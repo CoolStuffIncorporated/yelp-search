@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'; 
 import axios from 'axios'; 
  
@@ -35,5 +34,5 @@ export default class Search extends Component {
         <input type="text" onKeyPress={zip} value={zip}/> 
       </div> 
     ); 
-  }; 
+  }
 } 
