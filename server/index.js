@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const { getRestaurantsIds, getRestaurantDetails } = require('./apiHelpers');
 const { saveFavoritesToDB, getFavoritesFromDB, deleteFavoritesFromDB } = require('../database/databaseHelpers');
+const { saveRestaurantsGeneratedBySearch } = require('../database');
 
 /* we should straighten out if we want API_KEY or API_TOKEN
 we refer to both here and in */
@@ -47,7 +48,7 @@ app.get('/faves', (req, res) => {
 app.post('/faves', (req, res) => {
   const data = req.body;
   // use database helper here
-  const saveRestaurantsPromise = saveFavoritesToDB(data);
+  const saveRestaurantsPromise = saveRestaurantsGeneratedBySearch(data);
   saveRestaurantsPromise.then((savedRestaurants) => {
     res.send('successfully added restaurant to faves!');
   })

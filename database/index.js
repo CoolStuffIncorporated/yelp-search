@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
-const { save } = require('./database');
+const { saveRestaurants } = require('./database');
 const mlab = 'mongodb://teamthor1:teamthor1@ds141320.mlab.com:41320/yelp-dev' //temp database
 
 const log = console.log;
@@ -48,7 +48,7 @@ const FavoritesSchema = new Schema({
 
 const Favorites = mongoose.model('Favorites', FavoritesSchema);
 
-const save = (restaurants) => { 
+const saveRestaurantsGeneratedBySearch = (restaurants) => { 
   return restaurants.forEach((restaurantObj) => {
     const restaurant = new Favorites(restaurantObj);
     log(succ(`Saved ${restaurant} to database`));
@@ -59,4 +59,4 @@ const save = (restaurants) => {
   });
 };
 
-module.exports.save = save;
+module.exports.saveRestaurantsGeneratedBySearch = saveRestaurantsGeneratedBySearch;

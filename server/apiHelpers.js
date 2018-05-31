@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const { API_TOKEN } = require('./env/config.js');
 
 let apiKey;
-try {
   apiKey = require('./env/config.js').API_TOKEN;
 } catch(err) {
   apiKey = process.env.TOKEN;
@@ -25,8 +24,6 @@ const getRestaurants = (searchObj) => { //@params: searchObj(type: obj, example:
   .then(data => data.jsonBody.businesses)  //@output: a promise with an array of the businesses
 };
 
-// needs refactoring
-// make call to businesses/{id} using yelp-fusion.business
 const getRestaurantDetails = (restaurantIdObj) => {
   client.search(restaurantIdObj)
     .then((response) => {
