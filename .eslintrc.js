@@ -9,6 +9,7 @@ module.exports = {
       'camelcase': 'off',
       'global-require': 'off',
       'object-shorthand': 'off',
-      'linebreak-style': 'off'
+      'linebreak-style': 'off',
+      'prefer-destructuring': 'off',
     }
   };
