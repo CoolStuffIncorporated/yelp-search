@@ -4,18 +4,17 @@ class Favorites extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    //    no need for state, already have favorites coming in as props
-    //    just refer to faves in parent for current bizes
+        showUrl : false
     }
-    // method binding here any methods needed?
-      // to mouseover to show url
-      this.onHover = this.onHover.bind(this);
+    this.onHover = this.onHover.bind(this); // displays url
   }
 
-//   onHover () {
-//     console.log('on the url');
-
-//   }
+  onHover () {
+    console.log('on the url');
+    this.setState({
+      showUrl : true
+    })
+  }
  
   render () {
     return (
@@ -25,7 +24,7 @@ class Favorites extends Component {
         {this.props.favorites.map((favorite) => {
             console.log(favorite);
             return ( 
-              <li className="favorite-item">
+              <li className="favorite-item" onHover={() => {return this.state.showUrl ? <Hover favorite={favorite}/> : null}}>
                 <img src={favorite.image_url}/>
                 <div className="favorite-description">
                   <h4>{favorite.name}</h4>
