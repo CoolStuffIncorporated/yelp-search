@@ -93,6 +93,6 @@ app.listen(port, () => {
 });
 
 
-getRestaurants({term: 'tacos', loc: 10017})
-.then(restaurants => console.log(restaurants))
-.catch(err => console.log(err));
+// getRestaurants({term: 'tacos', loc: 10017})
+// .then(restaurants => console.log('success'))
+// .catch(err => console.log(err));
