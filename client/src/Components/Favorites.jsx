@@ -1,5 +1,5 @@
-
 import React, { Component } from 'react';
+import Hover from './Hover.jsx';
 
 class Favorites extends Component {
   constructor(props) {
@@ -7,26 +7,24 @@ class Favorites extends Component {
     this.state = {
       showUrl : false
     }
-    this.onHover = this.onHover.bind(this); // displays url
-    console.log('props of Favorites', props);
+    this.onHover = this.onHover.bind(this);
   }
-  
+
   onHover () {
-      // console.log('on the url');
-      this.setState({
-          showUrl : true
-        })
-      }
-      
-      render () {
-        console.log('props of Favorites in rendering', this.props);
+    this.setState({
+        showUrl : !this.state.showUrl
+      })
+  }
+
+  
+    render () {
+      // console.log(this.props.favorites)
     return (
       <ul className="favorites-all">
           {/*loop through all fave restaurants, render to page with approp. props from DB*/}
         {this.props.favorites.map((favorite) => {
-            // console.log(favorite);
             return ( 
-              <li key={favorite.id} className="favorite-item" onMouseOver={() => {this.onHover()}}> {/*creates Mousover event*/}
+              <li key={favorite.id} className="favorite-item" onMouseEnter={() => {this.onHover()}} onMouseLeave={() => {this.onHover()}}>
                 <img src={favorite.image_url}/>
                 <div className="favorite-description">
                   <h4>{favorite.name}</h4>
@@ -34,11 +32,13 @@ class Favorites extends Component {
                     <div className="restaurant-contact-info">
                       <span>Phone: {favorite.display_phone}</span>
                       <span>Location: {favorite.location.display_address}</span>
-                      {/* <span>url {favorite.url}</span> */}{/*no need to dispaly url since hovered over*/}
+                      <br></br>
+                      {/* <span>Website</span> */}
+                      <a href={favorite.url}>{favorite.name}</a>
                     </div>
                   </section>
                 </div>
-                {/* {this.state.showUrl ? <Hover favorite={favorite}/> : null} should dispaly url if hovered over */}
+                {/* {this.state.showUrl ? <Hover url={favorite.url}/> : null} */}
               </li>
             )
         })}
