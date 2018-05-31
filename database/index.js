@@ -56,3 +56,4 @@ const save = (restaurants) => {
 };
 
 module.exports.save = save;
+module.exports.Favorites = Favorites;
