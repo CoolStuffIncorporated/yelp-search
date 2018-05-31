@@ -3,14 +3,11 @@ const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-<<<<<<< HEAD
-const { getRestaurantsIds, getRestaurantDetails } = require('./apiHelpers');
-const { saveFavoritesToDB, getFavoritesFromDB, deleteFavoritesFromDB } = require('../database/databaseHelpers');
-const { saveRestaurantsGeneratedBySearch } = require('../database');
-=======
 const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
-const { save } = require('../database');
->>>>>>> 4b0a10992827c27b26956487d96b58edf928f73f
+// const { saveFavoritesToDB, getFavoritesFromDB, deleteFavoritesFromDB } = require('../database/databaseHelpers');
+// const { saveRestaurantsGeneratedBySearch } = require('../database');
+// those two imports above were crashing the build, so I've commented them out for now because I can't go into the files if someone else is working on it
+// TODO: Fix your file paths and imports
 
 /* we should straighten out if we want API_KEY or API_TOKEN
 we refer to both here and in */
