@@ -1,5 +1,11 @@
 module.exports = {
-    "extends": "airbnb-base",
+  "parser": "babel-eslint",  
+  "extends": "airbnb-base",
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "import"
+  ],
     rules: {
       'no-console': 'off',
       'no-unused-vars': 'off',
