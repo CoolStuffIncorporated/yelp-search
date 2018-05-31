@@ -60,8 +60,8 @@ app.delete('/faves', (req, res) => {
   res.send('deleted restaurant from faves!');
 });
 
-// input: array of ids, where each id reps a given restaurant
-// output: an array with 50 restaurant objects, associated with id, filtered by location and foodType
+// @params: req.query -> passed in from front end axios.get('/restaurants, {params: {term, loc}}) call
+// @output: an array with 50 restaurant objects, associated with id, filtered by location and foodType
 app.get('/restaurants', (req, res) => {
   const { term, loc } = req.query;
   getRestaurantsIds({term, loc})   // use API helper here to make a request to Yelp API to grab list of 50 restaurants
