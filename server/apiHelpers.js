@@ -7,10 +7,12 @@ const bodyParser = require('body-parser');
 const { API_TOKEN } = require('./env/config.js');
 
 let apiKey;
+try {
   apiKey = require('./env/config.js').API_TOKEN;
 } catch(err) {
   apiKey = process.env.TOKEN;
 }
+
 
 const client = yelp.client(apiKey);
 
