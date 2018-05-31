@@ -63,11 +63,11 @@ app.delete('/faves', (req, res) => {
 // input: array of ids, where each id reps a given restaurant
 // output: an array with 50 restaurant objects, associated with id, filtered by location and foodType
 app.get('/restaurants', (req, res) => {
-  const { term, loc } = req.body;
-  // use API helper here to make a request to Yelp API to grab list of 50 restaurants by id
-  // send back array of ids
-  log(succ('Retrieved restaurant ids'));
-  res.send('here\'s your list of restaurant ids');
+  const { term, loc } = req.query;
+  getRestaurantsIds({term, loc})   // use API helper here to make a request to Yelp API to grab list of 50 restaurants
+  .then(restaurants => res.send(restaurants))
+  .catch(err => res.send(err));
+  // log(succ('Retrieved restaurant ids')); sorry about your chalk, Charlie!
 });
 
 // input: id representing a specific restaurant 
