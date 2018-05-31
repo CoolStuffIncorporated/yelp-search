@@ -4,19 +4,20 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { getRestaurantsIds, getRestaurantDetails } = require('./apiHelpers');
+const { save } = require('../database');
 
 /* we should straighten out if we want API_KEY or API_TOKEN
 we refer to both here and in */
 
 let API_TOKEN;
 try {
-  API_TOKEN = require('./config.js').API_KEY;
+  API_TOKEN = require('./env/config.example.js').API_KEY;
 } catch (err) {
   API_TOKEN = process.env.API_KEY;
 }
 
 const searchRequest = {
-  term:'Four Barrel Coffee',
+  term: 'Four Barrel Coffee',
   location: 'san francisco, ca',
 };
 
@@ -32,24 +33,35 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 
+// input: n/a
+// output: an array of objects containing favorited restaurants (image and url associated with)
 app.get('/faves', (req, res) => {
   // use database helper here
+
   res.send('received your request to get faves!');
 });
 
+
+// input: an object containing Url and pic
+// output: let user know item has been saved (save fave to db)
 app.post('/faves', (req, res) => {
   const data = req.body;
   // use database helper here
+  save(data);
   log(succ('successfully added restaurant to faves!'));
   res.send('successfully added restaurant to faves!');
 });
 
+// input: id of favorite restaurant 
+// output: not really output, should remove fave from faveList
 app.delete('/faves', (req, res) => {
   // use database helper here
   log(succ('deleted restaurant from faves!'));
   res.send('deleted restaurant from faves!');
 });
 
+// input: array of ids, where each id reps a given restaurant
+// output: an array with 50 restaurant objects, associated with id, filtered by location and foodType
 app.get('/restaurants', (req, res) => {
   const { term, loc } = req.body;
   // use API helper here to make a request to Yelp API to grab list of 50 restaurants by id
@@ -58,6 +70,8 @@ app.get('/restaurants', (req, res) => {
   res.send('here\'s your list of restaurant ids');
 });
 
+// input: id representing a specific restaurant 
+// output: an array of pics, description for given restaurant  
 app.get('/restaurant', (req, res) => {
   const { id } = req.body;
   // use another api helper here to make a request to API to grab details of selected restaurant

@@ -1,50 +1,41 @@
 const axios = require('axios');
+const request = require('request');
+const yelp = require('yelp-fusion');
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { API_TOKEN } = require('./env/config.js').API_TOKEN;
+const { API_TOKEN } = require('./env/config.example.js');
 
-const getRestaurantsIds = (requestObj, callback) => {
-  // use API helper here to make a request to Yelp API to grab list of 50 restaurants by id
-  // send back array of ids
-  const { term } = requestObj.term;
-  const { loc } = requestObj.loc;
+const apiKey = API_TOKEN;
+const client = yelp.client(apiKey);
 
-  const options = {
-    // need to incorpirate term && location into this url somehow
-    url: `https://api.yelp.com/v3/businesses/search?term=${term}&location=${loc}`,
-    headers: {
-      'User-Agent': 'request',
-      Authorization: API_TOKEN,
-    },
+const getRestaurantsIds = (searchObj, callback) => {
+
+  const searchRequest = {
+    term: searchObj.term,
+    loc: searchObj.loc,
   };
-  axios.get(options)
+
+  client.search(searchRequest)
     .then((response) => {
-      console.log(response.business);
-      callback(response.businesses);
+      const firstResult = response.jsonBody.businesses[0];
+      const prettyJson = JSON.stringify(firstResult, null, 4);
+      console.log(prettyJson);
     })
-    .catch((err) => {
-      console.error(err);
+    .catch((e) => {
+      console.log(e);
     });
 };
 
-const getRestaurantDetails = (restaurantId, callback) => {
-  // use another api helper here to make a request to API to grab details of selected restaurant
-  // send back restaurant data
-  const options = {
-    url: `https://api.yelp.com/v3/businesses/${restaurantId}`,
-    headers: {
-      'User-Agent': 'request',
-      Authorization: API_TOKEN,
-    },
-  };
-  axios.get(options)
-    .then((restaurant) => {
-      console.log(restaurant);
-      callback(restaurant);
+const getRestaurantDetails = (restaurantIdObj, callback) => {
+  client.search(restaurantIdObj)
+    .then((response) => {
+      const firstResult = response.jsonBody.businesses[0];
+      const prettyJson = JSON.stringify(firstResult, null, 4);
+      console.log(prettyJson);
     })
-    .catch((err) => {
-      console.error(err);
+    .catch((e) => {
+      console.log(e);
     });
 };
 
