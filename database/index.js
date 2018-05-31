@@ -10,7 +10,7 @@ const infoc = chalk.blue.bgBlack; // log general information
 
 let config;
 try {
-  config = require('../server/env/config.example.js').MONGO;
+  config = require('../server/env/config.js').MONGO;
 } catch (err) {
   config = process.env.MONGO;
 }
