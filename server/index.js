@@ -11,7 +11,7 @@ we refer to both here and in */
 
 let API_TOKEN;
 try {
-  API_TOKEN = require('./env/config.example.js').API_KEY;
+  API_TOKEN = require('./env/config.js').API_KEY;
 } catch (err) {
   API_TOKEN = process.env.API_KEY;
 }
@@ -48,10 +48,10 @@ app.post('/faves', (req, res) => {
   const data = req.body;
   // use database helper here
   const saveRestaurantsPromise = save(data);
-    saveRestaurantsPromise.then((savedRestaurants) => {
+  saveRestaurantsPromise.then((savedRestaurants) => {
     res.send('successfully added restaurant to faves!');
   })
-    .catch((err) => { console.log(`${err}`});
+    .catch((err) => { console.log(err); });
   // log(succ('successfully added restaurant to faves!'));
   // res.send('successfully added restaurant to faves!');
 });

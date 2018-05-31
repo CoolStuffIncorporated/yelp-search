@@ -10,7 +10,7 @@ const infoc = chalk.blue.bgBlack; // log general information
 
 let config;
 try {
-  config = require('../server/env/config.example.js').MONGO;
+  config = require('../server/env/config.js').MONGO;
 } catch (err) {
   config = process.env.MONGO;
 }
@@ -46,16 +46,14 @@ const FavoritesSchema = new Schema({
 
 const Favorites = mongoose.model('Favorites', FavoritesSchema);
 
-const save = (restaurants) => {
-  console.log('SAVE restaurants', restaurants);
+const save = (restaurants) => { 
   return restaurants.forEach((restaurantObj) => {
     const restaurant = new Favorites(restaurantObj);
     log(succ(`Saved ${restaurant} to database`));
     return restaurant.save()
       .catch((err) => {
         console.log(err);
-      })
-    );
+      });
   });
 };
 
