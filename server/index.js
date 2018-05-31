@@ -80,11 +80,10 @@ app.get('/restaurants', (req, res) => {
 // input: id representing a specific restaurant 
 // output: an array of pics, description for given restaurant  
 app.get('/restaurant', (req, res) => {
-  const { id } = req.body;
-  // use another api helper here to make a request to API to grab details of selected restaurant
-  // send back restaurant data
-  log(succ('Retrieved restaurant data and pics'));
-  res.send('here\'s your restaurant data with the pics too');
+  getRestaurantDetails(req.query.id)
+  .then(data => res.send(data))
+  .catch(err => res.send(err));
+  // log(succ('Retrieved restaurant data and pics'));
 });
 
 const port = process.env.PORT || 3000;

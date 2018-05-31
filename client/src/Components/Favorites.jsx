@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react';
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 
 class Favorites extends Component {
   constructor(props) {
@@ -22,12 +23,12 @@ class Favorites extends Component {
         console.log('props of Favorites in rendering', this.props);
     return (
       <ul className="favorites-all">
-          {/*loop through all fave restaurants, render to page with approp. props from DB*/}
+        <div><NavLink to="/">Home</NavLink></div>
         {this.props.favorites.map((favorite) => {
             // console.log(favorite);
             return ( 
               <li key={favorite.id} className="favorite-item" onMouseOver={() => {this.onHover()}}> {/*creates Mousover event*/}
-                <img src={favorite.image_url}/>
+                <img src={favorite.image_url} width="200px"/>
                 <div className="favorite-description">
                   <h4>{favorite.name}</h4>
                   <section className="restaurant-details">

@@ -12,10 +12,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorites: [business, business, business],
+      favorites: [],
       restaurants: [],
       currentIndex: 0,
-      restaurantID: "x7hsZRd_MyrUgAW91FM9qA",
+      restaurantID: "UA2M9QFZghe-9th2KwLoWQ",
       restaurant: business
     }
     
@@ -23,7 +23,8 @@ class App extends Component {
     console.log('current state of App', this.state);
   }
   componentDidMount() {
-    this.getRestaurants('burgers', 10017)
+    this.getRestaurants();
+    this.getRestaurant(this.state.restaurantID);
   }
   getFaves() {
     axios.get('/faves')
@@ -35,26 +36,30 @@ class App extends Component {
     axios.get('/restaurants', {params: {term, loc}})
     // .then(({data}) => this.setState({ restaurants: data}))
     .then(({data}) => this.setState({ restaurants: data, favorites: data})) // also populate faves with the restaurants data for now
-    .then(() => console.log(this.state.restaurants))
+    // .then(() => console.log(this.state.restaurants))
     .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
   }
   getRestaurant(id) { //@params: id('string')
     //helper func for moving to next restaurant, invoked in both save & skip funcs in Display component
-    axios.get('/restaurant', {params: {id}})  //send GET req to '/restaurant' endpoint
-      .then(({response}) => { this.setState({ restaurant: data.business })})  // get the restaurant object back & setState
+    axios.get('/restaurant', {params: {id}})
+      .then(({data}) => this.setState({ restaurant: data }))
       .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
   }
   render() {
-    let FoodSwiper = (props) => <Display restaurant={this.state.restaurant} />;
+    let FoodSwiper = (props) => {
+      return (
+        <div>
+        <Search />
+        <Display restaurant={this.state.restaurant} />
+        </div>
+      )
+
+    }
     let Faves = (props) => <Favorites favorites={this.state.favorites} />;
     return (
       <div className="app">
-        <header className="navbar">The Amazing Restaurant Finder
-        <li><NavLink to="/display">Home</NavLink></li>
-        <li><NavLink to="/faves">Faves</NavLink></li>
-        </header>
-        {/* <Search /> */}
-        <Route path="/display" render={FoodSwiper} />
+        {/* <header className="navbar">The Amazing Restaurant Finder</header> */}
+        <Route exact path="/" render={FoodSwiper} />
         <Route path="/faves" render={Faves} />
       </div>
     )
