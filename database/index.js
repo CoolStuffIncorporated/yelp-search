@@ -26,7 +26,7 @@ db.once('open', () => {
 
 // if is_closed, don't store
 
-let FavoritesSchema = new Schema({
+const FavoritesSchema = new Schema({
   id: { type: String, required: true, unique: true },
   name: { type: String, required: true },
   photos: [Array],
