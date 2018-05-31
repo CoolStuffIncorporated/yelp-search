@@ -6,7 +6,9 @@ const { save, Favorites } = require('./index');
 const getFavoritesFromDB = async () => {
   try {
     const favorites = await Favorites.find({});
-    console.log(favorites);
+    express.get('/faves', (req, res) => {
+      res.send(favorites);
+    });
   } catch (err) {
     console.error(err);
   }
