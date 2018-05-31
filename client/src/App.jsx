@@ -48,6 +48,7 @@ class App extends Component {
         <header className="navbar">The Amazing Restaurant Finder</header>
         {/* <Search /> */}
         <Display restaurant={this.state.restaurant} />
+        {/* <Favorites favorites={this.state.favorites} /> */}
       </div>
     )
   }
