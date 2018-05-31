@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 // output: an array of objects containing favorited restaurants (image and url associated with)
 app.get('/faves', (req, res) => {
   // use database helper here
-  let favoriteRestaurants = getFavoritesFromDB();
+  const favoriteRestaurants = getFavoritesFromDB();
   res.send(favoriteRestaurants);
 });
 
@@ -61,6 +61,7 @@ app.post('/faves', (req, res) => {
 // output: not really output, should remove fave from faveList
 app.delete('/faves', (req, res) => {
   // use database helper here
+  deleteFavoritesFromDB(id);
   log(succ('deleted restaurant from faves!'));
   res.send('deleted restaurant from faves!');
 });
