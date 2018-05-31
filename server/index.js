@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { getRestaurantsIds, getRestaurantDetails } = require('./apiHelpers');
-const { save } = require('../database');
+const { saveFavoritesToDB, getFavoritesFromDB, deleteFavoritesFromDB } = require('../database/databaseHelpers');
 
 /* we should straighten out if we want API_KEY or API_TOKEN
 we refer to both here and in */
@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 // output: an array of objects containing favorited restaurants (image and url associated with)
 app.get('/faves', (req, res) => {
   // use database helper here
-
+  const 
   res.send('received your request to get faves!');
 });
 
@@ -47,7 +47,7 @@ app.get('/faves', (req, res) => {
 app.post('/faves', (req, res) => {
   const data = req.body;
   // use database helper here
-  const saveRestaurantsPromise = save(data);
+  const saveRestaurantsPromise = saveFavoritesToDB(data);
   saveRestaurantsPromise.then((savedRestaurants) => {
     res.send('successfully added restaurant to faves!');
   })
