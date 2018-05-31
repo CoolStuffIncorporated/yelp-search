@@ -1,0 +1,4 @@
+module.exports = {
+      API_KEY: 'THIS IS A PLACEHOLDER FILE FOR CONVENIENCE',
+      API_TOKEN: 'DO NOT ADD IN ACTUAL KEYS HERE'
+    };
