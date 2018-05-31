@@ -25,7 +25,7 @@ class Display extends Component {
     let {restaurant} = this.props;
     return (
       <div className="display">
-        <div><NavLink to="/faves">Faves</NavLink></div>
+        <div><NavLink to="/favorites">Faves</NavLink></div>
         <h1>{restaurant.name}</h1>
         <div className="rating">Rating: <span>{restaurant.rating}</span></div>
         <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
