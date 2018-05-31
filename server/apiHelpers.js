@@ -6,10 +6,17 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { API_TOKEN } = require('./env/config.js');
 
-const apiKey = API_TOKEN;
+let apiKey;
+try {
+  API_KEY = require('./config.js');
+} catch(err) {
+  API_KEY = process.env.API_KEY;
+}
+
 const client = yelp.client(apiKey);
 
-const getRestaurantsIds = (searchObj) => { //@params: searchObj(type: obj, example: {term: 'tacos', loc: 10017})
+// make call businesses/search using yelp-fusion.search
+const getRestaurants = (searchObj) => { //@params: searchObj(type: obj, example: {term: 'tacos', loc: 10017})
   const searchRequest = {
     term: searchObj.term,
     location: searchObj.loc,
@@ -18,6 +25,8 @@ const getRestaurantsIds = (searchObj) => { //@params: searchObj(type: obj, examp
   .then(data => data.jsonBody.businesses)  //@output: a promise with an array of the businesses
 };
 
+// needs refactoring
+// make call to businesses/{id} using yelp-fusion.business
 const getRestaurantDetails = (restaurantIdObj) => {
   client.search(restaurantIdObj)
     .then((response) => {
@@ -31,13 +40,13 @@ const getRestaurantDetails = (restaurantIdObj) => {
 };
 
 module.exports = {
-  getRestaurantsIds: getRestaurantsIds,
+  getRestaurants: getRestaurants,
   getRestaurantDetails: getRestaurantDetails,
 };
 
 
 /* TEST CALLS */
-getRestaurantsIds({term: 'tacos', loc: 10017})
+getRestaurants({term: 'tacos', loc: 10017})
 .then(businesses => console.log(businesses))  // shows an array of the businesses
 
 ////// teammates' removed code, saved below just in case
