@@ -12,7 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorites: [business, business, business],
+      favorites: [],
       restaurants: [],
       currentIndex: 0,
       restaurantID: "x7hsZRd_MyrUgAW91FM9qA",
