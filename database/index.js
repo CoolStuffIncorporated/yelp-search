@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
-const mlab = 'mongodb://rose:rose00@ds141320.mlab.com:41320/yelptemp' //temp database
 
 const log = console.log;
 const succ = chalk.bold.green.bgWhite; // use to log success
@@ -18,7 +17,7 @@ try {
 // mongoose housekeeping
 const Schema = mongoose.Schema;
 
-mongoose.connect(process.env.MONGO || mlab || 'mongodb://localhost');
+mongoose.connect(process.env.MONGO || 'mongodb://localhost');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
@@ -47,14 +46,13 @@ const FavoritesSchema = new Schema({
 const Favorites = mongoose.model('Favorites', FavoritesSchema);
 
 const save = (restaurants) => {
-  console.log('SAVE restaurants', restaurants);
-  restaurants.forEach((restaurantObj) => {
+  return Promise.all(restaurants.map((restaurantObj) => {
     const restaurant = new Favorites(restaurantObj);
     log(succ(`Saved ${restaurant} to database`));
-    restaurant.save(((err) => {
-      console.log(err);
-    }));
-  });
+    return restaurant.save((err) => {
+      console.error(err);
+    })
+  }).catch((err) => {console.error(`err for save db function ${err}`)});
 };
 
 module.exports.save = save;
