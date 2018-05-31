@@ -25,14 +25,10 @@ const deleteFavoritesFromDB = async (id) => {
 
 // input: object containing fave url and pics
 // output: let user know has been saved
-const postFavoritesToDB = (restaurantObj) => { 
+const postFavoritesToDB = async (restaurantObj) => {
   // should post new restaurant to DB 
   // being invoked in server index.js 
-  try {
-    Favorites.update(restaurantObj); 
-  } catch (err) {
-    console.error(err);
-  }
+  Favorites.update(restaurantObj); 
 }; 
 
 module.exports.getFavoritesFromDB = getFavoritesFromDB; 

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
+const { saveRestaurants } = require('./database');
 const mlab = 'mongodb://teamthor1:teamthor1@ds141320.mlab.com:41320/yelp-dev' //temp database
 
 const log = console.log;
