@@ -4,15 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
-<<<<<<< HEAD
 const { saveFavoritesToDB, getFavoritesFromDB, deleteFavoritesFromDB } = require('../database/databaseHelpers');
 const { saveRestaurantsGeneratedBySearch } = require('../database');
-=======
-// const { saveFavoritesToDB, getFavoritesFromDB, deleteFavoritesFromDB } = require('../database/databaseHelpers');
-// const { saveRestaurantsGeneratedBySearch } = require('../database');
-// those two imports above were crashing the build, so I've commented them out for now because I can't go into the files if someone else is working on it
-// TODO: Fix your file paths and imports
->>>>>>> 577d80579d01d5a63b4580778fc985f4add55642
 
 /* we should straighten out if we want API_KEY or API_TOKEN
 we refer to both here and in */
