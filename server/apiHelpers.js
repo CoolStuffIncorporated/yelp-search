@@ -4,16 +4,17 @@ const yelp = require('yelp-fusion');
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { API_TOKEN } = require('./env/config.example.js');
+const { API_TOKEN } = require('./env/config.js');
 
 const apiKey = API_TOKEN;
 const client = yelp.client(apiKey);
+
 
 const getRestaurantsIds = (searchObj, callback) => {
 
   const searchRequest = {
     term: searchObj.term,
-    loc: searchObj.loc,
+    location: searchObj.loc,
   };
 
   client.search(searchRequest)
