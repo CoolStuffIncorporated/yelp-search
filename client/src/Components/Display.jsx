@@ -11,6 +11,15 @@ class Display extends Component {
     if (this.state.photoIndex === 2) this.setState({photoIndex: 0})
     else this.setState({photoIndex: ++this.state.photoIndex});
   }
+  nextRestaurant() {  //helper func for moving to next restaurant, invoked in both save & skip funcs
+    
+  }
+  saveRestaurant() {  //makes POST req to our '/faves' endpoint, then shows next restaurant
+
+  }
+  skipRestaurant() { //(implement later) makes POST req to a '/dislikes' endpoint, then shows next restaurant
+
+  }
   render() {
     let {restaurant} = this.props;
     return (
