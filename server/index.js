@@ -3,18 +3,18 @@ const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const { getRestaurantsIds, getRestaurantDetails } = require('./apiHelpers');
+const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
 const { save } = require('../database');
 
 /* we should straighten out if we want API_KEY or API_TOKEN
 we refer to both here and in */
 
-let API_TOKEN;
-try {
-  API_TOKEN = require('./env/config.js').API_KEY;
-} catch (err) {
-  API_TOKEN = process.env.API_KEY;
-}
+// let API_TOKEN;
+// try {
+//   API_TOKEN = require('./env/config.js').API_KEY;
+// } catch (err) {
+//   API_TOKEN = process.env.API_KEY;
+// }
 
 const searchRequest = {
   term: 'Four Barrel Coffee',
@@ -59,14 +59,15 @@ app.delete('/faves', (req, res) => {
   res.send('deleted restaurant from faves!');
 });
 
-// input: array of ids, where each id reps a given restaurant
-// output: an array with 50 restaurant objects, associated with id, filtered by location and foodType
+// @params: req.query -> passed in from front end axios.get('/restaurants, {params: {term, loc}}) call
+// @output: an array with 50 restaurant objects, associated with id, filtered by location and foodType
 app.get('/restaurants', (req, res) => {
-  const { term, loc } = req.body;
-  // use API helper here to make a request to Yelp API to grab list of 50 restaurants by id
-  // send back array of ids
-  log(succ('Retrieved restaurant ids'));
-  res.send('here\'s your list of restaurant ids');
+  const { term, loc } = req.query;
+  getRestaurants({term, loc})   // use API helper here to make a request to Yelp API to grab list of 50 restaurants
+  // getRestaurants({term: 'tacos', loc: 10017})
+  .then(restaurants => res.send(restaurants))
+  .catch(err => res.send(err));
+  // log(succ('Retrieved restaurant ids')); sorry about your chalk, Charlie!
 });
 
 // input: id representing a specific restaurant 
@@ -83,3 +84,8 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   log(succ('listening on port 3000!'));
 });
+
+
+getRestaurants({term: 'tacos', loc: 10017})
+.then(restaurants => console.log(restaurants))
+.catch(err => console.log(err));
