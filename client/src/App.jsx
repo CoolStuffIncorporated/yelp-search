@@ -12,26 +12,29 @@ class App extends Component {
     super(props);
     this.state = {
       favorites: [business],
-      restaurants: businessIds,
+      restaurants: [],
       currentIndex: 0,
       restaurantID: "x7hsZRd_MyrUgAW91FM9qA",
       restaurant: business
     }
-    // bind functions up here
-    console.log(this.state.restaurants);
+    
+    this.getRestaurants = this.getRestaurants.bind(this);
+    console.log('current state of App', this.state);
   }
   componentDidMount() {
-    // this.getRestaurant('burgers', 11220)
+    this.getRestaurants('burgers', 10017)
   }
   getFaves() {
     axios.get('/faves')
       .then(({res}) => this.setState({ favorites: data}))
       .catch(({err})=> console.log({err}))
   }
-  getRestaurants(term, loc) { //@params: term('string'), loc('number zip')
+  getRestaurants(term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
+    console.log('fetching restaurants of', term, loc)
     axios.get('/restaurants', {params: {term, loc}})
-    .then(data => console.log(data))// .then(({response}) => this.setState({ restaurants: data.businesses}))
-    .catch((err) => console.log(`Error in fetchRestaurants: ${err}`))
+    .then(({data}) => this.setState({ restaurants: data}))
+    .then(() => console.log(this.state.restaurants))
+    .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
   }
   getRestaurant(id) { //@params: id('string')
     //helper func for moving to next restaurant, invoked in both save & skip funcs in Display component
@@ -45,6 +48,7 @@ class App extends Component {
         <header className="navbar">The Amazing Restaurant Finder</header>
         {/* <Search /> */}
         <Display restaurant={this.state.restaurant} />
+        {/* <Favorites favorites={this.state.favorites} /> */}
       </div>
     )
   }
