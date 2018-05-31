@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
+const mlab = 'mongodb://rose:rose00@ds141320.mlab.com:41320/yelptemp' //temp database
 
 const log = console.log;
 const succ = chalk.bold.green.bgWhite; // use to log success
@@ -9,7 +10,7 @@ const infoc = chalk.blue.bgBlack; // log general information
 
 let config;
 try {
-  config = require('../server/env/config.example.js').MONGO;
+  config = require('../server/env/config.js').MONGO;
 } catch (err) {
   config = process.env.MONGO;
 }
@@ -17,7 +18,7 @@ try {
 // mongoose housekeeping
 const Schema = mongoose.Schema;
 
-mongoose.connect(process.env.MONGO || 'mongodb://localhost');
+mongoose.connect(process.env.MONGO || mlab || 'mongodb://localhost');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {

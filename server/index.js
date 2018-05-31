@@ -11,7 +11,7 @@ we refer to both here and in */
 
 let API_TOKEN;
 try {
-  API_TOKEN = require('./env/config.example.js').API_KEY;
+  API_TOKEN = require('./env/config.js').API_KEY;
 } catch (err) {
   API_TOKEN = process.env.API_KEY;
 }
