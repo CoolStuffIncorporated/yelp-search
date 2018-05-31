@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
-const mlab = 'mongodb://rose:rose00@ds141320.mlab.com:41320/yelptemp' //temp database
+const mlab = 'mongodb://teamthor1:teamthor1@ds141320.mlab.com:41320/yelp-dev' //temp database
 
 const log = console.log;
 const succ = chalk.bold.green.bgWhite; // use to log success
 const errc = chalk.bold.red.bgBlack; // UH OH
 const warc = chalk.underline.orange; // log concerning but non-breaking
 const infoc = chalk.blue.bgBlack; // log general information
+
 
 let config;
 try {
@@ -46,15 +47,15 @@ const FavoritesSchema = new Schema({
 
 const Favorites = mongoose.model('Favorites', FavoritesSchema);
 
-const save = (restaurants) => {
-  console.log('SAVE restaurants', restaurants);
-  restaurants.forEach((restaurantObj) => {
+const saveRestaurantsGeneratedBySearch = (restaurants) => { 
+  return restaurants.forEach((restaurantObj) => {
     const restaurant = new Favorites(restaurantObj);
     log(succ(`Saved ${restaurant} to database`));
-    restaurant.save(((err) => {
-      console.log(err);
-    }));
+    return restaurant.save()
+      .catch((err) => {
+        console.log(err);
+      });
   });
 };
 
-module.exports.save = save;
+module.exports.saveRestaurantsGeneratedBySearch = saveRestaurantsGeneratedBySearch;

@@ -4,7 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
-const { save } = require('../database');
+const { saveFavoritesToDB, getFavoritesFromDB, deleteFavoritesFromDB } = require('../database/databaseHelpers');
+const { saveRestaurantsGeneratedBySearch } = require('../database');
 
 /* we should straighten out if we want API_KEY or API_TOKEN
 we refer to both here and in */
@@ -37,7 +38,8 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 // output: an array of objects containing favorited restaurants (image and url associated with)
 app.get('/faves', (req, res) => {
   // use database helper here
-  res.send('received your request to get faves!');
+  const favoriteRestaurants = getFavoritesFromDB();
+  res.send(favoriteRestaurants);
 });
 
 
@@ -46,15 +48,20 @@ app.get('/faves', (req, res) => {
 app.post('/faves', (req, res) => {
   const data = req.body;
   // use database helper here
-  save(data);
-  log(succ('successfully added restaurant to faves!'));
-  res.send('successfully added restaurant to faves!');
+  const saveRestaurantsPromise = saveRestaurantsGeneratedBySearch(data);
+  saveRestaurantsPromise.then((savedRestaurants) => {
+    res.send('successfully added restaurant to faves!');
+  })
+    .catch((err) => { console.log(err); });
+  // log(succ('successfully added restaurant to faves!'));
+  // res.send('successfully added restaurant to faves!');
 });
 
 // input: id of favorite restaurant 
 // output: not really output, should remove fave from faveList
 app.delete('/faves', (req, res) => {
   // use database helper here
+  deleteFavoritesFromDB(id);
   log(succ('deleted restaurant from faves!'));
   res.send('deleted restaurant from faves!');
 });
@@ -86,6 +93,6 @@ app.listen(port, () => {
 });
 
 
-getRestaurants({term: 'tacos', loc: 10017})
-.then(restaurants => console.log(restaurants))
-.catch(err => console.log(err));
+// getRestaurants({term: 'tacos', loc: 10017})
+// .then(restaurants => console.log('success'))
+// .catch(err => console.log(err));
