@@ -4,13 +4,13 @@ class Favorites extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        showUrl : false
+      showUrl : false
     }
     this.onHover = this.onHover.bind(this); // displays url
   }
 
   onHover () {
-    console.log('on the url');
+    // console.log('on the url');
     this.setState({
       showUrl : true
     })
@@ -20,11 +20,10 @@ class Favorites extends Component {
     return (
       <ul className="favorites-all">
           {/*loop through all fave restaurants, render to page with approp. props from DB*/}
-          {/*can add a mouseEnter event if so desired, right now url dispalying with contact info*/}
         {this.props.favorites.map((favorite) => {
             console.log(favorite);
             return ( 
-              <li className="favorite-item" onHover={() => {return this.state.showUrl ? <Hover favorite={favorite}/> : null}}>
+              <li className="favorite-item" onMouseOver={() => {this.onHover()}}> {/*creates Mousover event*/}
                 <img src={favorite.image_url}/>
                 <div className="favorite-description">
                   <h4>{favorite.name}</h4>
@@ -32,10 +31,11 @@ class Favorites extends Component {
                     <div className="restaurant-contact-info">
                       <span>Phone: {favorite.display_phone}</span>
                       <span>Location: {favorite.location}</span>
-                      <span>url {favorite.url}</span>
+                      {/* <span>url {favorite.url}</span> */}{/*no need to dispaly url since hovered over*/}
                     </div>
                   </section>
                 </div>
+                {this.state.showUrl ? <Hover favorite={favorite}/> : null} {/*should dispaly url if hovered over*/}
               </li>
             )
         })}
