@@ -47,9 +47,13 @@ app.get('/faves', (req, res) => {
 app.post('/faves', (req, res) => {
   const data = req.body;
   // use database helper here
-  save(data);
-  log(succ('successfully added restaurant to faves!'));
-  res.send('successfully added restaurant to faves!');
+  const saveRestaurantsPromise = save(data);
+    saveRestaurantsPromise.then((savedRestaurants) => {
+    res.send('successfully added restaurant to faves!');
+  })
+    .catch((err) => { console.log(`${err}`});
+  // log(succ('successfully added restaurant to faves!'));
+  // res.send('successfully added restaurant to faves!');
 });
 
 // input: id of favorite restaurant 

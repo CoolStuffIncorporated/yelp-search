@@ -13,7 +13,7 @@ const getRestaurantsIds = (searchObj, callback) => {
 
   const searchRequest = {
     term: searchObj.term,
-    loc: searchObj.loc,
+    location: searchObj.loc,
   };
 
   client.search(searchRequest)

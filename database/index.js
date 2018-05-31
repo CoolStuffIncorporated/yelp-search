@@ -47,12 +47,14 @@ const Favorites = mongoose.model('Favorites', FavoritesSchema);
 
 const save = (restaurants) => {
   console.log('SAVE restaurants', restaurants);
-  restaurants.forEach((restaurantObj) => {
+  return restaurants.forEach((restaurantObj) => {
     const restaurant = new Favorites(restaurantObj);
     log(succ(`Saved ${restaurant} to database`));
-    restaurant.save(((err) => {
-      console.log(err);
-    }));
+    return restaurant.save()
+      .catch((err) => {
+        console.log(err);
+      })
+    );
   });
 };
 
