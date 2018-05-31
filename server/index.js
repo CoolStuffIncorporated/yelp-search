@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 // output: an array of objects containing favorited restaurants (image and url associated with)
 app.get('/faves', (req, res) => {
   // use database helper here
-  
+
   res.send('received your request to get faves!');
 });
 
@@ -60,8 +60,8 @@ app.delete('/faves', (req, res) => {
   res.send('deleted restaurant from faves!');
 });
 
-// input: array of objects, where each object reps a given restaurant
-// output: an array with 50 restaurant objects, filtered by location and foodType
+// input: array of ids, where each id reps a given restaurant
+// output: an array with 50 restaurant objects, associated with id, filtered by location and foodType
 app.get('/restaurants', (req, res) => {
   const { term, loc } = req.body;
   // use API helper here to make a request to Yelp API to grab list of 50 restaurants by id
@@ -70,8 +70,8 @@ app.get('/restaurants', (req, res) => {
   res.send('here\'s your list of restaurant ids');
 });
 
-// input: object representing a specific restaurant 
-// output: id for the given restaurant 
+// input: id representing a specific restaurant 
+// output: an array of pics, description for given restaurant  
 app.get('/restaurant', (req, res) => {
   const { id } = req.body;
   // use another api helper here to make a request to API to grab details of selected restaurant
