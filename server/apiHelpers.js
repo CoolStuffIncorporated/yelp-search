@@ -8,9 +8,9 @@ const { API_TOKEN } = require('./env/config.js');
 
 let apiKey;
 try {
-  API_KEY = require('./config.js');
+  apiKey = require('./env/config.js').API_TOKEN;
 } catch(err) {
-  API_KEY = process.env.API_KEY;
+  apiKey = process.env.TOKEN;
 }
 
 const client = yelp.client(apiKey);
