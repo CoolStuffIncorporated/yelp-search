@@ -43,4 +43,3 @@ module.exports = {
   getRestaurantsIds: getRestaurantsIds,
   getRestaurantDetails: getRestaurantDetails,
 };
- 

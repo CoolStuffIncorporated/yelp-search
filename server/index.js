@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 // output: an array of objects containing favorited restaurants (image and url associated with)
 app.get('/faves', (req, res) => {
   // use database helper here
-
+  
   res.send('received your request to get faves!');
 });
 
