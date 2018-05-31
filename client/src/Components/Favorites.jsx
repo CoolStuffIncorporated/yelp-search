@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Hover from './Hover.jsx';
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 
 class Favorites extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class Favorites extends Component {
       // console.log(this.props.favorites)
     return (
       <ul className="favorites-all">
-          {/*loop through all fave restaurants, render to page with approp. props from DB*/}
+        <div><NavLink to="/">Home</NavLink></div>
         {this.props.favorites.map((favorite) => {
             return ( 
               <li key={favorite.id} className="favorite-item" onMouseEnter={() => {this.onHover()}} onMouseLeave={() => {this.onHover()}}>
