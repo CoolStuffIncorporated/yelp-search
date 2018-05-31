@@ -6,9 +6,7 @@ const { save, Favorites } = require('./index');
 const getFavoritesFromDB = async () => {
   try {
     const favorites = await Favorites.find({});
-    express.get('/faves', (req, res) => {
-      res.send(favorites);
-    });
+    return favorites;
   } catch (err) {
     console.error(err);
   }
@@ -27,10 +25,14 @@ const deleteFavoritesFromDB = async (id) => {
 
 // input: object containing fave url and pics
 // output: let user know has been saved
-const postFavoritesToDB = (restaurantObj) => { 
+const postFavoritesToDB = async (restaurantObj) => {
   // should post new restaurant to DB 
   // being invoked in server index.js 
-  Favorites.update(restaurantObj); 
+  try {
+    const addToFavorites = await Favorites.update(restaurantObj);
+  } catch (err) {
+    console.error(err)
+  }
 }; 
 
 module.exports.getFavoritesFromDB = getFavoritesFromDB; 
