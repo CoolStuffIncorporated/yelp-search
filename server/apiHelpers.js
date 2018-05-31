@@ -30,6 +30,7 @@ const getRestaurantsIds = (searchObj, callback) => {
 
 const getRestaurantDetails = (restaurantIdObj, callback) => {
 
+  // -> check https://www.npmjs.com/package/y
   // need to modify this to get the business details somehow
   client.search(restaurantIdObj).then(response => {
     console.log(response.jsonBody.businesses);
@@ -37,7 +38,7 @@ const getRestaurantDetails = (restaurantIdObj, callback) => {
     console.log(e);
   });
 };
-
+ 
 module.exports = {
   getRestaurantsIds: getRestaurantsIds,
   getRestaurantDetails: getRestaurantDetails,
