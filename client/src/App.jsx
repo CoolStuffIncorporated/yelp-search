@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Search from './Components/Search.jsx';
 import Display from './Components/Display.jsx';
+import Favorites from './Components/Favorites.jsx';
 import axios from 'axios';
-
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 import {business, data} from './dummydata.js';
 let businessIds = data.businesses.map(business => business.id); // dummy data for now
 
@@ -11,7 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorites: [business],
+      favorites: [business, business, business],
       restaurants: [],
       currentIndex: 0,
       restaurantID: "x7hsZRd_MyrUgAW91FM9qA",
@@ -32,7 +33,8 @@ class App extends Component {
   getRestaurants(term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
     console.log('fetching restaurants of', term, loc)
     axios.get('/restaurants', {params: {term, loc}})
-    .then(({data}) => this.setState({ restaurants: data}))
+    // .then(({data}) => this.setState({ restaurants: data}))
+    .then(({data}) => this.setState({ restaurants: data, favorites: data})) // also populate faves with the restaurants data for now
     .then(() => console.log(this.state.restaurants))
     .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
   }
@@ -43,21 +45,28 @@ class App extends Component {
       .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
   }
   render() {
+    let FoodSwiper = (props) => <Display restaurant={this.state.restaurant} />;
+    let Faves = (props) => <Favorites favorites={this.state.favorites} />;
     return (
       <div className="app">
-        <header className="navbar">The Amazing Restaurant Finder</header>
+        <header className="navbar">The Amazing Restaurant Finder
+        <li><NavLink to="/display">Home</NavLink></li>
+        <li><NavLink to="/faves">Faves</NavLink></li>
+        </header>
         {/* <Search /> */}
-        <Display restaurant={this.state.restaurant} />
-        {/* <Favorites favorites={this.state.favorites} /> */}
+        <Route path="/display" render={FoodSwiper} />
+        <Route path="/faves" render={Faves} />
       </div>
     )
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
 
 
 
+{/* <Favorites favorites={this.state.favorites} /> */}
+{/* <Display restaurant={this.state.restaurant} /> */}
 
 
 
