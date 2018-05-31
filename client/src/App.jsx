@@ -23,7 +23,7 @@ class App extends Component {
     console.log('current state of App', this.state);
   }
   componentDidMount() {
-    this.getRestaurants('burgers', 10017)
+    this.getRestaurants();
   }
   getFaves() {
     axios.get('/faves')
@@ -45,16 +45,24 @@ class App extends Component {
       .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
   }
   render() {
-    let FoodSwiper = (props) => <Display restaurant={this.state.restaurant} />;
+    let FoodSwiper = (props) => {
+      return (
+        <div>
+        <Search />
+        <Display restaurant={this.state.restaurant} />
+        </div>
+      )
+
+    }
     let Faves = (props) => <Favorites favorites={this.state.favorites} />;
     return (
       <div className="app">
         <header className="navbar">The Amazing Restaurant Finder
-        <li><NavLink to="/display">Home</NavLink></li>
-        <li><NavLink to="/faves">Faves</NavLink></li>
+        {/* <li><NavLink to="/display">Home</NavLink></li> */}
+
         </header>
-        {/* <Search /> */}
-        <Route path="/display" render={FoodSwiper} />
+        <Route exact path="/" render={FoodSwiper} />
+        {/* <Route path="/display" render={FoodSwiper} /> */}
         <Route path="/faves" render={Faves} />
       </div>
     )
