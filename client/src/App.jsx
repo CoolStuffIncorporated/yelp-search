@@ -20,17 +20,27 @@ class App extends Component {
     }
     
     this.getRestaurants = this.getRestaurants.bind(this);
+    // this.postFaves = this.postFaves.bind(this);
+    this.getFaves = this.getFaves.bind(this);
     console.log('current state of App', this.state);
   }
   componentDidMount() {
     this.getRestaurants();
     this.getRestaurant(this.state.restaurantID);
   }
+
   getFaves() {
     axios.get('/faves')
-      .then(({res}) => this.setState({ favorites: data}))
-      .catch(({err})=> console.log({err}))
+      .then(favorite => console.log('client-side favorite', favorite))
+      .catch((err) => { console.error(err); });
   }
+  postFaves() {
+    // let obj = { id: 'uniqueeeeee', name: 'bobbbby' };
+    axios.post('/faves', obj)
+      .then(posted => { console.log('posted', posted)})
+      .catch(err => { console.log(err) });
+  }
+
   getRestaurants(term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
     console.log('fetching restaurants of', term, loc)
     axios.get('/restaurants', {params: {term, loc}})
@@ -45,6 +55,7 @@ class App extends Component {
       .then(({data}) => this.setState({ restaurant: data }))
       .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
   }
+
   render() {
     let FoodSwiper = (props) => {
       return (

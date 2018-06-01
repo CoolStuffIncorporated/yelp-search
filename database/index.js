@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
-const { saveRestaurants } = require('./database');
 const mlab = 'mongodb://teamthor1:teamthor1@ds141320.mlab.com:41320/yelp-dev' //temp database
 
 const log = console.log;
@@ -30,7 +29,7 @@ db.once('open', () => {
 // if is_closed, don't store
 
 const FavoritesSchema = new Schema({
-  id: { type: String, required: true, unique: true },
+  id: { type: String, required: true },
   name: { type: String, required: true },
   photos: [Array],
   display_phone: [String],
@@ -48,15 +47,45 @@ const FavoritesSchema = new Schema({
 
 const Favorites = mongoose.model('Favorites', FavoritesSchema);
 
-const saveRestaurantsGeneratedBySearch = (restaurants) => { 
-  return restaurants.forEach((restaurantObj) => {
-    const restaurant = new Favorites(restaurantObj);
-    log(succ(`Saved ${restaurant} to database`));
-    return restaurant.save()
-      .catch((err) => {
-        console.log(err);
-      });
+const getFavoritesFromDB = (callback) => {
+  Favorites.find({}, (err, favorites) => {
+    callback(err, favorites);
   });
 };
 
-module.exports.saveRestaurantsGeneratedBySearch = saveRestaurantsGeneratedBySearch;
+// input: id of the fave to delete
+// output: n/a
+const deleteFavoritesFromDB = (id) => {
+  Favorites.findOneAndRemove({ id: id }, (err) => {
+    if (!err) {
+      console.log('deleted successfully!')
+    } else {
+      console.log('error, not deleted! Try again.')
+    }
+  });
+};
+
+// input: object containing fave url and pics
+// output: let user know has been saved
+const postFavoritesFromDB = (data, callback) => {
+  console.log('data within db post', data);
+  Favorites.create(data)
+    .then((obj) => { callback(obj); })
+    .catch((err) => { console.log(`error ${err}`); });
+}; 
+
+// should return a promisified array of 
+const getFavoritedRestaurants = () => {
+  Favorites.find({}, (err, res) => {
+    if (!err) {
+      res.exec();
+    } else {
+      console.log(`${err}`);
+    }
+  });
+};
+
+module.exports.getFavoritesFromDB = getFavoritesFromDB;
+module.exports.postFavoritesFromDB = postFavoritesFromDB;
+module.exports.deleteFavoritesFromDB = deleteFavoritesFromDB;
+module.exports.getFavoritedRestaurants = getFavoritedRestaurants;
