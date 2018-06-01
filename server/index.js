@@ -86,6 +86,14 @@ app.get('/restaurant', (req, res) => {
   // log(succ('Retrieved restaurant data and pics'));
 });
 
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../client/dist/index.html'), (err) => {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   log(succ('listening on port 3000!'));

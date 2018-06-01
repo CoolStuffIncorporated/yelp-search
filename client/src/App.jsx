@@ -60,7 +60,7 @@ class App extends Component {
       <div className="app">
         {/* <header className="navbar">The Amazing Restaurant Finder</header> */}
         <Route exact path="/" render={FoodSwiper} />
-        <Route path="/faves" render={Faves} />
+        <Route path="/favorites" render={Faves} />
       </div>
     )
   }
