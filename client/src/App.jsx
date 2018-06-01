@@ -63,7 +63,7 @@ class App extends Component {
       if (!this.state.restaurant) return <div>LOADING</div>;
       return (
         <div>
-        <Search />
+          <Search getRestaurants={this.getRestaurants} />
         <Display restaurant={this.state.restaurant} />
         </div>
       )
