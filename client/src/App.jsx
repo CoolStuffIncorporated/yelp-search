@@ -15,7 +15,7 @@ class App extends Component {
       favorites: [],
       restaurants: [],
       currentIndex: 0,
-      restaurantID: "UA2M9QFZghe-9th2KwLoWQ",
+      restaurantID: '',
       restaurant: null
     }
     
