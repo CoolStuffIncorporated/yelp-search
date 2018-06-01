@@ -36,7 +36,7 @@ const getRestaurants = (searchObj) => {
 // make call to businesses/{id} using yelp-fusion.business
 // https://www.yelp.com/developers/documentation/v3/business
 const getRestaurantDetails = restaurantId => client.business(restaurantId).then((data) => {
-  console.log(chalk.green('Retrieved', (data.body)));
+  // console.log(chalk.green('Retrieved', (data.body)));
   return data.body;
 }).catch((err) => {
   console.log(chalk.bold.red('Encountered error requesting restaurant details from Yelp', err));
@@ -77,8 +77,8 @@ module.exports = {
 
 
 // const testId = 'SULHf6nGQ8sK0UpG1XU30w';
-// // getRestaurantDetails(testId).then(data => console.log(data));
-// // console.log(getRestaurantDetails(testId));
+// // // getRestaurantDetails(testId).then(data => console.log(data));
+// // // console.log(getRestaurantDetails(testId));
 // getRestaurantDetails(testId)
 //   .then(data => console.log(data))
 //   .catch(err => console.log(err));
