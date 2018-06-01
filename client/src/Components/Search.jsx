@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
+
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      foodTypes: ['tacos', 'burgers', 'hot dogs', 'salad', 'ramen'],  
+      foodTypes: ['tacos', 'burgers', 'hot dogs', 'salad', 'ramen'],
       zip: 10001,
       foodType: '',
     };
@@ -26,7 +27,7 @@ class Search extends Component {
       <select onChange={this.inputFood}>
         {this.state.foodTypes.map(foodType => <option key={foodType}>{foodType}</option>)}
       </select>
-        <input placeholder="ZIP CODE" type="text" pattern="[0-9]{5}" onChange={this.inputZip}/>
+        <input placeholder="ZIP CODE" type="number" onChange={this.inputZip}/>
       </div>
     );
   }
