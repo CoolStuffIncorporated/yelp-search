@@ -15,18 +15,18 @@ class App extends Component {
       favorites: [],
       restaurants: [],
       currentIndex: 0,
-      restaurantID: "UA2M9QFZghe-9th2KwLoWQ",
-      restaurant: business
+      restaurantID: '',
+      restaurant: null
     }
     
     this.getRestaurants = this.getRestaurants.bind(this);
     // this.postFaves = this.postFaves.bind(this);
     this.getFaves = this.getFaves.bind(this);
     console.log('current state of App', this.state);
+    this.getRestaurants();
   }
   componentDidMount() {
-    this.getRestaurants();
-    this.getRestaurant(this.state.restaurantID);
+    // this.getRestaurant(this.state.restaurantID);
   }
 
   getFaves() {
@@ -46,7 +46,9 @@ class App extends Component {
     axios.get('/restaurants', {params: {term, loc}})
     // .then(({data}) => this.setState({ restaurants: data}))
     .then(({data}) => this.setState({ restaurants: data, favorites: data})) // also populate faves with the restaurants data for now
-    // .then(() => console.log(this.state.restaurants))
+    .then(() => this.setState({restaurantID: this.state.restaurants[0].id}))
+    .then(() => this.getRestaurant(this.state.restaurantID))
+    // .then(() => console.log(this.state))
     .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
   }
   getRestaurant(id) { //@params: id('string')
@@ -58,6 +60,7 @@ class App extends Component {
 
   render() {
     let FoodSwiper = (props) => {
+      if (!this.state.restaurant) return <div>LOADING</div>;
       return (
         <div>
         <Search />
