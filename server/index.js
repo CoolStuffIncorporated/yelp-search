@@ -4,8 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
-const { saveFavoritesToDB, getFavoritesFromDB, deleteFavoritesFromDB } = require('../database/databaseHelpers');
-const { saveRestaurantsGeneratedBySearch } = require('../database');
+const { saveRestaurantsGeneratedBySearch, saveFavoritesToDB, postFavoritesFromDB, deleteFavoritesFromDB, getFavoritesFromDB } = require('../database');
 
 /* we should straighten out if we want API_KEY or API_TOKEN
 we refer to both here and in */
@@ -36,34 +35,54 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 
 // input: n/a
 // output: an array of objects containing favorited restaurants (image and url associated with)
+// app.get('/faves', (req, res) => {
+//   // use database helper here
+//   getFavoritesFromDB((err, res) => {
+//     if (!err) {
+//       console.log('res1', res);
+//       res.send(res);
+//     } else {
+//       res.send(`ERROR: ${err}`);
+//     }
+//   });
+// });
+
+
 app.get('/faves', (req, res) => {
-  // use database helper here
-  const favoriteRestaurants = getFavoritesFromDB();
-  res.send(favoriteRestaurants);
-});
+  // console.log('ANYTHING')
+  getFavoritesFromDB((err, favoriteRestaurants) => {
+    console.log('YAY SERVER', favoriteRestaurants);
+    if (!err) {
+      res.send(favoriteRestaurants);
+    } else {
+      console.error(`${err}`);
+    }
+  })
+})
 
 
 // input: an object containing Url and pic
 // output: let user know item has been saved (save fave to db)
 app.post('/faves', (req, res) => {
+  console.log('req in post server', req);
   const data = req.body;
-  // use database helper here
-  const saveRestaurantsPromise = saveRestaurantsGeneratedBySearch(data);
-  saveRestaurantsPromise.then((savedRestaurants) => {
-    res.send('successfully added restaurant to faves!');
-  })
-    .catch((err) => { console.log(err); });
-  // log(succ('successfully added restaurant to faves!'));
-  // res.send('successfully added restaurant to faves!');
+  postFavoritesFromDB(data, (faves, err) => {
+    if (!err) {
+      console.log('faves', faves);
+      res.send(faves);
+    } else {
+      console.log(`${err}`);
+    }
+  });
 });
 
 // input: id of favorite restaurant 
 // output: not really output, should remove fave from faveList
 app.delete('/faves', (req, res) => {
+  console.log(req.body)
   // use database helper here
-  deleteFavoritesFromDB(id);
-  log(succ('deleted restaurant from faves!'));
-  res.send('deleted restaurant from faves!');
+  deleteFavoritesFromDB(req.query.id);
+  console.log('deleted!');
 });
 
 // @params: req.query -> passed in from front end axios.get('/restaurants, {params: {term, loc}}) call
