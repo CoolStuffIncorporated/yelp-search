@@ -15,6 +15,7 @@ try {
 } catch (err) {
   config = process.env.MONGO;
 }
+
 // mongoose housekeeping
 const Schema = mongoose.Schema;
 
@@ -28,7 +29,7 @@ db.once('open', () => {
 // if is_closed, don't store
 
 const FavoritesSchema = new Schema({
-  id: { type: String, required: true },
+  id: { type: String, required: true, unique: true },
   name: { type: String, required: true },
   photos: [Array],
   display_phone: [String],
@@ -46,45 +47,50 @@ const FavoritesSchema = new Schema({
 
 const Favorites = mongoose.model('Favorites', FavoritesSchema);
 
-const getFavoritesFromDB = (callback) => {
-  Favorites.find({}, (err, favorites) => {
-    callback(err, favorites);
-  });
+const getFavoritesFromDB = async () => {
+  try {
+    const favorites = await Favorites.find({});
+    return favorites;
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 // input: id of the fave to delete
 // output: n/a
-const deleteFavoritesFromDB = (id) => {
-  Favorites.findOneAndRemove({ id: id }, (err) => {
-    if (!err) {
-      console.log('deleted successfully!')
-    } else {
-      console.log('error, not deleted! Try again.')
-    }
-  });
+const deleteFavoritesFromDB = async (id) => {
+  try {
+    const deletedFavorite = await Favorites.deleteOne({ id: id });
+    console.log('deleted from Favorites!');
+  } catch (err) {
+    console.error(err);
+  } 
 };
 
 // input: object containing fave url and pics
 // output: let user know has been saved
-const postFavoritesFromDB = (data, callback) => {
-  console.log('data within db post', data);
-  Favorites.create(data)
-    .then((obj) => { callback(obj); })
-    .catch((err) => { console.log(`error ${err}`); });
+const postFavoritesToDB = async (restaurantObj) => {
+  // should post new restaurant to DB 
+  // being invoked in server index.js 
+  try {
+    const addToFavorites = await Favorites.update(restaurantObj);
+  } catch (err) {
+    console.error(err)
+    Favorites.update(restaurantObj); 
+  } catch (err) {
+    console.error(err);
+  }
 }; 
 
-// should return a promisified array of 
-const getFavoritedRestaurants = () => {
-  Favorites.find({}, (err, res) => {
-    if (!err) {
-      res.exec();
-    } else {
-      console.log(`${err}`);
-    }
+const saveRestaurantsGeneratedBySearch = (restaurants) => { 
+  return restaurants.forEach((restaurantObj) => {
+    const restaurant = new Favorites(restaurantObj);
+    log(succ(`Saved ${restaurant} to database`));
+    return restaurant.save()
+      .catch((err) => {
+        console.log(err);
+      });
   });
 };
 
-module.exports.getFavoritesFromDB = getFavoritesFromDB;
-module.exports.postFavoritesFromDB = postFavoritesFromDB;
-module.exports.deleteFavoritesFromDB = deleteFavoritesFromDB;
-module.exports.getFavoritedRestaurants = getFavoritedRestaurants;
+module.exports.saveRestaurantsGeneratedBySearch = saveRestaurantsGeneratedBySearch;
