@@ -15,7 +15,6 @@ try {
 } catch (err) {
   config = process.env.MONGO;
 }
-
 // mongoose housekeeping
 const Schema = mongoose.Schema;
 
