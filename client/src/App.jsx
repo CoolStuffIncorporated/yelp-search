@@ -24,14 +24,17 @@ class App extends Component {
     this.getFaves = this.getFaves.bind(this);
     console.log('current state of App', this.state);
     this.getRestaurants();
+    this.getFaves = this.getFaves.bind(this);
   }
   componentDidMount() {
     // this.getRestaurant(this.state.restaurantID);
+    this.getFaves();
   }
 
   getFaves() {
     axios.get('/faves')
-      .then(favorite => console.log('client-side favorite', favorite))
+      // .then(favorite => console.log('client-side favorite', favorite))
+      .then(({data}) => this.setState({favorites: data}))
       .catch((err) => { console.error(err); });
   }
   postFaves() {
@@ -44,8 +47,7 @@ class App extends Component {
   getRestaurants(term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
     console.log('fetching restaurants of', term, loc)
     axios.get('/restaurants', {params: {term, loc}})
-    // .then(({data}) => this.setState({ restaurants: data}))
-    .then(({data}) => this.setState({ restaurants: data, favorites: data})) // also populate faves with the restaurants data for now
+    .then(({data}) => this.setState({ restaurants: data}))
     .then(() => this.setState({restaurantID: this.state.restaurants[0].id}))
     .then(() => this.getRestaurant(this.state.restaurantID))
     // .then(() => console.log(this.state))
