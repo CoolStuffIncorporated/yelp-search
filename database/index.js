@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
-const mlabAlon = 'mongodb://teamthor1:teamthor1@ds141320.mlab.com:41320/yelp-dev' //temp database
-const mlab = 'mongodb://rose:rose00@ds141320.mlab.com:41320/yelptemp'
+const mlab = 'mongodb://teamthor1:teamthor1@ds141320.mlab.com:41320/yelp-dev' //temp database
 
 const log = console.log;
 const succ = chalk.bold.green.bgWhite; // use to log success
@@ -48,50 +47,44 @@ const FavoritesSchema = new Schema({
 
 const Favorites = mongoose.model('Favorites', FavoritesSchema);
 
-const getFavoritesFromDB = async () => {
-  try {
-    const favorites = await Favorites.find({});
-    return favorites;
-  } catch (err) {
-    console.error(err);
-  }
-};
+const getFavoritesFromDB = (callback) => { 
+  Favorites.find({}, (err, favorites) => { 
+    callback(err, favorites); 
+  }); 
+}
 
 // input: id of the fave to delete
 // output: n/a
-const deleteFavoritesFromDB = async (id) => {
-  try {
-    const deletedFavorite = await Favorites.deleteOne({ id: id });
-    console.log('deleted from Favorites!');
-  } catch (err) {
-    console.error(err);
-  } 
+const deleteFavoritesFromDB = (id) => {
+  const deleteFavoritesFromDB = (id) => { 
+    Favorites.findOneAndRemove({ id: id }, (err) => { 
+      if (!err) { 
+        console.log('deleted successfully!') 
+      } else { 
+        console.log('error, not deleted! Try again.') 
+      }
+    });
 };
 
 // input: object containing fave url and pics
 // output: let user know has been saved
-const postFavoritesToDB = async (restaurantObj) => {
-  // should post new restaurant to DB 
-  // being invoked in server index.js 
-  try {
-    const addToFavorites = await Favorites.update(restaurantObj);
-  } catch (err) {
-    console.error(err)
-    Favorites.update(restaurantObj); 
-  } catch (err) {
-    console.error(err);
-  }
+const postFavoritesFromDB = (data, callback) => { 
+  console.log('data within db post', data); 
+  Favorites.create(data) 
+    .then((obj) => { callback(obj); }) 
+    .catch((err) => { console.log(`error ${err}`); 
+  }); 
 }; 
 
-const saveRestaurantsGeneratedBySearch = (restaurants) => { 
-  return restaurants.forEach((restaurantObj) => {
-    const restaurant = new Favorites(restaurantObj);
-    log(succ(`Saved ${restaurant} to database`));
-    return restaurant.save()
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-};
+const saveRestaurantsGeneratedBySearch = (restaurants) => {  
+  return restaurants.forEach((restaurantObj) => { 
+    const restaurant = new Favorites(restaurantObj); 
+    log(succ(`Saved ${restaurant} to database`)); 
+    return restaurant.save() 
+      .catch((err) => { 
+        console.log(err); 
+      }); 
+  }); 
+}; 
 
 module.exports.saveRestaurantsGeneratedBySearch = saveRestaurantsGeneratedBySearch;
