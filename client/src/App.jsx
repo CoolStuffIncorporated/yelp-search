@@ -18,11 +18,11 @@ class App extends Component {
       restaurantID: '',
       restaurant: null
     }
-    
     this.getRestaurants = this.getRestaurants.bind(this);
     this.getFaves = this.getFaves.bind(this);
     console.log('current state of App', this.state);
     this.getFaves = this.getFaves.bind(this);
+    this.nextRestaurant = this.nextRestaurant.bind(this);
   }
   componentDidMount() {
     // this.getRestaurant(this.state.restaurantID);
@@ -39,7 +39,7 @@ class App extends Component {
     axios.get('/restaurants', {params: {term, loc}})
     .then(({data}) => this.setState({ restaurants: data}))
     .then(() => console.log('get res, state', this.state))
-    .then(() => this.setState({restaurantID: this.state.restaurants[0].id}))
+    .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id}))
     .then(() => this.getRestaurant(this.state.restaurantID))
     .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
   }
@@ -50,13 +50,24 @@ class App extends Component {
       .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
   }
 
+  nextRestaurant () { //@params: none, contorlled component that resets rest state
+    // helper func that moves down restuarant array to display next restaurant, and set rest id correspondingly
+    this.setState({
+      thisrestaurant: this.state.restaurants[++this.state.currentIndex],
+      restaurantID: this.state.restaurant.id
+    }, () => {
+      console.log('current index', this.state.currentIndex);
+      console.log('restaurants', this.state.restaurant);
+    })
+  }
+
   render() {
     let FoodSwiper = (props) => {
       if (!this.state.restaurant) return <div>LOADING</div>;
       return (
         <div>
           <Search getRestaurants={this.getRestaurants} />
-          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} />
+          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} />
         </div>
       )
     }
