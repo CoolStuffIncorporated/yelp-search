@@ -4,11 +4,10 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
-
 import Search from './Components/Search.jsx';
 import Display from './Components/Display.jsx';
 import Favorites from './Components/Favorites.jsx';
-import { business, data } from './dummydata';
+import { business, data } from './dummydata.js';
 
 const businessIds = data.businesses.map(business => business.id); // dummy data for now
 
@@ -20,11 +19,13 @@ class App extends Component {
       restaurants: [],
       currentIndex: 0,
       restaurantID: '',
-      restaurant: null
-    };
-
-    this.getRestaurants = this.getRestaurants.bind(this);
+      restaurant: null,
+      restaurantInfo: null,
+      isHidden: true,
+    }
     this.getFaves = this.getFaves.bind(this);
+    this.getRestaurants = this.getRestaurants.bind(this);
+    this.getRestaurant = this.getRestaurant.bind(this);
     console.log('current state of App', this.state);
     this.getFaves = this.getFaves.bind(this);
     this.nextRestaurant = this.nextRestaurant.bind(this);
@@ -119,7 +120,6 @@ ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById(
 
 /* IGNORE THIS WORK ON CONTEXT API */
 // const MyContext = React.createContext();
-
 // class MyProvider extends Component {
 //   state = {
 //     favorites: [dummyBiz],
