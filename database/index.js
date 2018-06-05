@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
-const mlab = 'mongodb://teamthor1:teamthor1@ds141320.mlab.com:41320/yelp-dev' //temp database
+const mlabAlon = 'mongodb://teamthor1:teamthor1@ds141320.mlab.com:41320/yelp-dev' //temp database
+const mlab = 'mongodb://rose:rose00@ds141320.mlab.com:41320/yelptemp'
 
 const log = console.log;
 const succ = chalk.bold.green.bgWhite; // use to log success
