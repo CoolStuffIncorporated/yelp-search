@@ -38,9 +38,9 @@ class Display extends Component {
         <div className="rating">Rating: <span>{restaurant.rating}</span></div>
         <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
         <div>
-        <button class="waves-effects waves-light btn">Skip</button>
-        <button class="waves-effects waves-light btn">Info</button>
-        <button class="waves-effects waves-light btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
+        <button className="waves-effects waves-light btn">Skip</button>
+        <button className="waves-effects waves-light btn">Info</button>
+        <button className="waves-effects waves-light btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
         </div>
         <div className="description">
           {/* <p>{restaurant.location.display_address[0]}</p>
