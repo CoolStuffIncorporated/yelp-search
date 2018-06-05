@@ -4,17 +4,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
-const { saveRestaurantsGeneratedBySearch, saveFavoritesToDB, postFavoritesFromDB, deleteFavoritesFromDB, getFavoritesFromDB } = require('../database');
-
-/* we should straighten out if we want API_KEY or API_TOKEN
-we refer to both here and in */
-
-// let API_TOKEN;
-// try {
-//   API_TOKEN = require('./env/config.js').API_KEY;
-// } catch (err) {
-//   API_TOKEN = process.env.API_KEY;
-// }
+const { getFaves, deleteFave, addFave } = require('../database');
+// const https = require('https'); uncomment for https
+// const fs = require('fs'); uncomment for https
 
 const searchRequest = {
   term: 'Four Barrel Coffee',
@@ -33,91 +25,67 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 
-// input: n/a
-// output: an array of objects containing favorited restaurants (image and url associated with)
-// app.get('/faves', (req, res) => {
-//   // use database helper here
-//   getFavoritesFromDB((err, res) => {
-//     if (!err) {
-//       console.log('res1', res);
-//       res.send(res);
-//     } else {
-//       res.send(`ERROR: ${err}`);
-//     }
-//   });
-// });
-
-
+/* FAVES ROUTES LINK TO DATABASE */
 app.get('/faves', (req, res) => {
-  // console.log('ANYTHING')
-  getFavoritesFromDB((err, favoriteRestaurants) => {
-    console.log('YAY SERVER', favoriteRestaurants);
-    if (!err) {
-      res.send(favoriteRestaurants);
-    } else {
-      console.error(`${err}`);
-    }
-  })
-})
+  getFaves().then(faves => res.send(faves)).catch(err => res.sendStatus(404));
+});
 
-
-// input: an object containing Url and pic
-// output: let user know item has been saved (save fave to db)
 app.post('/faves', (req, res) => {
-  console.log('req in post server', req);
-  const data = req.body;
-  postFavoritesFromDB(data, (faves, err) => {
-    if (!err) {
-      console.log('faves', faves);
-      res.send(faves);
-    } else {
-      console.log(`${err}`);
-    }
-  });
+  addFave(req.body.fave)
+    .then(data => res.send(data))
+    .catch(err => res.send(err));
 });
 
-// input: id of favorite restaurant 
-// output: not really output, should remove fave from faveList
 app.delete('/faves', (req, res) => {
-  console.log(req.body)
-  // use database helper here
-  deleteFavoritesFromDB(req.query.id);
-  console.log('deleted!');
+  deleteFave(req.body.id)
+    .then(data => res.send(data))
+    .catch(err => res.status(400).send(err));
 });
 
-// @params: req.query -> passed in from front end axios.get('/restaurants, {params: {term, loc}}) call
-// @output: an array with 50 restaurant objects, associated with id, filtered by location and foodType
+// @params: req.query -> passed in from front end
+// axios.get('/restaurants, {params: {term, loc}}) call
+// @output: an array with 50 restaurant objects,
+// associated with id, filtered by location and foodType
 app.get('/restaurants', (req, res) => {
   const { term, loc } = req.query;
-  getRestaurants({term, loc})   // use API helper here to make a request to Yelp API to grab list of 50 restaurants
-  // getRestaurants({term: 'tacos', loc: 10017})
-  .then(restaurants => res.send(restaurants))
-  .catch(err => res.send(err));
-  // log(succ('Retrieved restaurant ids')); sorry about your chalk, Charlie!
+  getRestaurants({ term, loc })
+    .then(restaurants => res.send(restaurants))
+    .catch(err => res.send(err));
 });
 
-// input: id representing a specific restaurant 
-// output: an array of pics, description for given restaurant  
+// input: id representing a specific restaurant
+// output: an array of pics, description for given restaurant
 app.get('/restaurant', (req, res) => {
   getRestaurantDetails(req.query.id)
-  .then(data => res.send(data))
-  .catch(err => res.send(err));
+    .then(data => res.send(data))
+    .catch(err => res.send(err));
   // log(succ('Retrieved restaurant data and pics'));
 });
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'), (err) => {
     if (err) {
-      res.status(500).send(err)
+      res.status(500).send(err);
     }
-  })
-})
+  });
+});
 
 const port = process.env.PORT || 3000;
+
 app.listen(port, () => {
   log(succ('listening on port 3000!'));
 });
 
+// uncomment for https
+// key and cert files available on Google Drive
+// placein env folder
+// https.createServer({
+//   key: fs.readFileSync(path.join(__dirname, './env/server.key')),
+//   cert: fs.readFileSync(path.join(__dirname, './env/server.cert')),
+// }, app)
+//   .listen(3000, () => {
+//     console.log(`Port ${port} is lit fam 🔥 🔥 🔥`);
+//   });
 
 // getRestaurants({term: 'tacos', loc: 10017})
 // .then(restaurants => console.log('success'))
