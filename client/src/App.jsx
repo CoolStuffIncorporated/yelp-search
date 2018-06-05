@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 import Search from './Components/Search.jsx';
 import Display from './Components/Display.jsx';
 import Favorites from './Components/Favorites.jsx';
-import axios from 'axios';
-import { BrowserRouter, Route, NavLink } from 'react-router-dom';
-import {business, data} from './dummydata.js';
-let businessIds = data.businesses.map(business => business.id); // dummy data for now
+import { business, data } from './dummydata.js';
+
+const businessIds = data.businesses.map(business => business.id); // dummy data for now
 
 class App extends Component {
   constructor(props) {
@@ -37,11 +38,11 @@ class App extends Component {
   getRestaurants(term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
     console.log('fetching restaurants of', term, loc)
     axios.get('/restaurants', {params: {term, loc}})
-    .then(({data}) => this.setState({ restaurants: data}))
-    .then(() => console.log('get res, state', this.state))
-    .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id}))
-    .then(() => this.getRestaurant(this.state.restaurantID))
-    .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
+      .then(({data}) => this.setState({ restaurants: data}))
+      // .then(() => console.log('get res, state', this.state))
+      .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id}))
+      .then(() => this.getRestaurant(this.state.restaurantID))
+      .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
   }
   getRestaurant(id) { //@params: id('string')
     //helper func for moving to next restaurant, invoked in both save & skip funcs in Display component
@@ -52,12 +53,15 @@ class App extends Component {
 
   nextRestaurant () { //@params: none, contorlled component that resets rest state
     // helper func that moves down restuarant array to display next restaurant, and set rest id correspondingly
+    console.log('REST in next', this.state.currentIndex);
+    console.log('REST in next', this.state.restaurant);
     this.setState({
-      thisrestaurant: this.state.restaurants[++this.state.currentIndex],
-      restaurantID: this.state.restaurant.id
+      currentIndex: this.state.currentIndex + 1,
+      thisrestaurant: this.state.restaurants[this.state.currentIndex],
+      restaurantID: this.state.restaurants[this.state.currentIndex].id,
     }, () => {
       console.log('current index', this.state.currentIndex);
-      console.log('restaurants', this.state.restaurant);
+      console.log('this.state.restaurant', this.state.restaurant);
     })
   }
 
