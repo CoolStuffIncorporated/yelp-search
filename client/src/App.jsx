@@ -71,7 +71,7 @@ class App extends Component {
 
   render() {
     let FoodSwiper = (props) => {
-      if (!this.state.restaurant) return <div class="progress"><div class="indeterminate">LOADING</div></div>;
+      if (!this.state.restaurant) return <div className="progress"><div className="indeterminate">LOADING</div></div>;
       return (
         <div>
           <Search getRestaurants={this.getRestaurants} />
