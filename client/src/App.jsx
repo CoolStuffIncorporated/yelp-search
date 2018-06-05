@@ -18,12 +18,13 @@ class App extends Component {
       restaurants: [],
       currentIndex: 0,
       restaurantID: '',
-      restaurant: null,
-    };
+      restaurant: null
+    }
     this.getRestaurants = this.getRestaurants.bind(this);
     this.getFaves = this.getFaves.bind(this);
     console.log('current state of App', this.state);
     this.getFaves = this.getFaves.bind(this);
+    this.nextRestaurant = this.nextRestaurant.bind(this);
   }
   componentDidMount() {
     // this.getRestaurant(this.state.restaurantID);
@@ -40,7 +41,7 @@ class App extends Component {
     axios.get('/restaurants', {params: {term, loc}})
     .then(({data}) => this.setState({ restaurants: data}))
     .then(() => console.log('get res, state', this.state))
-    .then(() => this.setState({restaurantID: this.state.restaurants[0].id}))
+    .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id}))
     .then(() => this.getRestaurant(this.state.restaurantID))
     .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
   }
@@ -50,14 +51,31 @@ class App extends Component {
       .then(({data}) => this.setState({ restaurant: data }))
       .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
   }
-  // added loading bar from https://materializecss.com/preloader.html, needs revision at present
+
+  nextRestaurant (nextIndex) { //@params: the next Index, passed down to child via props
+    // helper func that moves down restuarant array to display next restaurant, and correspondingly set restaurant, and restaurant id
+    console.log('the next index', nextIndex);
+    this.setState({
+      currentIndex: nextIndex,
+      restaurantID: this.state.restaurants[nextIndex].id
+    }, () => {
+      console.log('restaurant id', this.state.restaurantID);
+      this.getRestaurant(this.state.restaurantID);
+      if (nextIndex === 19) { // loops back through the array once limit (20) reached
+        this.setState({
+          currentIndex : 0
+        });
+      }
+    });
+  }
+
   render() {
     let FoodSwiper = (props) => {
       if (!this.state.restaurant) return <div className="progress"><div className="indeterminate">LOADING</div></div>;
       return (
         <div>
           <Search getRestaurants={this.getRestaurants} />
-          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} />
+          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} currentIndex={this.state.currentIndex} nextIndex={this.state.currentIndex + 1} />
         </div>
       )
     }
@@ -118,4 +136,4 @@ ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById(
 
 // ReactDOM.render(<MyProvider><App /></MyProvider>, document.getElementById('root'));
 
-///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////\
