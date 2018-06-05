@@ -32,9 +32,9 @@ class Display extends Component {
   // }
 
 
-  showInfo (flippedBoolean) {
+  showInfo () {
     this.setState({
-      showInfo : flippedBoolean // refactor to just take flipped state, may not need to pass in any val, BUT set state async could cause issues
+      showInfo : !this.state.showInfo
     })
   }
 
@@ -47,7 +47,8 @@ class Display extends Component {
         <button className="waves-effects waves-light red btn">Faves</button>
         </NavLink></div>
         <h1>{restaurant.name}</h1>
-        <div className="rating">Rating: <span>{restaurant.rating}</span></div>
+        {/* <div className="rating">Rating: <span>{restaurant.rating}</span></div> */}
+        <div className="rating"><img src={imgPath} /></div>
         { !this.state.showInfo 
           ? 
           <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} /> 
@@ -59,9 +60,9 @@ class Display extends Component {
           </div>
         }
         <div>
-        <button class="waves-effects waves-light btn" onClick={() => this.props.nextRestaurant(this.props.nextIndex)}>Skip</button>
-        <button class="waves-effects waves-light btn" onClick={() => this.showInfo(!this.state.showInfo) }>Info</button>
-        <button class="waves-effects waves-light btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
+        <button className="waves-effects waves-light red btn" onClick={() => this.props.nextRestaurant(this.props.nextIndex)}>Skip</button>
+        <button className="waves-effects waves-light red btn" onClick={() => this.showInfo() }>Info</button>
+        <button className="waves-effects waves-light red btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
         </div>
         <div className="description">
           {/* <p>{restaurant.location.display_address[0]}</p>
