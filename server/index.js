@@ -74,8 +74,8 @@ const port = process.env.PORT || 3000;
 // });
 
 https.createServer({
-  key: fs.readFileSync('/env/server.key'),
-  cert: fs.readFileSync('/env/server.cert'),
+  key: fs.readFileSync(path.join(__dirname, './env/server.key')),
+  cert: fs.readFileSync(path.join(__dirname, './env/server.cert')),
 }, app)
   .listen(3000, () => {
     console.log(`Port ${port} is lit fam 🔥 🔥 🔥`);
