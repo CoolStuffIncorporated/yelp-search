@@ -61,7 +61,7 @@ class App extends Component {
     }, () => {
       console.log('restaurant id', this.state.restaurantID);
       this.getRestaurant(this.state.restaurantID);
-      if (nextIndex === 19) { // loops back through the array, for now
+      if (nextIndex === 19) { // loops back through the array once limit (20) reached
         this.setState({
           currentIndex : 0
         });
