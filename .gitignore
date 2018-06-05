@@ -63,3 +63,9 @@ client/dist/bundle.js
 
 # Yelp-Fusion examples
 yelp-node-examples/
+
+# Fonts
+*.woff2
+**.woff2
+***.woff2
+****.woff2
