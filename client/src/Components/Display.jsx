@@ -31,13 +31,14 @@ class Display extends Component {
   
   render() {
     let {restaurant, addFave} = this.props;
+    let imgPath = `./assets/yelp_stars/${restaurant.rating}.png`;
     return (
       <div className="display">
         <div><NavLink to="/favorites">Faves</NavLink></div>
         <h1>{restaurant.name}</h1>
-        <div className="rating">Rating: <span>{restaurant.rating}</span></div>
         <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
         <div>
+        <div className="rating"><img src={imgPath} /></div>
         <button class="waves-effects waves-light btn" onClick={() => this.props.nextRestaurant(this.props.nextIndex)}>Skip</button>
         <button class="waves-effects waves-light btn">Info</button>
         <button class="waves-effects waves-light btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
