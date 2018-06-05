@@ -31,27 +31,6 @@ class Favorites extends Component {
         <button className="waves-effects waves-light red btn">Home</button>
         </NavLink></div>
         {this.props.favorites.map((favorite) => {
-<<<<<<< HEAD
-          return (
-            <li key={favorite.id} className="favorite-item" onMouseEnter={() => {this.onHover()}} onMouseLeave={() => {this.onHover()}}>
-              <img src={favorite.image_url} width="100px"/>
-              <div className="favorite-description">
-                <h4>{favorite.name}</h4>
-                <section className="restaurant-details">
-                  <div className="restaurant-contact-info">
-                    <span>Phone: {favorite.display_phone}</span>
-                    <span>Location: {favorite.location.display_address}</span>
-                    <br></br>
-                    {/* <span>Website</span> */}
-                    <a href={favorite.url}>{favorite.name}</a>
-                    <button className="waves-effects waves-light btn" onClick={() => this.handleDelete(favorite.id)}>Delete</button>
-                  </div>
-                </section>
-              </div>
-              {/* {this.state.showUrl ? <Hover url={favorite.url}/> : null} */}
-            </li>
-          );
-=======
             return ( 
               <li key={favorite.id} className="favorite-item" onMouseEnter={() => {this.onHover()}} onMouseLeave={() => {this.onHover()}}>
                 <img src={favorite.image_url} width="100px"/>
@@ -71,7 +50,6 @@ class Favorites extends Component {
                 {/* {this.state.showUrl ? <Hover url={favorite.url}/> : null} */}
               </li>
             )
->>>>>>> 665844b2a5b7f134437465f05a154f6721d32f8e
         })}
     </ul>
     );

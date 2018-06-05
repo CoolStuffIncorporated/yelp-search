@@ -16,10 +16,7 @@ try {
 
 
 const client = yelp.client(apiKey);
-<<<<<<< HEAD
-=======
 // https://api.yelp.com/v3/businesses/search?term=burgers&location=10017&radius=20000&limit=50&open_now=true
->>>>>>> f55159a0294d39621e67b497a41317cfd4cf72ce
 // make call businesses/search using yelp-fusion.search
 // https://www.yelp.com/developers/documentation/v3/business_search
 const getRestaurants = (searchObj) => {
