@@ -12,13 +12,13 @@ class Display extends Component {
     // this.skipRestaurant = this.skipRestaurant.bind(this); // implement later
   }
   nextPhoto() {
-    if (this.state.photoIndex === 2) this.setState({photoIndex: 0})
-    else this.setState({photoIndex: ++this.state.photoIndex});
+    if (this.state.photoIndex === 2) this.setState({ photoIndex: 0 });
+    else this.setState({ photoIndex: ++this.state.photoIndex });
   }
 
   saveRestaurant(fave) {
-    console.log(`saving to faves ${fave}`)
-    axios.post('/faves', {fave})
+    console.log(`saving to faves ${fave}`);
+    axios.post('/faves', { fave })
       .then(res => console.log('posted', res))
       .then(() => this.props.getFaves())
       .then(() => this.props.nextRestaurant(this.props.nextIndex))
@@ -30,20 +30,20 @@ class Display extends Component {
   // }
   
   render() {
-    let {restaurant, addFave} = this.props;
-    let imgPath = `./assets/yelp_stars/${restaurant.rating}.png`;
+    const { restaurant, addFave } = this.props;
+    const imgPath = `./assets/yelp_stars/${restaurant.rating}.png`;
     return (
       <div className="display">
         <div><NavLink to="/favorites">
-        <button className="waves-effects waves-light btn">Faves</button>
-        </NavLink></div>
-        <h1>{restaurant.name}</h1>
-        <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
-        <div>
-        <div className="rating"><img src={imgPath} /></div>
-        <button className="waves-effects waves-light btn" onClick={() => this.props.nextRestaurant(this.props.nextIndex)}>Skip</button>
-        <button className="waves-effects waves-light btn">Info</button>
-        <button className="waves-effects waves-light btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
+          <button className="waves-effects waves-light btn">Faves</button>
+          </NavLink></div>
+          <h1>{restaurant.name}</h1>
+          <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
+          <div>
+          <div className="rating"><img src={imgPath} /></div>
+          <button className="waves-effects waves-light btn" onClick={() => this.props.nextRestaurant(this.props.nextIndex)}>Skip</button>
+          <button className="waves-effects waves-light btn">Info</button>
+          <button className="waves-effects waves-light btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
         </div>
         <div className="description">
           {/* <p>{restaurant.location.display_address[0]}</p>

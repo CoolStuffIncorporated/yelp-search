@@ -37,15 +37,15 @@ const FavoriteSchema = new mongoose.Schema({
         is_overnight: Boolean,
         start: String,
         end: String,
-        day: Number
-      }
-    ]
+        day: Number,
+      },
+    ],
   }],
   rating: Number,
   transactions: [String],
   categories: [{
     alias: { type: String, required: true },
-    title: { type: String, required: true }
+    title: { type: String, required: true },
   }],
   // could also build a validator to forbid any entries where
   // "is_closed": true
@@ -55,10 +55,10 @@ const Favorite = mongoose.model('Favorite', FavoriteSchema);
 
 const getFaves = () => Favorite.find({});
 
-const deleteFave = id => Favorite.findOneAndRemove({id});
+const deleteFave = id => Favorite.findOneAndRemove({ id });
 
-const addFave = fave => {
-  let dbFave = new Favorite(fave);
+const addFave = (fave) => {
+  const dbFave = new Favorite(fave);
   return dbFave.save();
 };
 

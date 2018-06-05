@@ -27,7 +27,9 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 
 /* FAVES ROUTES LINK TO DATABASE */
 app.get('/faves', (req, res) => {
-  getFaves().then(faves => res.send(faves)).catch(err => res.sendStatus(404));
+  getFaves()
+    .then(faves => res.send(faves))
+    .catch(err => res.sendStatus(404));
 });
 
 app.post('/faves', (req, res) => {

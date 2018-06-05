@@ -1,3 +1,5 @@
+import 'materialize-css'; // It installs the JS asset only
+import 'materialize-css/dist/css/materialize.min.css';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
@@ -34,23 +36,23 @@ class App extends Component {
   }
   getFaves() {
     axios.get('/faves')
-      .then(({data}) => this.setState({favorites: data}))
+      .then(({ data }) => this.setState({ favorites: data }))
       .catch(err => console.error(err));
   }
   getRestaurants(term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
-    console.log('fetching restaurants of', term, loc)
-    axios.get('/restaurants', {params: {term, loc}})
-    .then(({data}) => this.setState({ restaurants: data}))
-    .then(() => console.log('get res, state', this.state))
-    .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id}))
-    .then(() => this.getRestaurant(this.state.restaurantID))
-    .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
+    console.log('fetching restaurants of', term, loc);
+    axios.get('/restaurants', { params: { term, loc } })
+      .then(({ data }) => this.setState({ restaurants: data}))
+      .then(() => console.log('get res, state', this.state))
+      .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id}))
+      .then(() => this.getRestaurant(this.state.restaurantID))
+      .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
   }
   getRestaurant(id) { //@params: id('string')
     //helper func for moving to next restaurant, invoked in both save & skip funcs in Display component
     axios.get('/restaurant', {params: {id}})
-      .then(({data}) => this.setState({ restaurant: data }))
-      .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
+      .then(({ data }) => this.setState({ restaurant: data }))
+      .catch(err => console.log(`Error inside fetchRestaurant: ${err}`))
   }
 
   nextRestaurant (nextIndex) { //@params: the next Index, passed down to child via props
@@ -58,40 +60,39 @@ class App extends Component {
     console.log('the next index', nextIndex);
     this.setState({
       currentIndex: nextIndex,
-      restaurantID: this.state.restaurants[nextIndex].id
+      restaurantID: this.state.restaurants[nextIndex].id,
     }, () => {
       console.log('restaurant id', this.state.restaurantID);
       this.getRestaurant(this.state.restaurantID);
       if (nextIndex === 19) { // loops back through the array once limit (20) reached
         this.setState({
-          currentIndex : 0
+          currentIndex: 0,
         });
       }
     });
   }
 
   render() {
-    let FoodSwiper = (props) => {
+    const FoodSwiper = (props) => {
       if (!this.state.restaurant) return <div className="progress"><div className="indeterminate">LOADING</div></div>;
       return (
         <div>
           <Search getRestaurants={this.getRestaurants} />
           <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} currentIndex={this.state.currentIndex} nextIndex={this.state.currentIndex + 1} />
         </div>
-      )
-    }
-    let Faves = (props) => <Favorites favorites={this.state.favorites} getFaves={this.getFaves} />;
+      );
+    };
+    const Faves = props => <Favorites favorites={this.state.favorites} getFaves={this.getFaves} />;
     return (
       <div className="app">
         <Route exact path="/" render={FoodSwiper} />
         <Route path="/favorites" render={Faves} />
       </div>
-    )
+    );
   }
 }
 
 ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
-
 
 
 {/* <Favorites favorites={this.state.favorites} /> */}

@@ -1,17 +1,12 @@
 import { Component } from 'react';
 
-class Hover extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render () {
-    console.log(this.props.url);
+const Hover = ({ props }) => {
+  render() {
     return (
       <div>
-        {this.props.url}
+        {url}
       </div> 
-    )
+    );
   }
 }
 

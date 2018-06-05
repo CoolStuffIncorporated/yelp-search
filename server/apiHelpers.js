@@ -16,7 +16,6 @@ try {
 
 
 const client = yelp.client(apiKey);
-
 // make call businesses/search using yelp-fusion.search
 // https://www.yelp.com/developers/documentation/v3/business_search
 const getRestaurants = (searchObj) => {
@@ -46,7 +45,6 @@ module.exports = {
   getRestaurants: getRestaurants,
   getRestaurantDetails: getRestaurantDetails,
 };
-
 
 /* TEST CALLS */
 // getRestaurants({term: 'tacos', loc: 10017})
