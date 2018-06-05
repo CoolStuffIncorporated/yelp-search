@@ -40,9 +40,12 @@ class Display extends Component {
 
   render() {
     let {restaurant, addFave} = this.props;
+    let imgPath = `./assets/yelp_stars/${restaurant.rating}.png`;
     return (
       <div className="display">
-        <div><NavLink to="/favorites">Faves</NavLink></div>
+        <div><NavLink to="/favorites">
+        <button className="waves-effects waves-light red btn">Faves</button>
+        </NavLink></div>
         <h1>{restaurant.name}</h1>
         <div className="rating">Rating: <span>{restaurant.rating}</span></div>
         { !this.state.showInfo 
