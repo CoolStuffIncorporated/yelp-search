@@ -64,14 +64,14 @@ app.get('/faves', (req, res) => {
 // input: an object containing Url and pic
 // output: let user know item has been saved (save fave to db)
 app.post('/faves', (req, res) => {
-  console.log('req in post server', req);
-  const data = req.body;
-  postFavoritesFromDB(data, (faves, err) => {
-    if (!err) {
-      console.log('faves', faves);
-      res.send(faves);
+  console.log('req in post server body fave', req.body.fave);
+  const data = req.body.fave;
+  postFavoritesFromDB(data, (err, faves) => { // reversed order: faves, err
+    if (err) {
+      console.log(`${err}`)
     } else {
-      console.log(`${err}`);
+      console.log('These are the returned faves from DB', faves);
+      res.send(faves);
     }
   });
 });
