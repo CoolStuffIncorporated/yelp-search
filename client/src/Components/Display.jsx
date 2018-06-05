@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+import axios from 'axios';
 
 class Display extends Component {
   constructor(props) {
@@ -7,9 +8,8 @@ class Display extends Component {
     this.state = {
       photoIndex: 0
     }
-    // this.nextPhoto = this.nextPhoto.bind(this);
-    this.skipRestaurant = this.skipRestaurant.bind(this);
     this.saveRestaurant = this.saveRestaurant.bind(this);
+    // this.nextRestaurant = this.nextRestaurant.bind(this); // moved to app.jsx
   }
   nextPhoto() {
     if (this.state.photoIndex === 2) this.setState({photoIndex: 0})
@@ -17,20 +17,24 @@ class Display extends Component {
   }
 
   // nextRestaurant() {  //helper func for moving to next restaurant, invoked in both save & skip funcs
-  //    this.props.currentIndex++;
-  //    console.log(this.props.currentIndex);
+  //   console.log('loading next restaurant')
   // }
-  // // could add this on App.jsx insted, then pass down
 
-  saveRestaurant() {  //makes POST req to our '/faves' endpoint, then shows next restaurant
-    // this.state.nextRestaurant(); // need to invoke next restaurant here
+  saveRestaurant(fave) {
+    console.log(`saving to faves ${fave}`)
+    axios.post('/faves', {fave})
+      .then(res => console.log('posted', res))
+      .then(() => this.props.getFaves())
+      .then(() => this.nextRestaurant())
+      .catch(err => console.error(err));
   }
+
   skipRestaurant() { //(implement later) makes POST req to a '/dislikes' endpoint, then shows next restaurant
-    // this.props.nextRestaurant(); // need to invoke next restaurant here
-    // goes in skip button onClick={() => {this.skipRestaurant(restaurant)}}
+
   }
+  
   render() {
-    let {restaurant} = this.props;
+    let {restaurant, addFave} = this.props;
     return (
       <div className="display">
         <div><NavLink to="/favorites">Faves</NavLink></div>
@@ -38,9 +42,9 @@ class Display extends Component {
         <div className="rating">Rating: <span>{restaurant.rating}</span></div>
         <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
         <div>
-        <button>Skip</button>
+        <button onClick={() => {this.props.nextRestaurant(this.props.currentIndex)}}>Skip</button>
         <button>Info</button>
-        <button>Save</button>
+        <button onClick={() => this.saveRestaurant(restaurant)}>Save</button>
         </div>
         <div className="description">
           {/* <p>{restaurant.location.display_address[0]}</p>
