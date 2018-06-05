@@ -20,37 +20,27 @@ class App extends Component {
     }
     
     this.getRestaurants = this.getRestaurants.bind(this);
-    // this.postFaves = this.postFaves.bind(this);
     this.getFaves = this.getFaves.bind(this);
     console.log('current state of App', this.state);
-    this.getRestaurants();
     this.getFaves = this.getFaves.bind(this);
   }
   componentDidMount() {
     // this.getRestaurant(this.state.restaurantID);
+    this.getRestaurants();
     this.getFaves();
   }
-
   getFaves() {
     axios.get('/faves')
-      // .then(favorite => console.log('client-side favorite', favorite))
       .then(({data}) => this.setState({favorites: data}))
-      .catch((err) => { console.error(err); });
+      .catch(err => console.error(err));
   }
-  postFaves() {
-    // let obj = { id: 'uniqueeeeee', name: 'bobbbby' };
-    axios.post('/faves', obj)
-      .then(posted => { console.log('posted', posted)})
-      .catch(err => { console.log(err) });
-  }
-
   getRestaurants(term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
     console.log('fetching restaurants of', term, loc)
     axios.get('/restaurants', {params: {term, loc}})
     .then(({data}) => this.setState({ restaurants: data}))
+    .then(() => console.log('get res, state', this.state))
     .then(() => this.setState({restaurantID: this.state.restaurants[0].id}))
     .then(() => this.getRestaurant(this.state.restaurantID))
-    // .then(() => console.log(this.state))
     .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
   }
   getRestaurant(id) { //@params: id('string')
@@ -66,15 +56,13 @@ class App extends Component {
       return (
         <div>
           <Search getRestaurants={this.getRestaurants} />
-        <Display restaurant={this.state.restaurant} />
+          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} />
         </div>
       )
-
     }
-    let Faves = (props) => <Favorites favorites={this.state.favorites} />;
+    let Faves = (props) => <Favorites favorites={this.state.favorites} getFaves={this.getFaves} />;
     return (
       <div className="app">
-        {/* <header className="navbar">The Amazing Restaurant Finder</header> */}
         <Route exact path="/" render={FoodSwiper} />
         <Route path="/favorites" render={Faves} />
       </div>
