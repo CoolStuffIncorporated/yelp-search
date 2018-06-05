@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+
 import Search from './Components/Search.jsx';
 import Display from './Components/Display.jsx';
 import Favorites from './Components/Favorites.jsx';
-import axios from 'axios';
-import { BrowserRouter, Route, NavLink } from 'react-router-dom';
-import {business, data} from './dummydata.js';
-let businessIds = data.businesses.map(business => business.id); // dummy data for now
+import { business, data } from './dummydata';
+
+const businessIds = data.businesses.map(business => business.id); // dummy data for now
 
 class App extends Component {
   constructor(props) {
@@ -16,8 +18,8 @@ class App extends Component {
       restaurants: [],
       currentIndex: 0,
       restaurantID: '',
-      restaurant: null
-    }
+      restaurant: null,
+    };
     this.getRestaurants = this.getRestaurants.bind(this);
     this.getFaves = this.getFaves.bind(this);
     console.log('current state of App', this.state);
@@ -49,21 +51,10 @@ class App extends Component {
       .then(({data}) => this.setState({ restaurant: data }))
       .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
   }
-
-  nextRestaurant () { //@params: none, contorlled component that resets rest state
-    // helper func that moves down restuarant array to display next restaurant, and set rest id correspondingly
-    this.setState({
-      thisrestaurant: this.state.restaurants[++this.state.currentIndex],
-      restaurantID: this.state.restaurant.id
-    }, () => {
-      console.log('current index', this.state.currentIndex);
-      console.log('restaurants', this.state.restaurant);
-    })
-  }
-
+  // added loading bar from https://materializecss.com/preloader.html, needs revision at present
   render() {
     let FoodSwiper = (props) => {
-      if (!this.state.restaurant) return <div>LOADING</div>;
+      if (!this.state.restaurant) return <div class="progress"><div class="indeterminate">LOADING</div></div>;
       return (
         <div>
           <Search getRestaurants={this.getRestaurants} />
