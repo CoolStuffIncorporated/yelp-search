@@ -35,10 +35,9 @@ app.post('/faves', (req, res) => {
 });
 
 app.delete('/faves', (req, res) => {
-  console.log(req.body)
-  // deleteFave(req.query.id)
-  // .then(data => res.send(data))
-  // .catch(err => res.status(400).send(err));
+  deleteFave(req.body.id)
+  .then(data => res.send(data))
+  .catch(err => res.status(400).send(err));
 });
 
 // @params: req.query -> passed in from front end axios.get('/restaurants, {params: {term, loc}}) call

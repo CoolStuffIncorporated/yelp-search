@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Hover from './Hover.jsx';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+import axios from 'axios';
 
 class Favorites extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class Favorites extends Component {
       showUrl : false
     }
     this.onHover = this.onHover.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   onHover () {
@@ -16,7 +18,11 @@ class Favorites extends Component {
         showUrl : !this.state.showUrl
       })
   }
-
+  handleDelete(id) {
+    axios.delete('/faves', {data: {id}})
+      .then(() => this.props.getFaves())
+      .catch(err => console.error(err));
+  }
   
     render () {
       // console.log(this.props.favorites)
@@ -36,6 +42,7 @@ class Favorites extends Component {
                       <br></br>
                       {/* <span>Website</span> */}
                       <a href={favorite.url}>{favorite.name}</a>
+                      <button onClick={() => this.handleDelete(favorite.id)}>Delete</button>
                     </div>
                   </section>
                 </div>

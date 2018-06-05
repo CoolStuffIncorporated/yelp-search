@@ -60,7 +60,7 @@ class App extends Component {
         </div>
       )
     }
-    let Faves = (props) => <Favorites favorites={this.state.favorites} />;
+    let Faves = (props) => <Favorites favorites={this.state.favorites} getFaves={this.getFaves} />;
     return (
       <div className="app">
         <Route exact path="/" render={FoodSwiper} />
