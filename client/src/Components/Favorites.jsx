@@ -28,7 +28,9 @@ class Favorites extends Component {
       // console.log(this.props.favorites)
     return (
       <ul className="favorites-all">
-        <div><NavLink to="/">Home</NavLink></div>
+        <div><NavLink to="/">
+        <button className="waves-effects waves-light red btn">Home</button>
+        </NavLink></div>
         {this.props.favorites.map((favorite) => {
             return ( 
               <li key={favorite.id} className="favorite-item" onMouseEnter={() => {this.onHover()}} onMouseLeave={() => {this.onHover()}}>
@@ -41,8 +43,8 @@ class Favorites extends Component {
                       <span>Location: {favorite.location.display_address}</span>
                       <br></br>
                       {/* <span>Website</span> */}
-                      <a href={favorite.url}>{favorite.name}</a>
-                      <button className="waves-effects waves-light btn" onClick={() => this.handleDelete(favorite.id)}>Delete</button>
+                      <a class="waves-effects waves-light red btn" href={favorite.url}>{favorite.name}</a>
+                      <button className="waves-effects waves-light red btn" onClick={() => this.handleDelete(favorite.id)}>Delete</button>
                     </div>
                   </section>
                 </div>

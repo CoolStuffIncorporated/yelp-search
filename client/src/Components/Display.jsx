@@ -35,15 +35,15 @@ class Display extends Component {
     return (
       <div className="display">
         <div><NavLink to="/favorites">
-        <button className="waves-effects waves-light btn">Faves</button>
+        <button className="waves-effects waves-light red btn">Faves</button>
         </NavLink></div>
         <h1>{restaurant.name}</h1>
         <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
         <div>
         <div className="rating"><img src={imgPath} /></div>
-        <button className="waves-effects waves-light btn" onClick={() => this.props.nextRestaurant(this.props.nextIndex)}>Skip</button>
-        <button className="waves-effects waves-light btn">Info</button>
-        <button className="waves-effects waves-light btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
+        <button className="waves-effects waves-light red btn" onClick={() => this.props.nextRestaurant(this.props.nextIndex)}>Skip</button>
+        <button className="waves-effects waves-light red btn">Info</button>
+        <button className="waves-effects waves-light red btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
         </div>
         <div className="description">
           {/* <p>{restaurant.location.display_address[0]}</p>
