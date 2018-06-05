@@ -57,5 +57,15 @@ server/env/config.example.js
 # Travis client.travis.yml
 codecov.yml
 
+# Webpack
 ./client/dist/bundle.js
 client/dist/bundle.js
+
+# Yelp-Fusion examples
+yelp-node-examples/
+
+# Fonts
+*.woff2
+**.woff2
+***.woff2
+****.woff2

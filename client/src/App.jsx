@@ -1,12 +1,16 @@
+import 'materialize-css'; // It installs the JS asset only
+import 'materialize-css/dist/css/materialize.min.css';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+
 import Search from './Components/Search.jsx';
 import Display from './Components/Display.jsx';
 import Favorites from './Components/Favorites.jsx';
-import axios from 'axios';
-import { BrowserRouter, Route, NavLink } from 'react-router-dom';
-import {business, data} from './dummydata.js';
-let businessIds = data.businesses.map(business => business.id); // dummy data for now
+import { business, data } from './dummydata';
+
+const businessIds = data.businesses.map(business => business.id); // dummy data for now
 
 class App extends Component {
   constructor(props) {
@@ -49,10 +53,10 @@ class App extends Component {
       .then(({data}) => this.setState({ restaurant: data }))
       .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
   }
-
+  // added loading bar from https://materializecss.com/preloader.html, needs revision at present
   render() {
     let FoodSwiper = (props) => {
-      if (!this.state.restaurant) return <div>LOADING</div>;
+      if (!this.state.restaurant) return <div class="progress"><div class="indeterminate">LOADING</div></div>;
       return (
         <div>
           <Search getRestaurants={this.getRestaurants} />
