@@ -4,17 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
-const { saveRestaurantsGeneratedBySearch, saveFavoritesToDB, postFavoritesFromDB, deleteFavoritesFromDB, getFavoritesFromDB } = require('../database');
-
-/* we should straighten out if we want API_KEY or API_TOKEN
-we refer to both here and in */
-
-// let API_TOKEN;
-// try {
-//   API_TOKEN = require('./env/config.js').API_KEY;
-// } catch (err) {
-//   API_TOKEN = process.env.API_KEY;
-// }
+const { getFaves, deleteFave, addFave } = require('../database');
 
 const searchRequest = {
   term: 'Four Barrel Coffee',
@@ -33,67 +23,30 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 
-// input: n/a
-// output: an array of objects containing favorited restaurants (image and url associated with)
-// app.get('/faves', (req, res) => {
-//   // use database helper here
-//   getFavoritesFromDB((err, res) => {
-//     if (!err) {
-//       console.log('res1', res);
-//       res.send(res);
-//     } else {
-//       res.send(`ERROR: ${err}`);
-//     }
-//   });
-// });
-
-
+/* FAVES ROUTES LINK TO DATABASE */
 app.get('/faves', (req, res) => {
-  // console.log('ANYTHING')
-  getFavoritesFromDB((err, favoriteRestaurants) => {
-    console.log('YAY SERVER', favoriteRestaurants);
-    if (!err) {
-      res.send(favoriteRestaurants);
-    } else {
-      console.error(`${err}`);
-    }
-  })
-})
-
-
-// input: an object containing Url and pic
-// output: let user know item has been saved (save fave to db)
-app.post('/faves', (req, res) => {
-  console.log('req in post server body fave', req.body.fave);
-  const data = req.body.fave;
-  postFavoritesFromDB(data, (err, faves) => { // reversed order: faves, err
-    if (err) {
-      console.log(`${err}`)
-    } else {
-      console.log('These are the returned faves from DB', faves);
-      res.send(faves);
-    }
-  });
+  getFaves().then(faves => res.send(faves)).catch(err => res.sendStatus(404));
 });
 
-// input: id of favorite restaurant 
-// output: not really output, should remove fave from faveList
+app.post('/faves', (req, res) => {
+  addFave(req.body.fave)
+    .then(data => res.send(data))
+    .catch(err => res.send(err));
+});
+
 app.delete('/faves', (req, res) => {
-  console.log(req.body)
-  // use database helper here
-  deleteFavoritesFromDB(req.query.id);
-  console.log('deleted!');
+  deleteFave(req.body.id)
+  .then(data => res.send(data))
+  .catch(err => res.status(400).send(err));
 });
 
 // @params: req.query -> passed in from front end axios.get('/restaurants, {params: {term, loc}}) call
 // @output: an array with 50 restaurant objects, associated with id, filtered by location and foodType
 app.get('/restaurants', (req, res) => {
   const { term, loc } = req.query;
-  getRestaurants({term, loc})   // use API helper here to make a request to Yelp API to grab list of 50 restaurants
-  // getRestaurants({term: 'tacos', loc: 10017})
-  .then(restaurants => res.send(restaurants) )
+  getRestaurants({term, loc})
+  .then(restaurants => res.send(restaurants))
   .catch(err => res.send(err));
-  // log(succ('Retrieved restaurant ids')); sorry about your chalk, Charlie!
 });
 
 // input: id representing a specific restaurant 

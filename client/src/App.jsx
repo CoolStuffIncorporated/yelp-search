@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+
 import Search from './Components/Search.jsx';
 import Display from './Components/Display.jsx';
 import Favorites from './Components/Favorites.jsx';
-import { business, data } from './dummydata.js';
+import { business, data } from './dummydata';
 
 const businessIds = data.businesses.map(business => business.id); // dummy data for now
 
@@ -38,11 +39,11 @@ class App extends Component {
   getRestaurants(term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
     console.log('fetching restaurants of', term, loc)
     axios.get('/restaurants', {params: {term, loc}})
-      .then(({data}) => this.setState({ restaurants: data}))
-      .then(() => console.log('get res, state', this.state))
-      .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id}))
-      .then(() => this.getRestaurant(this.state.restaurantID))
-      .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
+    .then(({data}) => this.setState({ restaurants: data}))
+    .then(() => console.log('get res, state', this.state))
+    .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id}))
+    .then(() => this.getRestaurant(this.state.restaurantID))
+    .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
   }
   getRestaurant(id) { //@params: id('string')
     //helper func for moving to next restaurant, invoked in both save & skip funcs in Display component
@@ -65,7 +66,7 @@ class App extends Component {
 
   render() {
     let FoodSwiper = (props) => {
-      if (!this.state.restaurant) return <div>LOADING</div>;
+      if (!this.state.restaurant) return <div class="progress"><div class="indeterminate">LOADING</div></div>;
       return (
         <div>
           <Search getRestaurants={this.getRestaurants} />
