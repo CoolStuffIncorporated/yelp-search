@@ -42,7 +42,7 @@ class Favorites extends Component {
                       <br></br>
                       {/* <span>Website</span> */}
                       <a href={favorite.url}>{favorite.name}</a>
-                      <button onClick={() => this.handleDelete(favorite.id)}>Delete</button>
+                      <button className="waves-effects waves-light btn" onClick={() => this.handleDelete(favorite.id)}>Delete</button>
                     </div>
                   </section>
                 </div>
