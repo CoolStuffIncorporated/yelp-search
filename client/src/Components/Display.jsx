@@ -54,14 +54,14 @@ class Display extends Component {
           <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} /> 
           : 
           <div>
-            <span>Address: {restaurant.location.display_address}</span><br></br>
             <span>Phone: {restaurant.display_phone}</span><br></br>
-            <a href={restaurant.url}>{restaurant.name}</a>
+            <a href={restaurant.url}>{restaurant.name}</a><br></br>
+            <span>Address: {restaurant.location.display_address}</span>
           </div>
         }
         <div>
         <button className="waves-effects waves-light red btn" onClick={() => this.props.nextRestaurant(this.props.nextIndex)}>Skip</button>
-        <button className="waves-effects waves-light red btn" onClick={() => this.showInfo() }>Info</button>
+        <button className="waves-effects waves-light red btn" onClick={() => this.showInfo() }>{!this.state.showInfo ? 'Contact Info' : 'Tasty Pics'}</button>
         <button className="waves-effects waves-light red btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
         </div>
         <div className="description">
