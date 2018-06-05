@@ -6,10 +6,12 @@ class Display extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      photoIndex: 0
+      photoIndex: 0,
+      showInfo: false
     }
     this.saveRestaurant = this.saveRestaurant.bind(this);
     // this.skipRestaurant = this.skipRestaurant.bind(this); // implement later
+    this.showInfo = this.showInfo.bind(this);
   }
   nextPhoto() {
     if (this.state.photoIndex === 2) this.setState({photoIndex: 0})
@@ -28,7 +30,14 @@ class Display extends Component {
   // skipRestaurant(nextIndex, restaurant) { //(implement later) makes POST req to a '/dislikes' endpoint, then shows next restaurant
   //   this.props.nextRestaurant(nextIndex);
   // }
-  
+
+
+  showInfo () {
+    this.setState({
+      showInfo : !this.state.showInfo
+    })
+  }
+
   render() {
     let {restaurant, addFave} = this.props;
     let imgPath = `./assets/yelp_stars/${restaurant.rating}.png`;
@@ -38,11 +47,21 @@ class Display extends Component {
         <button className="waves-effects waves-light red btn">Faves</button>
         </NavLink></div>
         <h1>{restaurant.name}</h1>
-        <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
-        <div>
+        {/* <div className="rating">Rating: <span>{restaurant.rating}</span></div> */}
         <div className="rating"><img src={imgPath} /></div>
+        { !this.state.showInfo 
+          ? 
+          <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} /> 
+          : 
+          <div>
+            <span>Phone: {restaurant.display_phone}</span><br></br>
+            <a href={restaurant.url}>{restaurant.name}</a><br></br>
+            <span>Address: {restaurant.location.display_address}</span>
+          </div>
+        }
+        <div>
         <button className="waves-effects waves-light red btn" onClick={() => this.props.nextRestaurant(this.props.nextIndex)}>Skip</button>
-        <button className="waves-effects waves-light red btn">Info</button>
+        <button className="waves-effects waves-light red btn" onClick={() => this.showInfo() }>{!this.state.showInfo ? 'Contact Info' : 'Tasty Pics'}</button>
         <button className="waves-effects waves-light red btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
         </div>
         <div className="description">
