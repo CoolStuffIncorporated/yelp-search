@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
 const { getFaves, deleteFave, addFave } = require('../database');
+const https = require('https');
+const fs = require('fs');
 
 const searchRequest = {
   term: 'Four Barrel Coffee',
@@ -67,10 +69,17 @@ app.get('/*', (req, res) => {
 })
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  log(succ('listening on port 3000!'));
-});
+// app.listen(port, () => {
+//   log(succ('listening on port 3000!'));
+// });
 
+https.createServer({
+  key: fs.readFileSync('/env/server.key'),
+  cert: fs.readFileSync('/env/server.cert'),
+}, app)
+  .listen(3000, () => {
+    console.log(`Port ${port} is lit fam 🔥 🔥 🔥`);
+  });
 
 // getRestaurants({term: 'tacos', loc: 10017})
 // .then(restaurants => console.log('success'))
