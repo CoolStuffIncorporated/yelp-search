@@ -52,7 +52,7 @@ class App extends Component {
     .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
   }
   getRestaurant(id) { //@params: id('string')
-    //helper func for moving to next restaurant, invoked in both save & skip funcs in Display component
+    //helper func for moving to next restaurangit brant, invoked in both save & skip funcs in Display component
     axios.get('/restaurant', {params: {id}})
       .then(({data}) => this.setState({ restaurant: data }))
       .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
