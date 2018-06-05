@@ -51,15 +51,16 @@ class App extends Component {
       .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
   }
 
-  nextRestaurant (nextIndex) { //@params: none, contorlled component that resets rest state
+  nextRestaurant (nextIndex) { //@params: the next Index, passed down to child via props
     // helper func that moves down restuarant array to display next restaurant, and correspondingly set restaurant, and restaurant id
-    console.log(nextIndex);
+    console.log('the next index', nextIndex);
     this.setState({
       currentIndex: nextIndex,
       restaurantID: this.state.restaurants[nextIndex].id
+    }, () => {
+      console.log('restaurant id', this.state.restaurantID);
+      this.getRestaurant(this.state.restaurantID);
     });
-    console.log(this.state.restaurantID, 'rest id after new index set')
-    this.getRestaurant(this.state.restaurantID);
   }
 
   render() {
@@ -68,7 +69,7 @@ class App extends Component {
       return (
         <div>
           <Search getRestaurants={this.getRestaurants} />
-          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} nextIndex={this.state.currentIndex + 1} />
+          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} currentIndex={this.state.currentIndex} nextIndex={this.state.currentIndex + 1} />
         </div>
       )
     }

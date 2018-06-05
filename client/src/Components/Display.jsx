@@ -10,6 +10,7 @@ class Display extends Component {
     }
     this.saveRestaurant = this.saveRestaurant.bind(this);
     // this.nextRestaurant = this.nextRestaurant.bind(this);
+    this.skipRestaurant = this.skipRestaurant.bind(this);
   }
   nextPhoto() {
     if (this.state.photoIndex === 2) this.setState({photoIndex: 0})
@@ -25,17 +26,16 @@ class Display extends Component {
     axios.post('/faves', {fave})
       .then(res => console.log('posted', res))
       .then(() => this.props.getFaves())
-      .then(() => this.nextRestaurant())
+      .then(() => this.props.nextRestaurant(this.props.nextIndex)) // NOT CURRENTLY WORKING  (passed down via props)
       .catch(err => console.error(err));
   }
 
-  skipRestaurant() { //(implement later) makes POST req to a '/dislikes' endpoint, then shows next restaurant
-
+  skipRestaurant(nextIndex, deleteIndex) { //(implement later) makes POST req to a '/dislikes' endpoint, then shows next restaurant
+    this.props.nextRestaurant();
   }
   
   render() {
     let {restaurant, addFave} = this.props;
-    console.log('restaurant', restaurant);
     return (
       <div className="display">
         <div><NavLink to="/favorites">Faves</NavLink></div>
@@ -43,7 +43,8 @@ class Display extends Component {
         <div className="rating">Rating: <span>{restaurant.rating}</span></div>
         <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
         <div>
-        <button onClick={() => {this.props.nextRestaurant(this.props.nextIndex)}}>Skip</button>
+        {/* <button onClick={() => {this.props.skipRestaurant(this.props.nextIndex, this.props.currentIndex)}}>Skip</button> */}
+        <button onClick={() => this.props.nextRestaurant(this.props.nextIndex)}>Skip</button>
         <button>Info</button>
         <button onClick={() => this.saveRestaurant(restaurant)}>Save</button>
         </div>
