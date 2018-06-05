@@ -28,7 +28,7 @@ class Display extends Component {
   }
 
   // skipRestaurant(nextIndex, restaurant) { //(implement later) makes POST req to a '/dislikes' endpoint, then shows next restaurant
-  //   this.props.nextRestaurant(nextIndex);
+  //   this.props.nextRestaurant(nextIndex);  
   // }
 
 
