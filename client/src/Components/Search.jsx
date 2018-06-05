@@ -33,7 +33,7 @@ class Search extends Component {
   render() {
     return (
       <div className="search">
-      <select class="browser-default" onChange={this.inputFood}>
+      <select className="browser-default" onChange={this.inputFood}>
         {this.state.foodTypes.map(foodType => <option key={foodType}>{foodType}</option>)}
       </select>
         <input placeholder="ZIP CODE" type="number" onChange={this.inputZip} onKeyUp={this.checkEnter}/>
@@ -43,3 +43,4 @@ class Search extends Component {
 }
 
 export default Search;
+

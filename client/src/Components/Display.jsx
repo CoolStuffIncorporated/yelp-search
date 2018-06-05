@@ -9,26 +9,26 @@ class Display extends Component {
       photoIndex: 0
     }
     this.saveRestaurant = this.saveRestaurant.bind(this);
-    this.nextRestaurant = this.nextRestaurant.bind(this);
+    // this.skipRestaurant = this.skipRestaurant.bind(this); // implement later
   }
   nextPhoto() {
     if (this.state.photoIndex === 2) this.setState({photoIndex: 0})
     else this.setState({photoIndex: ++this.state.photoIndex});
   }
-  nextRestaurant() {  //helper func for moving to next restaurant, invoked in both save & skip funcs
-    console.log('loading next restaurant')
-  }
+
   saveRestaurant(fave) {
     console.log(`saving to faves ${fave}`)
     axios.post('/faves', {fave})
       .then(res => console.log('posted', res))
       .then(() => this.props.getFaves())
-      .then(() => this.nextRestaurant())
+      .then(() => this.props.nextRestaurant(this.props.nextIndex))
       .catch(err => console.error(err));
   }
-  skipRestaurant() { //(implement later) makes POST req to a '/dislikes' endpoint, then shows next restaurant
 
-  }
+  // skipRestaurant(nextIndex, restaurant) { //(implement later) makes POST req to a '/dislikes' endpoint, then shows next restaurant
+  //   this.props.nextRestaurant(nextIndex);
+  // }
+  
   render() {
     let {restaurant, addFave} = this.props;
     return (
@@ -38,7 +38,7 @@ class Display extends Component {
         <div className="rating">Rating: <span>{restaurant.rating}</span></div>
         <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
         <div>
-        <button class="waves-effects waves-light btn">Skip</button>
+        <button class="waves-effects waves-light btn" onClick={() => this.props.nextRestaurant(this.props.nextIndex)}>Skip</button>
         <button class="waves-effects waves-light btn">Info</button>
         <button class="waves-effects waves-light btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
         </div>
