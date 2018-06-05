@@ -23,7 +23,7 @@ class App extends Component {
     this.getFaves = this.getFaves.bind(this);
     console.log('current state of App', this.state);
     this.getRestaurants();
-    this.nextRestaurant = this.nextRestaurant.bind(this); // added on app to make cleaner
+    // this.nextRestaurant = this.nextRestaurant.bind(this); // added on app to make cleaner
   }
   componentDidMount() {
     // this.getRestaurant(this.state.restaurantID);
@@ -42,11 +42,11 @@ class App extends Component {
   }
 
   getRestaurants(term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
-    console.log('fetching restaurants of', term, loc)
+    console.log('fetching restaurants of', term, loc);
     axios.get('/restaurants', {params: {term, loc}})
-    // .then(({data}) => this.setState({ restaurants: data}))
-    .then(({data}) => this.setState({ restaurants: data, favorites: data})) // also populate faves with the restaurants data for now
-    .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id})) // set to currentIndex, instead of harcoded 0
+    .then(({data}) => this.setState({ restaurants: data}))
+    .then(({data}) => this.setState({ restaurants: data, favorites: data })) // also populate faves with the restaurants data for now
+    .then(() => this.setState({restaurantID: this.state.restaurants[0].id})) // set to currentIndex, instead of harcoded 0
     .then(() => this.getRestaurant(this.state.restaurantID))
     // .then(() => console.log(this.state))
     .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
@@ -61,12 +61,12 @@ class App extends Component {
   nextRestaurant() {  //helper func for moving to next restaurant, invoked in both save & skip funcs
     // this.state.currentIndex++;
     // console.log(this.state.currentIndex);
-    this.state.currentIndex++;
-    this.setState({
-      restaurant : this.state.restaurants[this.state.currentIndex] // this may work
-    }, () => {
-      console.log(this.state.restaurant);
-    })
+    // this.state.currentIndex++;
+    // this.setState({
+    //   restaurant : this.state.restaurants[this.state.currentIndex] // this may work
+    // }, () => {
+    //   console.log(this.state.restaurant);
+    // })
   }
 
   render() {

@@ -91,7 +91,7 @@ app.get('/restaurants', (req, res) => {
   const { term, loc } = req.query;
   getRestaurants({term, loc})   // use API helper here to make a request to Yelp API to grab list of 50 restaurants
   // getRestaurants({term: 'tacos', loc: 10017})
-  .then(restaurants => res.send(restaurants))
+  .then(restaurants => res.send(restaurants) )
   .catch(err => res.send(err));
   // log(succ('Retrieved restaurant ids')); sorry about your chalk, Charlie!
 });

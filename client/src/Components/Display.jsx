@@ -7,7 +7,7 @@ class Display extends Component {
     this.state = {
       photoIndex: 0
     }
-    this.nextPhoto = this.nextPhoto.bind(this);
+    // this.nextPhoto = this.nextPhoto.bind(this);
     this.skipRestaurant = this.skipRestaurant.bind(this);
     this.saveRestaurant = this.saveRestaurant.bind(this);
   }
@@ -26,7 +26,8 @@ class Display extends Component {
     // this.state.nextRestaurant(); // need to invoke next restaurant here
   }
   skipRestaurant() { //(implement later) makes POST req to a '/dislikes' endpoint, then shows next restaurant
-    this.props.nextRestaurant(); // need to invoke next restaurant here
+    // this.props.nextRestaurant(); // need to invoke next restaurant here
+    // goes in skip button onClick={() => {this.skipRestaurant(restaurant)}}
   }
   render() {
     let {restaurant} = this.props;
@@ -37,7 +38,7 @@ class Display extends Component {
         <div className="rating">Rating: <span>{restaurant.rating}</span></div>
         <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
         <div>
-        <button onClick={() => {this.skipRestaurant(restaurant)}}>Skip</button>
+        <button>Skip</button>
         <button>Info</button>
         <button>Save</button>
         </div>
