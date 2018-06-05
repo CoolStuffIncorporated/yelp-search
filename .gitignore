@@ -65,7 +65,5 @@ client/dist/bundle.js
 yelp-node-examples/
 
 # Fonts
-*.woff2
-**.woff2
-***.woff2
-****.woff2
+./client/dist/*.woff2
+./client/dist/*.woff
