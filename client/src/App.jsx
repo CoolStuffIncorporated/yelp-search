@@ -18,12 +18,12 @@ class App extends Component {
       restaurantID: '',
       restaurant: null
     }
-    
     this.getRestaurants = this.getRestaurants.bind(this);
     // this.postFaves = this.postFaves.bind(this);
     this.getFaves = this.getFaves.bind(this);
     console.log('current state of App', this.state);
     this.getRestaurants();
+    this.nextRestaurant = this.nextRestaurant.bind(this); // added on app to make cleaner
   }
   componentDidMount() {
     // this.getRestaurant(this.state.restaurantID);
@@ -46,7 +46,7 @@ class App extends Component {
     axios.get('/restaurants', {params: {term, loc}})
     // .then(({data}) => this.setState({ restaurants: data}))
     .then(({data}) => this.setState({ restaurants: data, favorites: data})) // also populate faves with the restaurants data for now
-    .then(() => this.setState({restaurantID: this.state.restaurants[0].id}))
+    .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id})) // set to currentIndex, instead of harcoded 0
     .then(() => this.getRestaurant(this.state.restaurantID))
     // .then(() => console.log(this.state))
     .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
@@ -58,13 +58,24 @@ class App extends Component {
       .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
   }
 
+  nextRestaurant() {  //helper func for moving to next restaurant, invoked in both save & skip funcs
+    // this.state.currentIndex++;
+    // console.log(this.state.currentIndex);
+    this.state.currentIndex++;
+    this.setState({
+      restaurant : this.state.restaurants[this.state.currentIndex] // this may work
+    }, () => {
+      console.log(this.state.restaurant);
+    })
+  }
+
   render() {
     let FoodSwiper = (props) => {
       if (!this.state.restaurant) return <div>LOADING</div>;
       return (
         <div>
         <Search />
-        <Display restaurant={this.state.restaurant} />
+        <Display restaurant={this.state.restaurant} nextRestaurant={this.nextRestaurant}/>
         </div>
       )
 
@@ -72,7 +83,6 @@ class App extends Component {
     let Faves = (props) => <Favorites favorites={this.state.favorites} />;
     return (
       <div className="app">
-        {/* <header className="navbar">The Amazing Restaurant Finder</header> */}
         <Route exact path="/" render={FoodSwiper} />
         <Route path="/favorites" render={Faves} />
       </div>

@@ -7,19 +7,26 @@ class Display extends Component {
     this.state = {
       photoIndex: 0
     }
+    this.nextPhoto = this.nextPhoto.bind(this);
+    this.skipRestaurant = this.skipRestaurant.bind(this);
+    this.saveRestaurant = this.saveRestaurant.bind(this);
   }
   nextPhoto() {
     if (this.state.photoIndex === 2) this.setState({photoIndex: 0})
     else this.setState({photoIndex: ++this.state.photoIndex});
   }
-  nextRestaurant() {  //helper func for moving to next restaurant, invoked in both save & skip funcs
-    
-  }
-  saveRestaurant() {  //makes POST req to our '/faves' endpoint, then shows next restaurant
 
+  // nextRestaurant() {  //helper func for moving to next restaurant, invoked in both save & skip funcs
+  //    this.props.currentIndex++;
+  //    console.log(this.props.currentIndex);
+  // }
+  // // could add this on App.jsx insted, then pass down
+
+  saveRestaurant() {  //makes POST req to our '/faves' endpoint, then shows next restaurant
+    // this.state.nextRestaurant(); // need to invoke next restaurant here
   }
   skipRestaurant() { //(implement later) makes POST req to a '/dislikes' endpoint, then shows next restaurant
-
+    this.props.nextRestaurant(); // need to invoke next restaurant here
   }
   render() {
     let {restaurant} = this.props;
@@ -30,7 +37,7 @@ class Display extends Component {
         <div className="rating">Rating: <span>{restaurant.rating}</span></div>
         <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
         <div>
-        <button>Skip</button>
+        <button onClick={() => {this.skipRestaurant(restaurant)}}>Skip</button>
         <button>Info</button>
         <button>Save</button>
         </div>
