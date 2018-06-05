@@ -19,54 +19,46 @@ class App extends Component {
       restaurant: null
     }
     this.getRestaurants = this.getRestaurants.bind(this);
-    // this.postFaves = this.postFaves.bind(this);
     this.getFaves = this.getFaves.bind(this);
     console.log('current state of App', this.state);
-    this.getRestaurants();
-    // this.nextRestaurant = this.nextRestaurant.bind(this); // added on app to make cleaner
+    this.getFaves = this.getFaves.bind(this);
+    this.nextRestaurant = this.nextRestaurant.bind(this);
   }
   componentDidMount() {
     // this.getRestaurant(this.state.restaurantID);
+    this.getRestaurants();
+    this.getFaves();
   }
-
   getFaves() {
     axios.get('/faves')
-      .then(favorite => console.log('client-side favorite', favorite))
-      .catch((err) => { console.error(err); });
+      .then(({data}) => this.setState({favorites: data}))
+      .catch(err => console.error(err));
   }
-  postFaves() {
-    // let obj = { id: 'uniqueeeeee', name: 'bobbbby' };
-    axios.post('/faves', obj)
-      .then(posted => { console.log('posted', posted)})
-      .catch(err => { console.log(err) });
-  }
-
   getRestaurants(term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
-    console.log('fetching restaurants of', term, loc);
+    console.log('fetching restaurants of', term, loc)
     axios.get('/restaurants', {params: {term, loc}})
     .then(({data}) => this.setState({ restaurants: data}))
-    .then(({data}) => this.setState({ restaurants: data, favorites: data })) // also populate faves with the restaurants data for now
-    .then(() => this.setState({restaurantID: this.state.restaurants[0].id})) // set to currentIndex, instead of harcoded 0
+    .then(() => console.log('get res, state', this.state))
+    .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id}))
     .then(() => this.getRestaurant(this.state.restaurantID))
-    // .then(() => console.log(this.state))
     .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
   }
   getRestaurant(id) { //@params: id('string')
-    //helper func for moving to next restaurangit brant, invoked in both save & skip funcs in Display component
+    //helper func for moving to next restaurant, invoked in both save & skip funcs in Display component
     axios.get('/restaurant', {params: {id}})
       .then(({data}) => this.setState({ restaurant: data }))
       .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
   }
 
-  nextRestaurant() {  //helper func for moving to next restaurant, invoked in both save & skip funcs
-    // this.state.currentIndex++;
-    // console.log(this.state.currentIndex);
-    // this.state.currentIndex++;
-    // this.setState({
-    //   restaurant : this.state.restaurants[this.state.currentIndex] // this may work
-    // }, () => {
-    //   console.log(this.state.restaurant);
-    // })
+  nextRestaurant () { //@params: none, contorlled component that resets rest state
+    // helper func that moves down restuarant array to display next restaurant, and set rest id correspondingly
+    this.setState({
+      thisrestaurant: this.state.restaurants[++this.state.currentIndex],
+      restaurantID: this.state.restaurant.id
+    }, () => {
+      console.log('current index', this.state.currentIndex);
+      console.log('restaurants', this.state.restaurant);
+    })
   }
 
   render() {
@@ -74,13 +66,12 @@ class App extends Component {
       if (!this.state.restaurant) return <div>LOADING</div>;
       return (
         <div>
-        <Search />
-        <Display restaurant={this.state.restaurant} nextRestaurant={this.nextRestaurant}/>
+          <Search getRestaurants={this.getRestaurants} />
+          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} />
         </div>
       )
-
     }
-    let Faves = (props) => <Favorites favorites={this.state.favorites} />;
+    let Faves = (props) => <Favorites favorites={this.state.favorites} getFaves={this.getFaves} />;
     return (
       <div className="app">
         <Route exact path="/" render={FoodSwiper} />
