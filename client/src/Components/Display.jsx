@@ -34,7 +34,9 @@ class Display extends Component {
     let imgPath = `./assets/yelp_stars/${restaurant.rating}.png`;
     return (
       <div className="display">
-        <div><NavLink to="/favorites">Faves</NavLink></div>
+        <div><NavLink to="/favorites">
+        <button className="waves-effects waves-light btn">Faves</button>
+        </NavLink></div>
         <h1>{restaurant.name}</h1>
         <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
         <div>
