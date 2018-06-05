@@ -61,6 +61,11 @@ class App extends Component {
     }, () => {
       console.log('restaurant id', this.state.restaurantID);
       this.getRestaurant(this.state.restaurantID);
+      if (nextIndex === 19) { // loops back through the array, for now
+        this.setState({
+          currentIndex : 0
+        });
+      }
     });
   }
 
