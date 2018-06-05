@@ -110,11 +110,6 @@ ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById(
 
 
 
-
-
-
-
-
 /* IGNORE THIS WORK ON CONTEXT API */
 // const MyContext = React.createContext();
 
