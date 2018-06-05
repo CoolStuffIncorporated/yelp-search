@@ -9,19 +9,22 @@ class Display extends Component {
       photoIndex: 0
     }
     this.saveRestaurant = this.saveRestaurant.bind(this);
+    this.nextRestaurant = this.nextRestaurant.bind(this);
   }
   nextPhoto() {
     if (this.state.photoIndex === 2) this.setState({photoIndex: 0})
     else this.setState({photoIndex: ++this.state.photoIndex});
   }
   nextRestaurant() {  //helper func for moving to next restaurant, invoked in both save & skip funcs
-    
+    console.log('loading next restaurant')
   }
-  saveRestaurant(fave) {  //makes POST req to our '/faves' endpoint, then shows next restaurant
+  saveRestaurant(fave) {
     console.log(`saving to faves ${fave}`)
     axios.post('/faves', {fave})
-      .then(res => { console.log('posted', res)})
-      .catch(err => { console.error(err) });
+      .then(res => console.log('posted', res))
+      .then(() => this.props.getFaves())
+      .then(() => this.nextRestaurant())
+      .catch(err => console.error(err));
   }
   skipRestaurant() { //(implement later) makes POST req to a '/dislikes' endpoint, then shows next restaurant
 

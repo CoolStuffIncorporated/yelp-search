@@ -29,8 +29,7 @@ app.get('/faves', (req, res) => {
 });
 
 app.post('/faves', (req, res) => {
-  const fave = req.body.fave;
-  addFave(fave)
+  addFave(req.body.fave)
     .then(data => res.send(data))
     .catch(err => res.send(err));
 });
@@ -46,11 +45,9 @@ app.delete('/faves', (req, res) => {
 // @output: an array with 50 restaurant objects, associated with id, filtered by location and foodType
 app.get('/restaurants', (req, res) => {
   const { term, loc } = req.query;
-  getRestaurants({term, loc})   // use API helper here to make a request to Yelp API to grab list of 50 restaurants
-  // getRestaurants({term: 'tacos', loc: 10017})
+  getRestaurants({term, loc})
   .then(restaurants => res.send(restaurants))
   .catch(err => res.send(err));
-  // log(succ('Retrieved restaurant ids')); sorry about your chalk, Charlie!
 });
 
 // input: id representing a specific restaurant 

@@ -29,25 +29,18 @@ class App extends Component {
     this.getRestaurants();
     this.getFaves();
   }
-
   getFaves() {
     axios.get('/faves')
       .then(({data}) => this.setState({favorites: data}))
       .catch(err => console.error(err));
   }
-  // addFave(fave) {
-  //   axios.post('/faves', {fave})
-  //     .then(res => { console.log('posted', res)})
-  //     .catch(err => { console.error(err) });
-  // }
-
   getRestaurants(term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
     console.log('fetching restaurants of', term, loc)
     axios.get('/restaurants', {params: {term, loc}})
     .then(({data}) => this.setState({ restaurants: data}))
+    .then(() => console.log('get res, state', this.state))
     .then(() => this.setState({restaurantID: this.state.restaurants[0].id}))
     .then(() => this.getRestaurant(this.state.restaurantID))
-    // .then(() => console.log(this.state))
     .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
   }
   getRestaurant(id) { //@params: id('string')
@@ -63,7 +56,7 @@ class App extends Component {
       return (
         <div>
           <Search getRestaurants={this.getRestaurants} />
-          <Display restaurant={this.state.restaurant} />
+          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} />
         </div>
       )
     }

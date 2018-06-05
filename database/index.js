@@ -64,6 +64,3 @@ const addFave = fave => {
 };
 
 module.exports = { getFaves, deleteFave, addFave };
-
-// getFaves()
-// .then(data => console.log(data));
