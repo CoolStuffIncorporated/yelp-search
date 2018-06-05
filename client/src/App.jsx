@@ -39,7 +39,7 @@ class App extends Component {
     console.log('fetching restaurants of', term, loc)
     axios.get('/restaurants', {params: {term, loc}})
       .then(({data}) => this.setState({ restaurants: data}))
-      // .then(() => console.log('get res, state', this.state))
+      .then(() => console.log('get res, state', this.state))
       .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id}))
       .then(() => this.getRestaurant(this.state.restaurantID))
       .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
@@ -51,18 +51,15 @@ class App extends Component {
       .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
   }
 
-  nextRestaurant () { //@params: none, contorlled component that resets rest state
-    // helper func that moves down restuarant array to display next restaurant, and set rest id correspondingly
-    console.log('REST in next', this.state.currentIndex);
-    console.log('REST in next', this.state.restaurant);
+  nextRestaurant (nextIndex) { //@params: none, contorlled component that resets rest state
+    // helper func that moves down restuarant array to display next restaurant, and correspondingly set restaurant, and restaurant id
+    console.log(nextIndex);
     this.setState({
-      currentIndex: this.state.currentIndex + 1,
-      thisrestaurant: this.state.restaurants[this.state.currentIndex],
-      restaurantID: this.state.restaurants[this.state.currentIndex].id,
-    }, () => {
-      console.log('current index', this.state.currentIndex);
-      console.log('this.state.restaurant', this.state.restaurant);
-    })
+      currentIndex: nextIndex,
+      restaurantID: this.state.restaurants[nextIndex].id
+    });
+    console.log(this.state.restaurantID, 'rest id after new index set')
+    this.getRestaurant(this.state.restaurantID);
   }
 
   render() {
@@ -71,7 +68,7 @@ class App extends Component {
       return (
         <div>
           <Search getRestaurants={this.getRestaurants} />
-          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} />
+          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} nextIndex={this.state.currentIndex + 1} />
         </div>
       )
     }

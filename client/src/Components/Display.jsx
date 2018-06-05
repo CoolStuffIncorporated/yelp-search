@@ -9,7 +9,7 @@ class Display extends Component {
       photoIndex: 0
     }
     this.saveRestaurant = this.saveRestaurant.bind(this);
-    // this.nextRestaurant = this.nextRestaurant.bind(this); // moved to app.jsx
+    // this.nextRestaurant = this.nextRestaurant.bind(this);
   }
   nextPhoto() {
     if (this.state.photoIndex === 2) this.setState({photoIndex: 0})
@@ -35,6 +35,7 @@ class Display extends Component {
   
   render() {
     let {restaurant, addFave} = this.props;
+    console.log('restaurant', restaurant);
     return (
       <div className="display">
         <div><NavLink to="/favorites">Faves</NavLink></div>
@@ -42,7 +43,7 @@ class Display extends Component {
         <div className="rating">Rating: <span>{restaurant.rating}</span></div>
         <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
         <div>
-        <button onClick={() => {this.props.nextRestaurant(this.props.currentIndex)}}>Skip</button>
+        <button onClick={() => {this.props.nextRestaurant(this.props.nextIndex)}}>Skip</button>
         <button>Info</button>
         <button onClick={() => this.saveRestaurant(restaurant)}>Save</button>
         </div>

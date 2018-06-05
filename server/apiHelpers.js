@@ -26,7 +26,7 @@ const getRestaurants = (searchObj) => {
     location: searchObj.loc,
   };
   return client.search(searchRequest)
-    .then(data => { data.jsonBody.businesses})
+    .then(data => data.jsonBody.businesses)
   // @output: a promise with an array of the businesses
     .catch((err) => {
       console.log(chalk.bold.red('Encoutered error requesting restaurants from Yelp', err));
