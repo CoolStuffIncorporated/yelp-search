@@ -57,7 +57,7 @@ class App extends Component {
   }
 
   nextRestaurant (nextIndex) { //@params: the next Index, passed down to child via props
-    // helper func that moves down restuarant array to display next restaurant, and correspondingly set restaurant, and restaurant id
+    // helper func that moves down restuarant array to display next restaurant, and correspondingly set restaurant and restaurant id
     console.log('the next index', nextIndex);
     this.setState({
       currentIndex: nextIndex,
@@ -98,11 +98,6 @@ ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById(
 
 {/* <Favorites favorites={this.state.favorites} /> */}
 {/* <Display restaurant={this.state.restaurant} /> */}
-
-
-
-
-
 
 
 
