@@ -34,10 +34,9 @@ class App extends Component {
       .then(({data}) => this.setState({favorites: data}))
       .catch(err => console.error(err));
   }
-  getRestaurants(user = 'anonymous', term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
+  getRestaurants(term = 'tacos', loc = 10017, user = 'anonymous') { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
     axios.get('/restaurants', {params: {user, term, loc}})
       .then(({data}) => this.setState({ restaurants: data}))
-      // .then(() => console.log('get res, state', this.state))
       .then(() => this.setState({restaurantID: this.state.restaurants[this.state.index].id}))
       .then(() => this.getRestaurant(this.state.restaurantID))
       .catch(err => console.log(`Error in fetchRestaurants: ${err}`));
