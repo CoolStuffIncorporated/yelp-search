@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
-const { getFaves, deleteFave, addFave } = require('../database');
+const { getFaves, deleteFave, addFave, getOffset } = require('../database');
 // const https = require('https'); uncomment for https
 // const fs = require('fs'); uncomment for https
 
@@ -47,10 +47,12 @@ app.delete('/faves', (req, res) => {
 // @output: an array with 50 restaurant objects,
 // associated with id, filtered by location and foodType
 app.get('/restaurants', (req, res) => {
-  const { term, loc } = req.query;
-  getRestaurants({ term, loc })
-    .then(restaurants => res.send(restaurants))
-    .catch(err => res.send(err));
+  const { user, term, loc } = req.query;
+  getOffset(user, term, loc).then(offset => {
+    getRestaurants({ term, loc, offset })
+      .then(restaurants => res.send(restaurants))
+      .catch(err => res.send(err));
+  })
 });
 
 // input: id representing a specific restaurant

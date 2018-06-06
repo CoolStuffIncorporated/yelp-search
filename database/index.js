@@ -52,7 +52,29 @@ const FavoriteSchema = new mongoose.Schema({
   // "is_closed": true
 });
 
+const SearchSchema = new mongoose.Schema({
+  user: { type: String, required: true },
+  term: { type: String, required: true },
+  loc: { type: Number, required: true },
+  offset: { type: Number }
+});
+
 const Favorite = mongoose.model('Favorite', FavoriteSchema);
+const Search = mongoose.model('Search', SearchSchema);
+
+const getOffset = (user, term, loc) => {
+  console.log('getting offset', user, term, loc);
+  return Search.findOne({user, term, loc})
+    .then(data => {
+      if (!data) {
+        console.log('creating new search', user, term, loc);
+        let entry = new Search({user, term, loc, offset: 0});
+        entry.save().then(data => data.offset)
+        .catch(err => console.log('error making new search', err)) // TODO: proper error handling
+      } else return data.offset;
+    })
+    .catch(err => console.error(err));  // TODO: proper error handling
+}
 
 const getFaves = () => Favorite.find({});
 
@@ -63,4 +85,4 @@ const addFave = fave => {
   return dbFave.save();
 };
 
-module.exports = { getFaves, deleteFave, addFave };
+module.exports = { getFaves, deleteFave, addFave, getOffset };

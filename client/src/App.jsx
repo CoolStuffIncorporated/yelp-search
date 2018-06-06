@@ -28,6 +28,7 @@ class App extends Component {
   }
   componentDidMount() {
     // this.getRestaurant(this.state.restaurantID);
+    console.log(this.state);
     this.getRestaurants();
     this.getFaves();
   }
@@ -36,9 +37,8 @@ class App extends Component {
       .then(({data}) => this.setState({favorites: data}))
       .catch(err => console.error(err));
   }
-  getRestaurants(term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
-    console.log('fetching restaurants of', term, loc)
-    axios.get('/restaurants', {params: {term, loc}})
+  getRestaurants(user = 'anonymous', term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
+    axios.get('/restaurants', {params: {user, term, loc}})
     .then(({data}) => this.setState({ restaurants: data}))
     .then(() => console.log('get res, state', this.state))
     .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id}))
