@@ -1,5 +1,6 @@
 import 'materialize-css'; // It installs the JS asset only
 import 'materialize-css/dist/css/materialize.min.css';
+import ReactTransitions from 'react-transitions';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
@@ -22,13 +23,13 @@ class App extends Component {
       restaurant: null,
       restaurantInfo: null,
       isHidden: true,
-    }
+    };
     this.getFaves = this.getFaves.bind(this);
     this.getRestaurants = this.getRestaurants.bind(this);
     this.getRestaurant = this.getRestaurant.bind(this);
-    console.log('current state of App', this.state);
     this.getFaves = this.getFaves.bind(this);
     this.nextRestaurant = this.nextRestaurant.bind(this);
+    console.log('current state of App', this.state);
   }
   componentDidMount() {
     // this.getRestaurant(this.state.restaurantID);
@@ -43,15 +44,15 @@ class App extends Component {
   getRestaurants(term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
     console.log('fetching restaurants of', term, loc);
     axios.get('/restaurants', { params: { term, loc } })
-      .then(({ data }) => this.setState({ restaurants: data}))
+      .then(({ data }) => this.setState({ restaurants: data }))
       .then(() => console.log('get res, state', this.state))
-      .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id}))
+      .then(() => this.setState({ restaurantID: this.state.restaurants[this.state.currentIndex].id }))
       .then(() => this.getRestaurant(this.state.restaurantID))
-      .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
+      .catch(err => console.log(`Error in fetchRestaurants: ${err}`));
   }
   getRestaurant(id) { //@params: id('string')
     //helper func for moving to next restaurant, invoked in both save & skip funcs in Display component
-    axios.get('/restaurant', {params: {id}})
+    axios.get('/restaurant', { params: { id } })
       .then(({ data }) => this.setState({ restaurant: data }))
       .catch(err => console.log(`Error inside fetchRestaurant: ${err}`))
   }
@@ -63,9 +64,9 @@ class App extends Component {
       currentIndex: nextIndex,
       restaurantID: this.state.restaurants[nextIndex].id,
     }, () => {
-      console.log('restaurant id', this.state.restaurantID);
+      // console.log('restaurant id', this.state.restaurantID);
       this.getRestaurant(this.state.restaurantID);
-      if (nextIndex === 19) { // loops back through the array once limit (20) reached
+      if (nextIndex === 49) { // loops back through the array once limit (20) reached
         this.setState({
           currentIndex: 0,
         });
