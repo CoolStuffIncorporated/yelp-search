@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
-const { getFaves, deleteFave, addFave, getOffset } = require('../database');
+const { getFaves, deleteFave, addFave, getOffset, updateOffset } = require('../database');
 // const https = require('https'); uncomment for https
 // const fs = require('fs'); uncomment for https
 
@@ -50,9 +50,9 @@ app.get('/restaurants', (req, res) => {
   const { user, term, loc } = req.query;
   getOffset(user, term, loc).then(offset => {
     getRestaurants({ term, loc, offset })
-      .then(restaurants => res.send(restaurants))
+      .then(restaurants => res.send({restaurants, offset}))
       .catch(err => res.send(err));
-  })
+  });
 });
 
 // input: id representing a specific restaurant
@@ -61,7 +61,13 @@ app.get('/restaurant', (req, res) => {
   getRestaurantDetails(req.query.id)
     .then(data => res.send(data))
     .catch(err => res.send(err));
-  // log(succ('Retrieved restaurant data and pics'));
+});
+
+app.put('/search', (req, res) => {
+  let {user, term, loc, offset} = req.body;
+  updateOffset(user, term, loc, offset)
+    .then(data => res.send(data))
+    .catch(err => res.send(err));
 });
 
 app.get('/*', (req, res) => {
