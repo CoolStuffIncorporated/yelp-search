@@ -24,6 +24,7 @@ const getRestaurants = (searchObj) => {
   const searchRequest = {
     term: searchObj.term,
     location: searchObj.loc,
+    offset: searchObj.offset,
     limit: 50,
     open_now: true
   };

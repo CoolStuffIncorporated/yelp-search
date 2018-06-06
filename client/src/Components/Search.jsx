@@ -6,13 +6,13 @@ class Search extends Component {
     this.state = {
       foodTypes: ['tacos', 'burgers', 'hot dogs', 'salad', 'ramen'],
       zip: 10001,
-      foodType: '',
+      foodType: 'tacos',
     };
     this.inputZip = this.inputZip.bind(this);
     this.inputFood = this.inputFood.bind(this);
     this.checkEnter = this.checkEnter.bind(this);
   }
-
+  
   inputZip(e) {
     // console.log(e.target.value);
     this.setState({ zip: e.target.value }, () => console.log(this.state));
