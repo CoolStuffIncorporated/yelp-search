@@ -50,7 +50,11 @@ app.get('/restaurants', (req, res) => {
   const { user, term, loc } = req.query;
   getOffset(user, term, loc).then(offset => {
     getRestaurants({ term, loc, offset })
-      .then(restaurants => res.send(restaurants))
+      .then(restaurants => {
+        // restaurants;
+        // console.log((restaurants));
+        res.send({restaurants, offset});
+      })
       .catch(err => res.send(err));
   })
 });
@@ -62,6 +66,14 @@ app.get('/restaurant', (req, res) => {
     .then(data => res.send(data))
     .catch(err => res.send(err));
   // log(succ('Retrieved restaurant data and pics'));
+});
+
+app.put('/search', (req, res) => {
+  let {user, term, loc, offset} = req.body;
+  console.log('put /search', req.body);
+  // updateOffset(user, term, loc, offset)
+  // .then(data => res.send(data))
+  // .catch(err => res.send(err));
 });
 
 app.get('/*', (req, res) => {
