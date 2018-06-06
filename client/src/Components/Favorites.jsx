@@ -39,16 +39,13 @@ class Favorites extends Component {
                   <h4>{favorite.name}</h4>
                   <section className="restaurant-details">
                     <div className="restaurant-contact-info">
-                      <span>Phone: {favorite.display_phone}</span>
-                      <span>Location: {favorite.location.display_address}</span>
-                      <br></br>
-                      {/* <span>Website</span> */}
+                      <span>Phone: {favorite.display_phone}</span><br></br>
+                      <span>Location: {favorite.location.display_address.join(', ')}</span><br></br>
                       <a class="waves-effects waves-light red btn" href={favorite.url}>{favorite.name}</a>
                       <button className="waves-effects waves-light red btn" onClick={() => this.handleDelete(favorite.id)}>Delete</button>
                     </div>
                   </section>
                 </div>
-                {/* {this.state.showUrl ? <Hover url={favorite.url}/> : null} */}
               </li>
             )
         })}

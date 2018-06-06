@@ -47,7 +47,6 @@ class Display extends Component {
         <button className="waves-effects waves-light red btn">Faves</button>
         </NavLink></div>
         <h1>{restaurant.name}</h1>
-        {/* <div className="rating">Rating: <span>{restaurant.rating}</span></div> */}
         <div className="rating"><img src={imgPath} /></div>
         { !this.state.showInfo 
           ? 
@@ -56,7 +55,7 @@ class Display extends Component {
           <div>
             <span>Phone: {restaurant.display_phone}</span><br></br>
             <a href={restaurant.url}>{restaurant.name}</a><br></br>
-            <span>Address: {restaurant.location.display_address}</span>
+            <span>Address: {restaurant.location.display_address.join(', ')}</span>
           </div>
         }
         <div>
