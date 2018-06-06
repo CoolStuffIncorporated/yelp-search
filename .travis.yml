@@ -1,15 +1,17 @@
 sudo: false
 language: node_js
 node_js:
-  - stable
-script: 
-  - npm run server-dev
+- stable
+script:
+- npm run server-dev
 deploy:
-  provider: elasticbeanstalk
-  access_key_id: 
-  secret_access_key:
-    secure: "Encrypted <secret-access-key>="
-  region: "us-east-1"
-  app: "yelp-searcher"
-  env: "yelp-searcher-env"
-  bucket_name: "arn:aws:s3:::yelp-searcher"
+  provider: codedeploy
+  revision_type: github
+  application: yelp-searcher
+  region: us-east-1
+  on:
+    branch: master
+env:
+  global:
+  - secure: SwRGxyXNRM01AD/js10oNNP2BMKKd/lXfnbEDfNOQRxbwq098Y8jEX0Umd17CYZ23nAPHAZfrmY49PePVDOlLM5pegJYjaT1WTePYxtrhgJoeHSi4aAJmYtqS35mgYVaOOtGrhBUDKxyhnYQtDh7KDh4AtkZ3O0xEtCWay8ib0HpBeGZNSWXgQq22L7cXdofhrRh9wx97x+65S3QSxNUAb3vGFwD/SREiLynLlxV6LwQ9IzfmBwYWs76BftCstOqy0TFuG7nezaVPBbDL2wAa9sUifBG7F3CXRj0vtFquxTbtmswDYwruIiN+JhtBhRTPSlWjbDEXdXjTK+D5Gpvk2MjN5LQFvb/z2RiGTDq78K8i05uAYF6fKM+Gegzb6UXDnH8ls4G0UeyGeCQDrCOskyTiN8O8TI++41jLMx9Z2ccDaL0rttUybSLWegbF0cEmBRwhUcp5Sg13cqosxmwnvWUpb7uI7HbLfAieSOTw68L8uraP1FUtMQuSPufNwz+RwlFz5vTFhuTWHTlQi7eyu1q+lGZJFH7vqM/0+SKD7JYq+vS2LpTQ5w5h0jnLRc8/e+klKRmqlSdFGfVI6KKQkw72GKg2Ce0yOdy9gc92738lC8biEuR9eI3t3qXh3F4ixl3xBb8t+FZsQ8Ui24QkhHvGxvH6wlbbpHrosyKjcI=
+  - secure: G68omosF8EL/Xxl1C0Da9ak5+yBJU1gACtZwQsdjJx+aB1rn8mzAnL9DNns3+mIHM7vH+v7q02pJwG3mIxaI/0f66c0+Jx1tZbtGDK6JyfKLvGwiif+XJp7ugNLd3aTxFWMPXOVGZYjpZfbm2MQhyEke761mmb0jdFtgqxc5av6lRw7fnuTZWhoNxWUuIproh973239krRMYvhqRQqegnEEzrk8DZhHGBkBTtupSt5IfUuJBYM7C96k69M8ph5anRIKg2ezrrqP4WnQ6gQ6JJbCvkun1TomHsvmpgug4iXwXNf33vk+jFWRV7/u/ECHdneGvGptf+jQPLvP+t0yhuNUXFWXtIfgHK6D1svX0CsP/Tc03CLTSnKsglTquYSv0FRLKwxjbi2ZJTw0+4Vsm64J6i6WVWzMC4Ztt5Jyn92q+wT9xcBTvv1h9BplrxFYXWk+ROKyhMWT/miD5wz3pAofUSRYBLIamD46WnfYr/iy+JT2N2avxyh7j5w++acI79xSvvY1nhuNAZl+j9UTUTKjFfxZTk5Ad3ZlZgzkAbMVzs5D3bcGbHf5MBwNoFy9IK3bR2JWPMqOsWVt8oqIq/e1kWHAPGzhdr3e0D/LoClp1keoJFmny/Rq2teBF44YBBRLzELxfmZ0MERjZGryyOpvpGUlDTTFNgE+7znJlt5U=

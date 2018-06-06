@@ -52,9 +52,23 @@ node_modules
 
 ## API keys
 server/env/config.js
+server/env/config.example.js
 
 # Travis client.travis.yml
 codecov.yml
 
-./client/dist/bundle.js
+# Webpack
 client/dist/bundle.js
+client/dist/0.bundle.js
+client/dist/vendors~main.bundle.js
+
+# Yelp-Fusion examples
+yelp-node-examples/
+
+# Fonts
+client/dist/*.woff2
+client/dist/*.woff
+
+# HTTPS
+server/env/server.cert
+server/env/server.key

@@ -1,93 +1,100 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
+import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+
 import Search from './Components/Search.jsx';
 import Display from './Components/Display.jsx';
-import axios from 'axios';
+import Favorites from './Components/Favorites.jsx';
+import { business, data } from './dummydata';
 
-let dummyBiz = {
-  "id": "x7hsZRd_MyrUgAW91FM9qA",
-  "alias": "bensons-nyc-new-york",
-  "name": "Benson's NYC",
-  "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/IRDAMx_lRnwe36Uh0n8ZnA/o.jpg",
-  "url": "https://www.yelp.com/biz/bensons-nyc-new-york?adjust_creative=gKPrJPaKyzvmkacQvhrozQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_lookup&utm_source=gKPrJPaKyzvmkacQvhrozQ",
-  "display_phone": "(646) 791-5765",
-  "review_count": 282,
-  "rating": 4.5,
-  "location": {
-      "address1": "181 Essex St",
-      "address2": null,
-      "address3": "",
-      "city": "New York",
-      "zip_code": "10002",
-      "country": "US",
-      "state": "NY",
-      "display_address": [
-          "181 Essex St",
-          "New York, NY 10002"
-      ],
-      "cross_streets": "Houston St & Avenue A"
-  },
-  "photos": [
-      "https://s3-media1.fl.yelpcdn.com/bphoto/IRDAMx_lRnwe36Uh0n8ZnA/o.jpg",
-      "https://s3-media4.fl.yelpcdn.com/bphoto/MwrXOCQg8_oOFHUTyVJ1hA/o.jpg",
-      "https://s3-media2.fl.yelpcdn.com/bphoto/IqwvRoVNmIiUHTlCWDtzXg/o.jpg"
-  ],
-  "price": "$$"
-};
+const businessIds = data.businesses.map(business => business.id); // dummy data for now
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorites: [dummyBiz],
-      restaurants: [dummyBiz],
-      currentRestaurant: dummyBiz,
-      restaurantID: "x7hsZRd_MyrUgAW91FM9qA"
+      favorites: [],
+      restaurants: [],
+      currentIndex: 0,
+      restaurantID: '',
+      restaurant: null
     }
-    // this.fetchDetails = this.fetchDetails.bind(this);
-    // this.fetchDetails = this.fetchDetails.bind(this);
-    // this.showFavorites = this.showFavorites.bind(this);
+    this.getRestaurants = this.getRestaurants.bind(this);
+    this.getFaves = this.getFaves.bind(this);
+    console.log('current state of App', this.state);
+    this.getFaves = this.getFaves.bind(this);
+    this.nextRestaurant = this.nextRestaurant.bind(this);
   }
-  // showFavorites() {
-  //   axios.get('/faves')
-  //     .then(({res}) => this.setState({ favorites: data}))
-  //     .catch(({err})=> console.log({err}))
-  // }
   componentDidMount() {
-    // e.preventDefault();
-    // this.fetchRestaurant();
+    // this.getRestaurant(this.state.restaurantID);
+    console.log(this.state);
+    this.getRestaurants();
+    this.getFaves();
   }
-  fetchRestaurants() {
-    // axios.get('/restaurants')
-    //   .then(({response}) => this.setState({ restaurants: [data.businesses, ...state]}))
-    //   .catch((err) => console.log(`Error in fetchRestaurants: ${err}`))
+  getFaves() {
+    axios.get('/faves')
+      .then(({data}) => this.setState({favorites: data}))
+      .catch(err => console.error(err));
   }
-  fetchRestaurant() {
-    // axios.get('/restaurant')
-    //   .then(({response}) => { this.setState({ restaurant: data.businesses[0] })})
-    //   .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
+  getRestaurants(user = 'anonymous', term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
+    axios.get('/restaurants', {params: {user, term, loc}})
+    .then(({data}) => this.setState({ restaurants: data}))
+    .then(() => console.log('get res, state', this.state))
+    .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id}))
+    .then(() => this.getRestaurant(this.state.restaurantID))
+    .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
+  }
+  getRestaurant(id) { //@params: id('string')
+    //helper func for moving to next restaurant, invoked in both save & skip funcs in Display component
+    axios.get('/restaurant', {params: {id}})
+      .then(({data}) => this.setState({ restaurant: data }))
+      .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
+  }
+
+  nextRestaurant (nextIndex) { //@params: the next Index, passed down to child via props
+    // helper func that moves down restuarant array to display next restaurant, and correspondingly set restaurant and restaurant id
+    console.log('the next index', nextIndex);
+    this.setState({
+      currentIndex: nextIndex,
+      restaurantID: this.state.restaurants[nextIndex].id
+    }, () => {
+      console.log('restaurant id', this.state.restaurantID);
+      this.getRestaurant(this.state.restaurantID);
+      if (nextIndex === 19) { // loops back through the array once limit (20) reached
+        this.setState({
+          currentIndex : 0
+        });
+      }
+    });
   }
 
   render() {
+    let FoodSwiper = (props) => {
+      if (!this.state.restaurant) return <div className="progress"><div className="indeterminate">LOADING</div></div>;
+      return (
+        <div>
+          <Search getRestaurants={this.getRestaurants} />
+          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} currentIndex={this.state.currentIndex} nextIndex={this.state.currentIndex + 1} />
+        </div>
+      )
+    }
+    let Faves = (props) => <Favorites favorites={this.state.favorites} getFaves={this.getFaves} />;
     return (
       <div className="app">
-        <header className="navbar">The Amazing Restaurant Finder</header>
-        {/* <Search /> */}
-        <Display restaurant={this.state.currentRestaurant} />
+        <Route exact path="/" render={FoodSwiper} />
+        <Route path="/favorites" render={Faves} />
       </div>
     )
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
 
 
 
-
-
-
-
-
+{/* <Favorites favorites={this.state.favorites} /> */}
+{/* <Display restaurant={this.state.restaurant} /> */}
 
 
 
@@ -124,4 +131,4 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 // ReactDOM.render(<MyProvider><App /></MyProvider>, document.getElementById('root'));
 
-///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////\

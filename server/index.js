@@ -3,18 +3,10 @@ const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const { getRestaurantsIds, getRestaurantDetails } = require('./apiHelpers');
-const { save } = require('../database');
-
-/* we should straighten out if we want API_KEY or API_TOKEN
-we refer to both here and in */
-
-let API_TOKEN;
-try {
-  API_TOKEN = require('./env/config.example.js').API_KEY;
-} catch (err) {
-  API_TOKEN = process.env.API_KEY;
-}
+const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
+const { getFaves, deleteFave, addFave, getOffset } = require('../database');
+// const https = require('https'); uncomment for https
+// const fs = require('fs'); uncomment for https
 
 const searchRequest = {
   term: 'Four Barrel Coffee',
@@ -33,54 +25,70 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 
-// input: n/a
-// output: an array of objects containing favorited restaurants (image and url associated with)
+/* FAVES ROUTES LINK TO DATABASE */
 app.get('/faves', (req, res) => {
-  // use database helper here
-
-  res.send('received your request to get faves!');
+  getFaves().then(faves => res.send(faves)).catch(err => res.sendStatus(404));
 });
 
-
-// input: an object containing Url and pic
-// output: let user know item has been saved (save fave to db)
 app.post('/faves', (req, res) => {
-  const data = req.body;
-  // use database helper here
-  save(data);
-  log(succ('successfully added restaurant to faves!'));
-  res.send('successfully added restaurant to faves!');
+  addFave(req.body.fave)
+    .then(data => res.send(data))
+    .catch(err => res.send(err));
 });
 
-// input: id of favorite restaurant 
-// output: not really output, should remove fave from faveList
 app.delete('/faves', (req, res) => {
-  // use database helper here
-  log(succ('deleted restaurant from faves!'));
-  res.send('deleted restaurant from faves!');
+  deleteFave(req.body.id)
+    .then(data => res.send(data))
+    .catch(err => res.status(400).send(err));
 });
 
-// input: array of ids, where each id reps a given restaurant
-// output: an array with 50 restaurant objects, associated with id, filtered by location and foodType
+// @params: req.query -> passed in from front end
+// axios.get('/restaurants, {params: {term, loc}}) call
+// @output: an array with 50 restaurant objects,
+// associated with id, filtered by location and foodType
 app.get('/restaurants', (req, res) => {
-  const { term, loc } = req.body;
-  // use API helper here to make a request to Yelp API to grab list of 50 restaurants by id
-  // send back array of ids
-  log(succ('Retrieved restaurant ids'));
-  res.send('here\'s your list of restaurant ids');
+  const { user, term, loc } = req.query;
+  getOffset(user, term, loc).then(offset => {
+    getRestaurants({ term, loc, offset })
+      .then(restaurants => res.send(restaurants))
+      .catch(err => res.send(err));
+  })
 });
 
-// input: id representing a specific restaurant 
-// output: an array of pics, description for given restaurant  
+// input: id representing a specific restaurant
+// output: an array of pics, description for given restaurant
 app.get('/restaurant', (req, res) => {
-  const { id } = req.body;
-  // use another api helper here to make a request to API to grab details of selected restaurant
-  // send back restaurant data
-  log(succ('Retrieved restaurant data and pics'));
-  res.send('here\'s your restaurant data with the pics too');
+  getRestaurantDetails(req.query.id)
+    .then(data => res.send(data))
+    .catch(err => res.send(err));
+  // log(succ('Retrieved restaurant data and pics'));
+});
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../client/dist/index.html'), (err) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
 });
 
 const port = process.env.PORT || 3000;
+
 app.listen(port, () => {
   log(succ('listening on port 3000!'));
 });
+
+// uncomment for https
+// key and cert files available on Google Drive
+// placein env folder
+// https.createServer({
+//   key: fs.readFileSync(path.join(__dirname, './env/server.key')),
+//   cert: fs.readFileSync(path.join(__dirname, './env/server.cert')),
+// }, app)
+//   .listen(3000, () => {
+//     console.log(`Port ${port} is lit fam 🔥 🔥 🔥`);
+//   });
+
+// getRestaurants({term: 'tacos', loc: 10017})
+// .then(restaurants => console.log('success'))
+// .catch(err => console.log(err));
