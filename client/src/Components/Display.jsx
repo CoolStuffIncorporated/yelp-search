@@ -22,15 +22,10 @@ class Display extends Component {
     console.log(`saving to faves ${fave}`)
     axios.post('/faves', {fave})
       .then(res => console.log('posted', res))
+      .then(() => this.props.nextRestaurant())
       .then(() => this.props.getFaves())
-      .then(() => this.props.nextRestaurant(this.props.nextIndex))
       .catch(err => console.error(err));
   }
-
-  // skipRestaurant(nextIndex, restaurant) { //(implement later) makes POST req to a '/dislikes' endpoint, then shows next restaurant
-  //   this.props.nextRestaurant(nextIndex);  
-  // }
-
 
   showInfo () {
     this.setState({
@@ -59,7 +54,7 @@ class Display extends Component {
           </div>
         }
         <div>
-        <button className="waves-effects waves-light red btn" onClick={() => this.props.nextRestaurant(this.props.nextIndex)}>Skip</button>
+        <button className="waves-effects waves-light red btn" onClick={this.props.nextRestaurant}>Skip</button>
         <button className="waves-effects waves-light red btn" onClick={() => this.showInfo() }>{!this.state.showInfo ? 'Contact Info' : 'Tasty Pics'}</button>
         <button className="waves-effects waves-light red btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
         </div>
