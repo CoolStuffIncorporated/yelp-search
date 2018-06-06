@@ -19,7 +19,7 @@ class App extends Component {
       index: 0,
       restaurantID: '',
       restaurant: null,
-      offset: 0,                       // TODO
+      offset: 0,
       user: 'anonymous',
       term: null,
       loc: null,
@@ -33,13 +33,12 @@ class App extends Component {
     this.getFaves();
   }
   incrementOffSet() {
-    console.log('incrementing offset!');
     let offset = ++this.state.offset;
     this.setState({offset});
     let {user, term, loc} = this.state;
     axios.put('/search', {user, term, loc, offset})
-      .then(data => console.log(data))
-      .catch(err => console.error(err));
+      .then(data => console.log('incremented offset'))
+      .catch(err => console.error('error incrementing offset', err));
   }
   getFaves() {
     axios.get('/faves')
