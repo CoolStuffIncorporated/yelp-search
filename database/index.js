@@ -62,8 +62,6 @@ const SearchSchema = new mongoose.Schema({
 const Favorite = mongoose.model('Favorite', FavoriteSchema);
 const Search = mongoose.model('Search', SearchSchema);
 
-// const addSearch = (term, loc, offset)
-
 const getOffset = (user, term, loc) => {
   console.log('getting offset', user, term, loc);
   return Search.findOne({user, term, loc})
