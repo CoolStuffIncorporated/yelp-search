@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactTransitions from 'react-transitions';
 
 class Search extends Component {
   constructor(props) {
@@ -33,10 +34,15 @@ class Search extends Component {
   render() {
     return (
       <div className="search">
-      <select className="browser-default" onChange={this.inputFood}>
-        {this.state.foodTypes.map(foodType => <option key={foodType}>{foodType}</option>)}
-      </select>
-        <input placeholder="ZIP CODE" type="number" onChange={this.inputZip} onKeyUp={this.checkEnter}/>
+        <select className="browser-default" onChange={this.inputFood}>
+          {this.state.foodTypes.map(foodType => <option key={foodType}>{foodType}</option>)}
+        </select>
+        <ReactTransitions
+          width={{ 100 }}
+          height={{ 50 }}
+        >
+          <input placeholder="ZIP CODE" type="number" onChange={this.inputZip} onKeyUp={this.checkEnter}/>
+        </ReactTransitions>
       </div>
     );
   }

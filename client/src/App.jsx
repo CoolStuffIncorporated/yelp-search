@@ -1,6 +1,6 @@
 import 'materialize-css'; // It installs the JS asset only
 import 'materialize-css/dist/css/materialize.min.css';
-import ReactTransitions from 'react-transitions';
+// import ReactTransitions from 'react-transitions';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
@@ -79,8 +79,14 @@ class App extends Component {
       if (!this.state.restaurant) return <div className="progress"><div className="indeterminate">LOADING</div></div>;
       return (
         <div>
+          <Display
+            restaurant={this.state.restaurant}
+            getFaves={this.getFaves}
+            nextRestaurant={this.nextRestaurant}
+            currentIndex={this.state.currentIndex}
+            nextIndex={this.state.currentIndex + 1}
+          />
           <Search getRestaurants={this.getRestaurants} />
-          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} currentIndex={this.state.currentIndex} nextIndex={this.state.currentIndex + 1} />
         </div>
       );
     };
@@ -99,8 +105,6 @@ ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById(
 
 {/* <Favorites favorites={this.state.favorites} /> */}
 {/* <Display restaurant={this.state.restaurant} /> */}
-
-
 
 
 
