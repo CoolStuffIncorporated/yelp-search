@@ -8,6 +8,7 @@
     "start:dev": "npm run webpack -- -w & nodemon --ignore src/ --ignore dist/ server/index.js",
     "server-dev": "nodemon server/index.js",
     "react-dev": "webpack -d --watch",
+    "sass-dev": "node-sass -w ./client/src/main.scss -o ./client/dist/",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "standard": "standard index.js",
     "test": "ava spec/mongo-ava-spec.js"
