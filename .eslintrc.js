@@ -4,7 +4,7 @@ module.exports = {
   "plugins": [
     "react",
     "jsx-a11y",
-    "import"
+    "import",
   ],
     rules: {
       'no-console': 'off',
@@ -17,6 +17,6 @@ module.exports = {
       'object-shorthand': 'off',
       'linebreak-style': 'off',
       'prefer-destructuring': 'off',
-      'arrow-parens': off,
+      'arrow-parens': 'off',
     }
   };
