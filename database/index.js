@@ -67,14 +67,16 @@ const getOffset = (user, term, loc) => {
   return Search.findOne({user, term, loc})
     .then(data => {
       if (!data) {
-        console.log('creating new search', user, term, loc);
         let entry = new Search({user, term, loc, offset: 0});
-        entry.save().then(data => data.offset)
-        .catch(err => console.log('error making new search', err)) // TODO: proper error handling
+        entry.save().catch(err => console.log('error making new search', err))
+        return 0; // TODO: error handling
       } else return data.offset;
     })
     .catch(err => console.error(err));  // TODO: proper error handling
 }
+
+const updateOffset = (user, term, loc, offset) => 
+  Search.findOneAndUpdate({user, term, loc}, {offset}, {new: true});
 
 const getFaves = () => Favorite.find({});
 
@@ -85,4 +87,4 @@ const addFave = fave => {
   return dbFave.save();
 };
 
-module.exports = { getFaves, deleteFave, addFave, getOffset };
+module.exports = { getFaves, deleteFave, addFave, getOffset, updateOffset };

@@ -16,34 +16,43 @@ class App extends Component {
     this.state = {
       favorites: [],
       restaurants: [],
-      currentIndex: 0,
+      index: 0,
       restaurantID: '',
-      restaurant: null
+      restaurant: null,
+      offset: 0,
+      user: 'anonymous',
+      term: null,
+      loc: null,
     }
+    this.getFaves = this.getFaves.bind(this);
     this.getRestaurants = this.getRestaurants.bind(this);
-    this.getFaves = this.getFaves.bind(this);
-    console.log('current state of App', this.state);
-    this.getFaves = this.getFaves.bind(this);
     this.nextRestaurant = this.nextRestaurant.bind(this);
   }
   componentDidMount() {
-    // this.getRestaurant(this.state.restaurantID);
-    console.log(this.state);
-    this.getRestaurants();
+    this.getRestaurants('burgers', 10017);
     this.getFaves();
+  }
+  incrementOffSet() {
+    let offset = ++this.state.offset;
+    this.setState({offset});
+    let {user, term, loc} = this.state;
+    axios.put('/search', {user, term, loc, offset})
+      .then(data => console.log('incremented offset'))
+      .catch(err => console.error('error incrementing offset', err));
   }
   getFaves() {
     axios.get('/faves')
       .then(({data}) => this.setState({favorites: data}))
       .catch(err => console.error(err));
   }
-  getRestaurants(user = 'anonymous', term = 'tacos', loc = 10017) { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
+  getRestaurants(term, loc, user = 'anonymous') { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
+    this.setState({term, loc});
     axios.get('/restaurants', {params: {user, term, loc}})
-    .then(({data}) => this.setState({ restaurants: data}))
-    .then(() => console.log('get res, state', this.state))
-    .then(() => this.setState({restaurantID: this.state.restaurants[this.state.currentIndex].id}))
-    .then(() => this.getRestaurant(this.state.restaurantID))
-    .catch(err => console.log(`Error in fetchRestaurants: ${err}`))
+      .then(({data}) => {console.log(data); return data})
+      .then(({restaurants, offset}) => this.setState({restaurants, offset}))
+      .then(() => this.setState({restaurantID: this.state.restaurants[this.state.index].id}))
+      .then(() => this.getRestaurant(this.state.restaurantID))
+      .catch(err => console.log(`Error in fetchRestaurants: ${err}`));
   }
   getRestaurant(id) { //@params: id('string')
     //helper func for moving to next restaurant, invoked in both save & skip funcs in Display component
@@ -52,21 +61,11 @@ class App extends Component {
       .catch((err) => console.log(`Error inside fetchRestaurant: ${err}`))
   }
 
-  nextRestaurant (nextIndex) { //@params: the next Index, passed down to child via props
-    // helper func that moves down restuarant array to display next restaurant, and correspondingly set restaurant and restaurant id
-    console.log('the next index', nextIndex);
-    this.setState({
-      currentIndex: nextIndex,
-      restaurantID: this.state.restaurants[nextIndex].id
-    }, () => {
-      console.log('restaurant id', this.state.restaurantID);
-      this.getRestaurant(this.state.restaurantID);
-      if (nextIndex === 19) { // loops back through the array once limit (20) reached
-        this.setState({
-          currentIndex : 0
-        });
-      }
-    });
+  nextRestaurant() {
+    let index = this.state.index === this.state.restaurants.length - 1 ? 0 : ++this.state.index;
+    this.setState({index, restaurantID: this.state.restaurants[index].id},
+      () => this.getRestaurant(this.state.restaurantID));
+    this.incrementOffSet();
   }
 
   render() {
@@ -75,7 +74,7 @@ class App extends Component {
       return (
         <div>
           <Search getRestaurants={this.getRestaurants} />
-          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} currentIndex={this.state.currentIndex} nextIndex={this.state.currentIndex + 1} />
+          <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} />
         </div>
       )
     }

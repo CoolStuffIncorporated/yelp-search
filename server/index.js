@@ -3,8 +3,10 @@ const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const morgan = require('morgan');
+const compression = require('compression');
 const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
-const { getFaves, deleteFave, addFave, getOffset } = require('../database');
+const { getFaves, deleteFave, addFave, getOffset, updateOffset } = require('../database');
 // const https = require('https'); uncomment for https
 // const fs = require('fs'); uncomment for https
 
@@ -22,8 +24,11 @@ const infoc = chalk.blue.bgBlack; // log general information
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, '/../client/dist')));
+app.use(bodyParser.json())
+    .use(bodyParser.urlencoded({ extended: true }))
+    .use(compression())
+    .use(morgan('combined'))
+    .use((express.static(path.join(__dirname, '/../client/dist'))));
 
 /* FAVES ROUTES LINK TO DATABASE */
 app.get('/faves', (req, res) => {
@@ -31,6 +36,7 @@ app.get('/faves', (req, res) => {
 });
 
 app.post('/faves', (req, res) => {
+  console.log(req.body);
   addFave(req.body.fave)
     .then(data => res.send(data))
     .catch(err => res.send(err));
@@ -50,9 +56,9 @@ app.get('/restaurants', (req, res) => {
   const { user, term, loc } = req.query;
   getOffset(user, term, loc).then(offset => {
     getRestaurants({ term, loc, offset })
-      .then(restaurants => res.send(restaurants))
+      .then(restaurants => res.send({restaurants, offset}))
       .catch(err => res.send(err));
-  })
+  });
 });
 
 // input: id representing a specific restaurant
@@ -61,7 +67,13 @@ app.get('/restaurant', (req, res) => {
   getRestaurantDetails(req.query.id)
     .then(data => res.send(data))
     .catch(err => res.send(err));
-  // log(succ('Retrieved restaurant data and pics'));
+});
+
+app.put('/search', (req, res) => {
+  let {user, term, loc, offset} = req.body;
+  updateOffset(user, term, loc, offset)
+    .then(data => res.send(data))
+    .catch(err => res.send(err));
 });
 
 app.get('/*', (req, res) => {
@@ -92,3 +104,5 @@ app.listen(port, () => {
 // getRestaurants({term: 'tacos', loc: 10017})
 // .then(restaurants => console.log('success'))
 // .catch(err => console.log(err));
+
+module.exports = app;
