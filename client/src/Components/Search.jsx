@@ -4,9 +4,9 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      foodTypes: ['tacos', 'burgers', 'hot dogs', 'salad', 'ramen'],
+      foodTypes: ['burgers', 'hot dogs', 'salad', 'ramen', 'tacos', 'bakery', 'brewery', 'bubble tea', 'coffee', 'desserts', 'donuts', 'gelato', 'ice cream', 'poke', 'pretzels', 'chocolate', 'pasta', 'wineries', 'cheese', 'candy', 'halal', 'sushi'],
       zip: null,
-      foodType: 'tacos',
+      foodType: 'burgers',
     };
     this.inputZip = this.inputZip.bind(this);
     this.inputFood = this.inputFood.bind(this);
