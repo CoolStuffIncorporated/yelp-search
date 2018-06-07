@@ -35,7 +35,7 @@ test.serial('Create favorite', async t => {
   const { app } = t.context
   const res = await request(app)
     .post('/faves')
-    .send({
+    .send({fave: {
       id: 'test-id-fave1',
       name: 'spaghetti and meatballs',
       alias: 'spaghetti-and-meatballs',
@@ -44,7 +44,7 @@ test.serial('Create favorite', async t => {
         alias: 'hotdogs',
         title: 'Hot Dogs',
       }],  
-    })
+    }})
   t.is(res.status, 200)
   t.is(res.body.name, 'spaghetti and meatballs')
 
