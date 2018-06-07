@@ -1,0 +1,23 @@
+.favorites-all {
+    display : flex;
+    background-color:rgb(216, 164, 164);
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    /* flex-direction: column; */
+  }
+  
+  .favorite-item {
+    border: 1px yellow solid;
+    padding: 12px;
+    text-align: center;
+    /* font-size: 20px; */
+    /* flex-grow: 1; */
+    flex-basis: content;
+  }
+  
+  .home-btn {
+    padding: 50%;
+    border: 3px solid #73AD21;
+  }
+  
