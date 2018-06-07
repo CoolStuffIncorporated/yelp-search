@@ -31,8 +31,10 @@
     "eslint-plugin-react": "^7.8.2",
     "file-loader": "^1.1.11",
     "ghooks": "^1.2.4",
+    "node-sass": "^4.9.0",
     "nodemon": "^1.17.5",
     "nyc": "^10.0.0",
+    "sass-loader": "^7.0.3",
     "standard": "^8.4.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.10.1",
@@ -67,5 +69,14 @@
     "ghooks": {
       "pre-commit": "npm run standard"
     }
+  },
+  "keywords": [
+  "yelp-fusion",
+  "yelp",
+  "mongo",
+  "express"
+],
+"engines": {
+  "node": "6.0.0"
   }
 }
