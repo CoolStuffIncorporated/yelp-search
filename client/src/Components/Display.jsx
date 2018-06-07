@@ -44,8 +44,10 @@ class Display extends Component {
         <h1>{restaurant.name}</h1>
         <div className="rating"><img src={imgPath} /></div>
         { !this.state.showInfo 
-          ? 
-          <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} /> 
+          ?
+          <div className="displayed-img">
+            <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} /> 
+          </div>
           : 
           <div className="info-btns">
             <span>Phone: {restaurant.display_phone}</span><br></br>

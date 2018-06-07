@@ -26,8 +26,11 @@
   padding-bottom: 3%;
 }
 
-.faves-btn {
-  /* padding: 10%; */
+.displayed-img {
+  padding-top: 2%;
+  padding-right: 20%;
+  padding-left: 20%;
+  padding-bottom: 3%;
 }
 
 .skip-btn {
@@ -55,6 +58,7 @@ img:hover {
   background-color:rgb(216, 164, 164);
   justify-content: center;
   flex-wrap: wrap;
+  flex-flow: row wrap;
   align-items: center;
   /* flex-direction: column; */
 }
@@ -69,6 +73,7 @@ img:hover {
 }
 
 .home-btn {
-  padding: 50%;
-  border: 3px solid #73AD21;
+  padding-right: 40%;
+  padding-left: 40%;
+  border: 3px solid rgb(219, 217, 66);
 }
