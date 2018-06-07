@@ -38,7 +38,7 @@ class Display extends Component {
     let imgPath = `./assets/yelp_stars/${restaurant.rating}.png`;
     return (
       <div className="display">
-        <div><NavLink to="/favorites">
+        <div className="faves-btn"><NavLink to="/favorites">
         <button className="waves-effects waves-light red btn">Faves</button>
         </NavLink></div>
         <h1>{restaurant.name}</h1>
@@ -47,16 +47,16 @@ class Display extends Component {
           ? 
           <img width="300px" src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} /> 
           : 
-          <div>
+          <div className="info-btns">
             <span>Phone: {restaurant.display_phone}</span><br></br>
             <a href={restaurant.url}>{restaurant.name}</a><br></br>
             <span>Address: {restaurant.location.display_address.join(', ')}</span>
           </div>
         }
         <div>
-        <button className="waves-effects waves-light red btn" onClick={this.props.nextRestaurant}>Skip</button>
-        <button className="waves-effects waves-light red btn" onClick={() => this.showInfo() }>{!this.state.showInfo ? 'Contact Info' : 'Tasty Pics'}</button>
-        <button className="waves-effects waves-light red btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
+        <button className="waves-effects waves-light red btn skip-btn" onClick={this.props.nextRestaurant}>Skip</button>
+        <button className="waves-effects waves-light red btn show-info-btn" onClick={() => this.showInfo() }>{!this.state.showInfo ? 'Contact Info' : 'Tasty Pics'}</button>
+        <button className="waves-effects waves-light red btn save-btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
         </div>
         <div className="description">
           {/* <p>{restaurant.location.display_address[0]}</p>
