@@ -4,6 +4,7 @@
   "description": "Tinder for food",
   "main": "index.js",
   "scripts": {
+    "start": "npm run webpack -- -w & nodemon --ignore src/ --ignore dist/ server/index.js",
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "start:dev": "npm run webpack -- -w & nodemon --ignore src/ --ignore dist/ server/index.js",
     "server-dev": "nodemon server/index.js",
