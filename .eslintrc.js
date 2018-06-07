@@ -17,5 +17,6 @@ module.exports = {
       'object-shorthand': 'off',
       'linebreak-style': 'off',
       'prefer-destructuring': 'off',
+      'arrow-parens': off,
     }
   };

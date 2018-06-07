@@ -10,11 +10,16 @@ module.exports = {
     filename: 'bundle.js',
     path: DIST_DIR,
   },
+  context: __dirname,
+  resolve: {
+    extensions: ['.js', '.jsx', '.json', '*'],
+  },
   module: {
     rules: [
       {
         test: /\.jsx?/,
         include: SRC_DIR,
+        exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
           presets: ['react', 'env'],
