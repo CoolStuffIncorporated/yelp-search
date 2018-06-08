@@ -58,6 +58,30 @@ body {
   text-align: end;
   flex-basis: content; }
 
+.favorites {
+  align-content: left;
+  background-color: transparent; }
+
+.favorites-container {
+  width: 10%;
+  min-width: 400px;
+  height: 600px;
+  display: flex;
+  background-color: #fec110;
+  display: flex;
+  border-radius: 5%;
+  flex-direction: row; }
+
+.favorite-item {
+  align-self: center;
+  padding: 2%; }
+
+.home-btn {
+  padding-right: 40%;
+  padding-left: 40%;
+  padding-bottom: 0%;
+  background-color: #d32424; }
+
 .search {
   padding-bottom: 3%;
   background-color: #fec110; }

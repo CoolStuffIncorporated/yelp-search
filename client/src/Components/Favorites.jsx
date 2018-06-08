@@ -27,11 +27,11 @@ class Favorites extends Component {
     render () {
       // console.log(this.props.favorites)
     return (
-      <div className="favorites-container">
+      <div className="favorites">
         <div className="home-btn"><NavLink to="/">
         <button className="waves-effects waves-light red btn">Home</button>
         </NavLink></div>
-        <ul className="favorites-all">
+        <ul className="favorites-container">
           {this.props.favorites.map((favorite) => {
               return ( 
                 <li key={favorite.id} className="favorite-item" onMouseEnter={() => {this.onHover()}} onMouseLeave={() => {this.onHover()}}>

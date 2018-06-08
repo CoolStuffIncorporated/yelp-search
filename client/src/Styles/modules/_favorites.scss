@@ -1,15 +1,17 @@
-.favorites-container {
+.favorites {
     align-content: left;
     background-color: transparent;
 }
 
-.favorites-all {
+.favorites-container {
+    width: 10%;
+    min-width: 400px;
+    height: 600px;
     display : flex;
-    background-color:rgb(216, 164, 164);
-    justify-content: center;
-    flex-wrap: wrap;
-    flex-flow: row wrap;
-    align-items: center;
+    background-color: $yellow;
+    display: flex;
+    border-radius: 5%;
+    flex-direction: row;
   }
   
 .favorite-item {
