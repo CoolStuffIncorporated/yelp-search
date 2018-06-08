@@ -1,19 +1,16 @@
 const chalk = require('chalk');
-const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const morgan = require('morgan');
 const compression = require('compression');
 const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
-const { getFaves, deleteFave, addFave, getOffset, updateOffset } = require('../database');
+const {
+  getFaves, deleteFave, addFave, getOffset, updateOffset,
+} = require('../database');
+
 // const https = require('https'); uncomment for https
 // const fs = require('fs'); uncomment for https
-
-const searchRequest = {
-  term: 'Four Barrel Coffee',
-  location: 'san francisco, ca',
-};
 
 // chalk logging
 const log = console.log;
@@ -25,10 +22,10 @@ const infoc = chalk.blue.bgBlack; // log general information
 const app = express();
 
 app.use(bodyParser.json())
-    .use(bodyParser.urlencoded({ extended: true }))
-    .use(compression())
-    .use(morgan('combined'))
-    .use((express.static(path.join(__dirname, '/../client/dist'))));
+  .use(bodyParser.urlencoded({ extended: true }))
+  .use(compression())
+  .use(morgan('tiny'))
+  .use((express.static(path.join(__dirname, '/../client/dist'))));
 
 /* FAVES ROUTES LINK TO DATABASE */
 app.get('/faves', (req, res) => {
