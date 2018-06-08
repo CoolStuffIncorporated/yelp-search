@@ -1,43 +1,67 @@
-.favorites {
-    align-content: left;
-    background-color: transparent;
-}
+// .favorites {
+//     align-content: center;
+//     background-color: transparent;
+//     padding-left: 5%;
+//     padding-right: 5%;
+// }
 
 .favorites-container {
-    width: 10%;
-    min-width: 400px;
-    height: 600px;
     display : flex;
-    background-color: $yellow;
-    display: flex;
+    margin: 3em auto 0 auto;
     border-radius: 5%;
-    flex-direction: row;
-  }
-  
-.favorite-item {
-    align-self: center;
-    padding: 2%;
-    // border: 1px yellow solid;
-    // /* padding: 12px; */
-    // text-align: center;
-    // flex-basis: content;
-    // align-items: flex-start;
-    // flex-grow: 1;
+    background-color: $yellow;
+    flex-wrap: wrap;
+    align-items: stretch;
+    align-content: center;
+    justify-content: center;
+    box-shadow: 7px 4px 15px 5px $black;
     div {
-        
+        color: $white;
+        object-fit: cover;
+        flex-grow: auto;
+        align-self: center;
+        padding-top: 10%;
+        padding-left: 10%;
+        padding-right: 5%;
+    }
+    h4 {
+        text-align: center;
+        color: $white;
     }
     img {
-        
+        width: 250px;
+        height: 250px;
+        object-fit: cover;
+        overflow: hidden;
+        padding-left: 10%;
+        padding-right: 10%;
+        padding-top: 4%;
     }
     section {
-        
+        color: $white;
+        text-align: center;
+        object-fit: cover;
+        text-overflow: hidden;
+        justify-content: center;
+        font-size: 90%;
+    }
+    span {
+        color: $white;
+        font-size: 90%;
+        text-align: center;
+    }
+    button {
+        font-size: 90%;
+    }
+    a {
+        font-size: 90%;
     }
 }
   
 .home-btn {
-    padding-right: 40%;
-    padding-left: 40%;
-    padding-bottom: 0%;
-    background-color: $red;
+    align-content: center;
+    padding-top: 2%;
+    padding-left: 1%;
+    background-color: transparent;
 }
   

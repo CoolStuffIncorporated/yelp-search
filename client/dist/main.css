@@ -58,29 +58,56 @@ body {
   text-align: end;
   flex-basis: content; }
 
-.favorites {
-  align-content: left;
-  background-color: transparent; }
-
 .favorites-container {
-  width: 10%;
-  min-width: 400px;
-  height: 600px;
   display: flex;
-  background-color: #fec110;
-  display: flex;
+  margin: 3em auto 0 auto;
   border-radius: 5%;
-  flex-direction: row; }
-
-.favorite-item {
-  align-self: center;
-  padding: 2%; }
+  background-color: #fec110;
+  flex-wrap: wrap;
+  align-items: stretch;
+  align-content: center;
+  justify-content: center;
+  box-shadow: 7px 4px 15px 5px #333333; }
+  .favorites-container div {
+    color: #f6f5f6;
+    object-fit: cover;
+    flex-grow: auto;
+    align-self: center;
+    padding-top: 10%;
+    padding-left: 10%;
+    padding-right: 5%; }
+  .favorites-container h4 {
+    text-align: center;
+    color: #f6f5f6; }
+  .favorites-container img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    overflow: hidden;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 4%; }
+  .favorites-container section {
+    color: #f6f5f6;
+    text-align: center;
+    object-fit: cover;
+    text-overflow: hidden;
+    justify-content: center;
+    font-size: 90%; }
+  .favorites-container span {
+    color: #f6f5f6;
+    font-size: 90%;
+    text-align: center; }
+  .favorites-container button {
+    font-size: 90%; }
+  .favorites-container a {
+    font-size: 90%; }
 
 .home-btn {
-  padding-right: 40%;
-  padding-left: 40%;
-  padding-bottom: 0%;
-  background-color: #d32424; }
+  align-content: center;
+  padding-top: 2%;
+  padding-left: 1%;
+  background-color: transparent; }
 
 .search {
   padding-bottom: 3%;
