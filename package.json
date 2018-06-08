@@ -63,6 +63,7 @@
     "react-router-dom": "^4.2.2",
     "request": "^2.87.0",
     "sass": "^1.5.1",
+    "scss": "^0.2.4",
     "supertest": "^3.1.0",
     "yelp-fusion": "^2.0.3"
   },
