@@ -29,10 +29,12 @@ class Search extends Component {
     return (
         <div className="search">
           <img className="yelp-logo" src={imgPath} />
+          <div className="search-fields">
           <select className="browser-default" onChange={this.inputFood}>
             {this.state.foodTypes.map(foodType => <option key={foodType}>{foodType}</option>)}
           </select>
-            <input placeholder="ZIP CODE" type="number" maxLength="5" min="10000" max="99999" onChange={this.inputZip} onKeyUp={this.checkEnter}/>
+            <input id="zip" placeholder="your zip code" type="number" maxLength="5" min="10000" max="99999" onChange={this.inputZip} onKeyUp={this.checkEnter}/>
+          </div>
         </div>
     );
   }
