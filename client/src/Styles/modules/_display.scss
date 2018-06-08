@@ -43,22 +43,17 @@
     .info-btns {
         width: 350px;
         height: 350px;
-        object-fit: cover;
-        overflow: hidden;
-        // margin-bottom: 25px;
-        // margin: 3em auto 0 auto;
-        // border-radius: 2%;
-        // display: flex;
-        // flex-direction: column;
+        margin-bottom: 25px;
         background-color: $yellow;
-        transition: transform 1s;
         box-shadow: 8px 3px 10px rgba(0,0,0,0.5);
         span {
             color: $black;
-            // font-size: 30px;
+            font-size: 30px;
+            object-fit: cover;
         }
         a {
-            // font-size: 30px;
+            font-size: 30px;
+            object-fit: cover;
         }
     }
 }

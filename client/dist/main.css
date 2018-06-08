@@ -38,13 +38,16 @@ body {
   .display-container .info-btns {
     width: 350px;
     height: 350px;
-    object-fit: cover;
-    overflow: hidden;
+    margin-bottom: 25px;
     background-color: #fec110;
-    transition: transform 1s;
     box-shadow: 8px 3px 10px rgba(0, 0, 0, 0.5); }
     .display-container .info-btns span {
-      color: #333333; }
+      color: #333333;
+      font-size: 30px;
+      object-fit: cover; }
+    .display-container .info-btns a {
+      font-size: 30px;
+      object-fit: cover; }
 
 .display-btns {
   display: flex;
