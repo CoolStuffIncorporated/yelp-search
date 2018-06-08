@@ -27,29 +27,31 @@ class Favorites extends Component {
     render () {
       // console.log(this.props.favorites)
     return (
-      <ul className="favorites-all">
-        <div><NavLink to="/">
+      <div>
+        <div className="home-btn"><NavLink to="/">
         <button className="waves-effects waves-light red btn">Home</button>
         </NavLink></div>
-        {this.props.favorites.map((favorite) => {
-            return ( 
-              <li key={favorite.id} className="favorite-item" onMouseEnter={() => {this.onHover()}} onMouseLeave={() => {this.onHover()}}>
-                <img src={favorite.image_url} width="100px"/>
-                <div className="favorite-description">
-                  <h4>{favorite.name}</h4>
-                  <section className="restaurant-details">
-                    <div className="restaurant-contact-info">
-                      <span>Phone: {favorite.display_phone}</span><br></br>
-                      <span>Location: {favorite.location.display_address.join(', ')}</span><br></br>
-                      <a className="waves-effects waves-light red btn" href={favorite.url}>{favorite.name}</a>
-                      <button className="waves-effects waves-light red btn" onClick={() => this.handleDelete(favorite.id)}>Delete</button>
-                    </div>
-                  </section>
-                </div>
-              </li>
-            )
-        })}
-     </ul>
+        <ul className="favorites-all">
+          {this.props.favorites.map((favorite) => {
+              return ( 
+                <li key={favorite.id} className="favorite-item" onMouseEnter={() => {this.onHover()}} onMouseLeave={() => {this.onHover()}}>
+                  <img src={favorite.image_url} width="100px"/>
+                  <div className="favorite-description">
+                    <h4>{favorite.name}</h4>
+                    <section className="restaurant-details">
+                      <div className="restaurant-contact-info">
+                        <span>Phone: {favorite.display_phone}</span><br></br>
+                        <span>Location: {favorite.location.display_address.join(', ')}</span><br></br>
+                        <a className="waves-effects waves-light red btn" href={favorite.url}>{favorite.name}</a>
+                        <button className="waves-effects waves-light red btn" onClick={() => this.handleDelete(favorite.id)}>Delete</button>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              )
+          })}
+      </ul>
+     </div>
     )
   }
 
