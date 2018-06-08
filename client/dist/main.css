@@ -1,6 +1,7 @@
 /* PALETTE */
 body {
-  background-color: #f6f5f6; }
+  background-color: #f6f5f6;
+  height: 100%; }
 
 .display {
   align-content: center;
@@ -11,7 +12,7 @@ body {
   min-width: 550px;
   height: 700px;
   background-color: #d32424;
-  margin: 3em auto 1em auto;
+  margin: 2em auto 1em auto;
   border-radius: 2%;
   display: flex;
   flex-direction: column;
@@ -92,3 +93,10 @@ body {
   .search-fields ::placeholder {
     color: #333333;
     text-align: center; }
+
+.loading {
+  display: flex;
+  height: 100%;
+  min-height: 100%;
+  justify-content: center;
+  align-items: center; }
