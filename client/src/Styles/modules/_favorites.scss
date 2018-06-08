@@ -25,9 +25,10 @@
         overflow: hidden;
         object-fit: cover;
         align-self: center;
-        padding-top: 4%;
-        padding-left: 5%;
-        padding-right: 5%;
+        // padding-top: 4%;
+        // padding-left: 5%;
+        // padding-right: 5%;
+        box-shadow: 8px 3px 10px $black;
     }
     section {
         color: $white;
@@ -51,7 +52,7 @@
   
 .home-btn {
     align-content: center;
-    padding-top: 2%;
+    padding-top: 1%;
     padding-left: 1%;
     background-color: transparent;
 }

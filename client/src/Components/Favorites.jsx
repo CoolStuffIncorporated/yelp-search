@@ -35,7 +35,9 @@ class Favorites extends Component {
           {this.props.favorites.map((favorite) => {
               return ( 
                 <li key={favorite.id} className="favorite-item" onMouseEnter={() => {this.onHover()}} onMouseLeave={() => {this.onHover()}}>
-                  <img className="favorite-image" src={favorite.image_url} width="100px"/>
+                  <div className="favorite-img">
+                    <img src={favorite.image_url} width="100px"/>
+                  </div>
                   <div className="favorite-description">
                     <h4>{favorite.name}</h4>
                     <section className="restaurant-details">
