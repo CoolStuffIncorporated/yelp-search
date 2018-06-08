@@ -35,13 +35,14 @@ class Favorites extends Component {
           {this.props.favorites.map((favorite) => {
               return ( 
                 <li key={favorite.id} className="favorite-item" onMouseEnter={() => {this.onHover()}} onMouseLeave={() => {this.onHover()}}>
-                  <img src={favorite.image_url} width="100px"/>
+                  <img className="favorite-image" src={favorite.image_url} width="100px"/>
                   <div className="favorite-description">
                     <h4>{favorite.name}</h4>
                     <section className="restaurant-details">
                       <div className="restaurant-contact-info">
                         <span>Phone: {favorite.display_phone}</span><br></br>
-                        <span>Location: {favorite.location.display_address.join(', ')}</span><br></br>
+                        <span>Location: {favorite.location.display_address.join(', ')}</span>
+                        <div></div>
                         <a className="waves-effects waves-light red btn" href={favorite.url}>{favorite.name}</a>
                         <button className="waves-effects waves-light red btn" onClick={() => this.handleDelete(favorite.id)}>Delete</button>
                       </div>

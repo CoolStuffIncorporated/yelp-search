@@ -77,36 +77,35 @@ body {
   justify-content: center;
   box-shadow: 7px 4px 15px 5px #333333; }
   .favorites-container div {
-    padding: 5px;
-    margin-top: 10px;
-    color: white;
-    font-weight: bold;
-    text-align: center; }
+    justify-content: center;
+    align-content: center;
+    align-self: center;
+    text-align: center;
+    padding: 10px; }
   .favorites-container h4 {
     text-align: center;
     color: #f6f5f6; }
   .favorites-container img {
     width: 250px;
     height: 250px;
-    object-fit: cover;
     overflow: hidden;
-    padding-top: 4%; }
+    object-fit: cover;
+    align-self: center;
+    padding-top: 4%;
+    padding-left: 5%;
+    padding-right: 5%; }
   .favorites-container section {
     color: #f6f5f6;
-    text-align: center;
-    object-fit: cover;
-    text-overflow: hidden;
-    justify-content: center;
     font-size: 90%; }
   .favorites-container span {
     color: #f6f5f6;
     font-size: 90%;
     font-weight: bold;
     text-align: center; }
-  .favorites-container button {
+  .favorites-container a {
     font-weight: bold;
     font-size: 90%; }
-  .favorites-container a {
+  .favorites-container button {
     font-weight: bold;
     font-size: 90%; }
 
