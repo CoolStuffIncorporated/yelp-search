@@ -55,7 +55,6 @@ class Display extends Component {
             <span>Address: {restaurant.location.display_address.join(', ')}</span>
           </div>
         }
-        <br></br>
         <div className="rating"><img src={imgPath} /></div>
         <div className="display-btns">
           <button className="waves-effects waves-light red btn skip-btn" onClick={this.props.nextRestaurant}>Skip</button>
