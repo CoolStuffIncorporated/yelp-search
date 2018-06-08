@@ -1,24 +1,21 @@
 .search {
   padding-bottom: 3%;
-  background-color: $yellow;
+  background: url("./assets/food_pattern.png") $yellow;
 }
 
 .search-fields {
   display: block;
   margin: -5% auto 0;
   width: 20%;
-  background-color: transparent;
   select {
-    // width: 60%;
-    // margin: 0 auto;
     text-align: center;
     text-align-last: center;
     color: $black;
-    background-color: transparent;
+    background-color: $white;
     text-transform: uppercase;
     transition: all .8s;
+    box-shadow: 0 0 3px $gray;
     &:hover {
-      // border: $red 1px solid;
       box-shadow: inset 0 0 10px $gray;
       transition: all .5s;
     }
@@ -27,7 +24,10 @@
     text-transform: uppercase;
     text-align: center;
     caret-color: $white;
+    background-color: $white;
     transition: all .8s;
+    margin-top: 10px;
+    box-shadow: 0 0 3px $gray;
     &:hover {
       // border-bottom: $red;
       box-shadow: inset 0 0 10px $gray;
