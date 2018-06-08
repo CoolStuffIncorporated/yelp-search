@@ -7,7 +7,6 @@
 
 .favorites-container {
     display : flex;
-    margin: 3em auto 0 auto;
     border-radius: 5%;
     background-color: $yellow;
     flex-wrap: wrap;
@@ -16,13 +15,17 @@
     justify-content: center;
     box-shadow: 7px 4px 15px 5px $black;
     div {
-        color: $white;
-        object-fit: cover;
-        flex-grow: auto;
-        align-self: center;
-        padding-top: 10%;
-        padding-left: 10%;
-        padding-right: 5%;
+        // color: $white;
+        // align-self: center;
+        // padding-top: 10%;
+        // padding-left: 10%;
+        // padding-right: 5%;
+        // background: tomato;
+        padding: 5px;
+        margin-top: 10px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
     }
     h4 {
         text-align: center;
@@ -33,8 +36,6 @@
         height: 250px;
         object-fit: cover;
         overflow: hidden;
-        padding-left: 10%;
-        padding-right: 10%;
         padding-top: 4%;
     }
     section {
@@ -48,12 +49,15 @@
     span {
         color: $white;
         font-size: 90%;
+        font-weight: bold;
         text-align: center;
     }
     button {
+        font-weight: bold;
         font-size: 90%;
     }
     a {
+        font-weight: bold;
         font-size: 90%;
     }
 }

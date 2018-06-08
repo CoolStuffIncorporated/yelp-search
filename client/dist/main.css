@@ -60,7 +60,6 @@ body {
 
 .favorites-container {
   display: flex;
-  margin: 3em auto 0 auto;
   border-radius: 5%;
   background-color: #fec110;
   flex-wrap: wrap;
@@ -69,13 +68,11 @@ body {
   justify-content: center;
   box-shadow: 7px 4px 15px 5px #333333; }
   .favorites-container div {
-    color: #f6f5f6;
-    object-fit: cover;
-    flex-grow: auto;
-    align-self: center;
-    padding-top: 10%;
-    padding-left: 10%;
-    padding-right: 5%; }
+    padding: 5px;
+    margin-top: 10px;
+    color: white;
+    font-weight: bold;
+    text-align: center; }
   .favorites-container h4 {
     text-align: center;
     color: #f6f5f6; }
@@ -84,8 +81,6 @@ body {
     height: 250px;
     object-fit: cover;
     overflow: hidden;
-    padding-left: 10%;
-    padding-right: 10%;
     padding-top: 4%; }
   .favorites-container section {
     color: #f6f5f6;
@@ -97,10 +92,13 @@ body {
   .favorites-container span {
     color: #f6f5f6;
     font-size: 90%;
+    font-weight: bold;
     text-align: center; }
   .favorites-container button {
+    font-weight: bold;
     font-size: 90%; }
   .favorites-container a {
+    font-weight: bold;
     font-size: 90%; }
 
 .home-btn {
