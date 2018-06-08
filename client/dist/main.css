@@ -38,18 +38,13 @@ body {
   .display-container .info-btns {
     width: 350px;
     height: 350px;
-    margin-bottom: 25px;
-    margin: 3em auto 0 auto;
-    border-radius: 2%;
-    display: flex;
-    flex-direction: column;
+    object-fit: cover;
+    overflow: hidden;
     background-color: #fec110;
-    box-shadow: 2px 2px 10px 2px #333333; }
+    transition: transform 1s;
+    box-shadow: 8px 3px 10px rgba(0, 0, 0, 0.5); }
     .display-container .info-btns span {
-      color: #333333;
-      font-size: 30px; }
-    .display-container .info-btns a {
-      font-size: 30px; }
+      color: #333333; }
 
 .display-btns {
   display: flex;
