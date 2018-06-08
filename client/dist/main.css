@@ -1,3 +1,33 @@
 /* PALETTE */
 body {
   background-color: #fec110; }
+
+.search {
+  padding-bottom: 4%; }
+
+.search-fields {
+  display: block;
+  margin: 0 auto;
+  width: 20%;
+  background-color: #fec110; }
+  .search-fields select {
+    text-align: center;
+    text-align-last: center;
+    color: #333333;
+    background-color: transparent;
+    text-transform: uppercase;
+    transition: all .8s; }
+    .search-fields select:hover {
+      box-shadow: inset 0 0 5px #333333;
+      transition: all .5s; }
+  .search-fields #zip {
+    text-transform: uppercase;
+    text-align: center;
+    caret-color: #f6f5f6;
+    transition: all .8s; }
+    .search-fields #zip:hover {
+      box-shadow: inset 0 0 5px #333333;
+      transition: all .5s; }
+  .search-fields ::placeholder {
+    color: #333333;
+    text-align: center; }
