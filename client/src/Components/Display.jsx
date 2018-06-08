@@ -55,10 +55,10 @@ class Display extends Component {
             <span>Address: {restaurant.location.display_address.join(', ')}</span>
           </div>
         }
-        <div>
-        <button className="waves-effects waves-light red btn skip-btn" onClick={this.props.nextRestaurant}>Skip</button>
-        <button className="waves-effects waves-light red btn show-info-btn" onClick={() => this.showInfo() }>{!this.state.showInfo ? 'Contact Info' : 'Tasty Pics'}</button>
-        <button className="waves-effects waves-light red btn save-btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
+        <div className="display-btns">
+          <button className="waves-effects waves-light red btn skip-btn" onClick={this.props.nextRestaurant}>Skip</button>
+          <button className="waves-effects waves-light red btn show-info-btn" onClick={() => this.showInfo() }>{!this.state.showInfo ? 'Contact Info' : 'Tasty Pics'}</button>
+          <button className="waves-effects waves-light red btn save-btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
         </div>
         <div className="description">
           {/* <p>{restaurant.location.display_address[0]}</p>
