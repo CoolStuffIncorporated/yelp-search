@@ -53,6 +53,7 @@ node_modules
 ## API keys
 server/env/config.js
 server/env/config.example.js
+credentials.tar.gz
 
 # Travis client.travis.yml
 codecov.yml
