@@ -43,11 +43,9 @@ body {
     box-shadow: 8px 3px 10px rgba(0, 0, 0, 0.5); }
     .display-container .info-btns span {
       color: #333333;
-      font-size: 30px;
-      object-fit: cover; }
+      font-size: 30px; }
     .display-container .info-btns a {
-      font-size: 30px;
-      object-fit: cover; }
+      font-size: 30px; }
 
 .display-btns {
   display: flex;
