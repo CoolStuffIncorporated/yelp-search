@@ -51,10 +51,11 @@ class Display extends Component {
           : 
           <div className="info-btns">
             <span>Phone: {restaurant.display_phone}</span><br></br>
-            <a href={restaurant.url}>{restaurant.name}</a><br></br>
+            <u><a href={restaurant.url}>{restaurant.name}</a></u><br></br>
             <span>Address: {restaurant.location.display_address.join(', ')}</span>
           </div>
         }
+        <br></br>
         <div className="rating"><img src={imgPath} /></div>
         <div className="display-btns">
           <button className="waves-effects waves-light red btn skip-btn" onClick={this.props.nextRestaurant}>Skip</button>
