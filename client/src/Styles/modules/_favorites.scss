@@ -1,3 +1,7 @@
+.favorites-container {
+    align-content: left;
+    background-color: transparent;
+}
 
 .favorites-all {
     display : flex;
@@ -6,22 +10,32 @@
     flex-wrap: wrap;
     flex-flow: row wrap;
     align-items: center;
-    /* flex-direction: column; */
   }
   
-  .favorite-item {
-    border: 1px yellow solid;
-    /* padding: 12px; */
-    text-align: center;
-    flex-basis: content;
-    align-items: flex-start;
-    flex-grow: 1;
-  }
+.favorite-item {
+    align-self: center;
+    padding: 2%;
+    // border: 1px yellow solid;
+    // /* padding: 12px; */
+    // text-align: center;
+    // flex-basis: content;
+    // align-items: flex-start;
+    // flex-grow: 1;
+    div {
+        
+    }
+    img {
+        
+    }
+    section {
+        
+    }
+}
   
-  .home-btn {
+.home-btn {
     padding-right: 40%;
     padding-left: 40%;
     padding-bottom: 0%;
-    background-color: khaki;
-  }
+    background-color: $red;
+}
   

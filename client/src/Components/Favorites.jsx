@@ -27,7 +27,7 @@ class Favorites extends Component {
     render () {
       // console.log(this.props.favorites)
     return (
-      <div>
+      <div className="favorites-container">
         <div className="home-btn"><NavLink to="/">
         <button className="waves-effects waves-light red btn">Home</button>
         </NavLink></div>
