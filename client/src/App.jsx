@@ -29,7 +29,8 @@ class App extends Component {
     this.nextRestaurant = this.nextRestaurant.bind(this);
   }
   componentDidMount() {
-    setTimeout(() => this.getRestaurants('burgers', 10017), 1000); // for displaying loading bar
+    // setTimeout(() => this.getRestaurants('burgers', 10017), 1000); // for displaying loading bar
+    this.getRestaurants('burgers', 10017);
     this.getFaves();
   }
   incrementOffSet() {
