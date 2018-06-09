@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -56,8 +57,7 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
   return (
     <MenuItem selected={isHighlighted} component="div">
       <div>
-        {parts.map((part, index) => {
-          return part.highlight ? (
+        {parts.map((part, index) => part.highlight ? (
             <span key={String(index)} style={{ fontWeight: 300 }}>
               {part.text}
             </span>
@@ -65,8 +65,7 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
             <strong key={String(index)} style={{ fontWeight: 500 }}>
               {part.text}
             </strong>
-          );
-        })}
+          ))}
       </div>
     </MenuItem>
   );
@@ -95,7 +94,8 @@ function getSuggestions(value) {
     ? []
     : suggestions.filter(suggestion => {
       const keep =
-          count < 5 && suggestion.label.toLowerCase().slice(0, inputLength) === inputValue;
+          count < 5 &&
+          suggestion.label.toLowerCase().slice(0, inputLength) === inputValue;
 
       if (keep) {
         count += 1;
@@ -144,7 +144,7 @@ class Search extends React.Component {
 
   checkEnter(e) {
     if (e.key === 'Enter') {
-      console.log(`Getting restaurants of: ${this.state.value}, ${this.state.zip}`);
+      console.log(`Getting restaurants of: ${this.state.value}, ${this.state.zip}`,);
       this.props.getRestaurants(this.state.value, this.state.zip);
     }
   }
@@ -175,45 +175,47 @@ class Search extends React.Component {
 
     return (
       <div className="search">
-      <img className="yelp-logo" src={imgPath} />
-      <div className="search-fields">
-      <Autosuggest
-        theme={{
-          container: classes.container,
-          suggestionsContainerOpen: classes.suggestionsContainerOpen,
-          suggestionsList: classes.suggestionsList,
-          suggestion: classes.suggestion,
-        }}
-        renderInputComponent={renderInput}
-        suggestions={this.state.suggestions}
-        onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
-        onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
-        renderSuggestionsContainer={renderSuggestionsContainer}
-        getSuggestionValue={getSuggestionValue}
-        renderSuggestion={renderSuggestion}
-        inputProps={{
-          classes,
-          placeholder: 'Search a country (start with a)',
-          value: this.state.value,
-          onChange: this.handleChange,
-        }}
-      />
-      <input
-          id="zip"
-          placeholder="What's your zip code?"
-          type="number"
-          maxLength="5"
-          min="10000"
-          max="99999"
-          onChange={this.inputZip}
-          onKeyUp={this.checkEnter}
+        <img className="yelp-logo" src={imgPath} />
+        <div className="search-fields">
+          <Autosuggest
+            theme={{
+              container: classes.container,
+              suggestionsContainerOpen: classes.suggestionsContainerOpen,
+              suggestionsList: classes.suggestionsList,
+              suggestion: classes.suggestion,
+            }}
+            renderInputComponent={renderInput}
+            suggestions={this.state.suggestions}
+            onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
+            onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
+            renderSuggestionsContainer={renderSuggestionsContainer}
+            getSuggestionValue={getSuggestionValue}
+            renderSuggestion={renderSuggestion}
+            inputProps={{
+              classes,
+              placeholder: 'What are you hungry for?',
+              value: this.state.value,
+              onChange: this.handleChange,
+            }}
           />
-      </div>
+          <input
+            theme={{
+              container: classes.container,
+            }}
+            id="zip"
+            placeholder="What's your zip code?"
+            type="number"
+            maxLength="5"
+            min="10000"
+            max="99999"
+            onChange={this.inputZip}
+            onKeyUp={this.checkEnter}
+          />
+        </div>
       </div>
     );
   }
 }
-
 
 Search.propTypes = {
   classes: PropTypes.object.isRequired,
