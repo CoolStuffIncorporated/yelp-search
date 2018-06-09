@@ -28,7 +28,7 @@ before_install:
 install:
 # Set the correct project to deploy to
 - gcloud config set project yelp-tinder
-- gloucd -q components update gae-node
+- gcloud -q components update gae-node
 # Install dependencies
 - npm i
 script:
