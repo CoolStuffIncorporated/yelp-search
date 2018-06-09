@@ -7,20 +7,20 @@ class Display extends Component {
     super(props);
     this.state = {
       photoIndex: 0,
-      showInfo: false
-    }
+      showInfo: false,
+    };
     this.saveRestaurant = this.saveRestaurant.bind(this);
     // this.skipRestaurant = this.skipRestaurant.bind(this); // implement later
     this.showInfo = this.showInfo.bind(this);
   }
   nextPhoto() {
-    if (this.state.photoIndex === 2) this.setState({photoIndex: 0})
-    else this.setState({photoIndex: ++this.state.photoIndex});
+    if (this.state.photoIndex === 2) this.setState({ photoIndex: 0 });
+    else this.setState({ photoIndex: this.state.photoIndex += 1 });
   }
 
   saveRestaurant(fave) {
-    console.log(`saving to faves ${fave}`)
-    axios.post('/faves', {fave})
+    console.log(`saving to faves ${fave}`);
+    axios.post('/faves', { fave })
       .then(res => console.log('posted', res))
       .then(() => this.props.nextRestaurant())
       .then(() => this.props.getFaves())
@@ -29,26 +29,32 @@ class Display extends Component {
 
   showInfo () {
     this.setState({
-      showInfo : !this.state.showInfo
-    })
+      showInfo: !this.state.showInfo,
+    });
   }
 
   render() {
-    let {restaurant, addFave} = this.props;
-    let imgPath = `./assets/yelp_stars/${restaurant.rating}.png`;
+    const { restaurant, addFave } = this.props;
+    const imgPath = `./assets/yelp_stars/${restaurant.rating}.png`;
     return (
       <div className="display">
       <div className="display-container">
         <div className="faves-btn"><NavLink to="/favorites">
-        <button className="waves-effects waves-light red btn">Faves</button>
+        <button
+          className="waves-effects waves-light red btn">
+          Faves
+          <i className="material-icons left">
+            favorite
+          </i>
+        </button>
         </NavLink></div>
         <h2>{restaurant.name}</h2>
-        { !this.state.showInfo 
+        { !this.state.showInfo
           ?
           <div className="displayed-img">
-            <img src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} /> 
+            <img src={restaurant.photos[this.state.photoIndex]} onClick={() => this.nextPhoto()} />
           </div>
-          : 
+          :
           <div className="info-btns">
             <span>Phone: {restaurant.display_phone}</span><br></br>
             <u><a href={restaurant.url}>{restaurant.name}</a></u><br></br>
@@ -57,9 +63,33 @@ class Display extends Component {
         }
         <div className="rating"><img src={imgPath} /></div>
         <div className="display-btns">
-          <button className="waves-effects waves-light red btn skip-btn" onClick={this.props.nextRestaurant}>Skip</button>
-          <button className="waves-effects waves-light red btn show-info-btn" onClick={() => this.showInfo() }>{!this.state.showInfo ? 'Contact Info' : 'Tasty Pics'}</button>
-          <button className="waves-effects waves-light red btn save-btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
+          <div className="col s3">
+            <button
+              className="btn-floating btn-large waves-effects waves-light btn grey skip-btn"
+              onClick={this.props.nextRestaurant}>
+                <i className="material-icons left">
+                  delete
+                </i>
+              </button>
+          </div>
+          <div className="col s6">
+            <button
+              className="small-btn waves-effects waves-light btn yellow accent-4 show-info-btn"
+              onClick={() => this.showInfo() }>{!this.state.showInfo ? 'Contact Info' : 'Tasty Pics'}
+                <i className="material-icons left">
+                  contactphone
+                </i>
+            </button>
+          </div>
+          <div className="col s3">
+            <button
+              className="btn-floating btn-large pulse waves-effects waves-light red btn save-btn"
+              onClick={() => this.saveRestaurant(restaurant)}>
+                <i className="material-icons left">
+                  favorite
+                </i>
+            </button>
+          </div>
         </div>
         <div className="description">
           {/* <p>{restaurant.location.display_address[0]}</p>

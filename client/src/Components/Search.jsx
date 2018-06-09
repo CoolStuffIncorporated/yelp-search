@@ -14,8 +14,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 // icons to import
-// location on
-// restaurant
+import { LocationOn, Restaurant } from '@material-ui/icons';
 
 const suggestions = [
   { label: 'bakery' },
@@ -152,7 +151,7 @@ class Search extends React.Component {
 
   checkEnter(e) {
     if (e.key === 'Enter') {
-      console.log(`Getting restaurants of: ${this.state.value}, ${this.state.zip}`,);
+      console.log(`Getting restaurants of: ${this.state.value}, ${this.state.zip}`);
       this.props.getRestaurants(this.state.value, this.state.zip);
     }
   }
@@ -201,7 +200,7 @@ class Search extends React.Component {
             renderSuggestion={renderSuggestion}
             inputProps={{
               classes,
-              placeholder: 'What are you hungry for?',
+              placeholder: 'Whatcha hungry for?',
               value: this.state.value,
               onChange: this.handleChange,
             }}
@@ -211,7 +210,7 @@ class Search extends React.Component {
               container: classes.container,
             }}
             id="zip"
-            placeholder="What's your zip code?"
+            placeholder="What's your zip?"
             type="number"
             maxLength="5"
             min="10000"
