@@ -19,8 +19,9 @@ function init() {
     return Math.random() > 0.5 ? v : -v;
   }
   const randX = () => Math.random() * canvas.width;
-  const randY = () => Math.random() * 200 - 200;
-  const foodMaker = foods => foods.map(food => new Food(`${food}`, `assets/food_icons/${food}.png`, 80, 80, randX(), randY(), randV(), randV()));
+  const randY = () => Math.random() * 200 - 400;
+  const randS = () => Math.random() * 50 + 60;
+  const foodMaker = foods => foods.map(food => new Food(`${food}`, `assets/food_icons/${food}.png`, randS(), randX(), randY(), randV(), randV()));
   let foodItems = foodMaker(['bacon', 'pizza', 'hamburger', 'hotdog', 'taco', 'mushroom', 'milkshake', 'toast', 'cookie', 'ketchup', 'radish', 'donut', 'onigiri', 'soda', 'scallion', 'cupcake', 'croissant']);
   setInterval(() => {
     c.clearRect(0, 0, canvas.width, canvas.height);
@@ -41,12 +42,12 @@ function drawImageRot(img, x, y, width, height, deg){
 
 let dampening = .9, shrinkage = .9;
 
-function Food(name, imgSrc, width, height, x, y, dx, dy) {
+function Food(name, imgSrc, size, x, y, dx, dy) {
   this.name = name;
   this.image = new Image();
   this.image.src = imgSrc;
-  this.width = width;
-  this.height = height;
+  this.width = size;
+  this.height = size;
   this.dx = dx;
   this.dy = dy;
   this.x = x;
