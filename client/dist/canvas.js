@@ -41,13 +41,13 @@ function init() {
   }
   const randX = () => Math.random() * canvas.width;
   const randY = () => Math.random() * 200 - 200;
-  // const foodMaker = 
-  let bacon = new Food('bacon', 'assets/food_icons/bacon.png', 80, 80, randX(), randY(), randV(), randV());
-  let pizza = new Food('pizza', 'assets/food_icons/pizza.png', 80, 80, randX(), randY(), randV(), randV());
+  const foodMaker = foods => {
+    return foods.map(food => new Food(`${food}`, `assets/food_icons/${food}.png`, 80, 80, randX(), randY(), randV(), randV()))
+  }
+  let foodItems = foodMaker(['bacon', 'pizza', 'hamburger', 'hotdog', 'taco', 'mushroom', 'milkshake', 'toast', 'cookie', 'ketchup']);
   setInterval(() => {
     c.clearRect(0, 0, canvas.width, canvas.height);
-    bacon.draw();
-    pizza.draw();
+    foodItems.forEach(item => item.draw())
   }, 20);
 }
 
@@ -73,7 +73,7 @@ function Food(name, imgSrc, width, height, x, y, dx, dy) {
   this.x = x;
   this.y = y;
   this.gravity = 1;
-  this.deg = 0;
+  this.deg = Math.random() * 360;
   this.torque = .05;
   this.image.onload = () => this.draw();
   this.draw = function(deg = 0) {
