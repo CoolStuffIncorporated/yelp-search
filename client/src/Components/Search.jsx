@@ -25,13 +25,18 @@ class Search extends Component {
     this.setState({ foodType: e.target.value });
   }
   render() {
+    let imgPath = `./assets/yelp_logo/yelp_fullcolor_outline.png`;
     return (
-      <div className="search">
-      <select className="browser-default" onChange={this.inputFood}>
-        {this.state.foodTypes.map(foodType => <option key={foodType}>{foodType}</option>)}
-      </select>
-        <input placeholder="ZIP CODE" type="number" maxLength="5" min="10000" max="99999" onChange={this.inputZip} onKeyUp={this.checkEnter}/>
-      </div>
+        <div className="search">
+          <img className="yelp-logo" src={imgPath} />
+          <canvas></canvas>
+          <div className="search-fields">
+          <select className="browser-default" onChange={this.inputFood}>
+            {this.state.foodTypes.map(foodType => <option key={foodType}>{foodType}</option>)}
+          </select>
+            <input id="zip" placeholder="your zip code" type="number" maxLength="5" min="10000" max="99999" onChange={this.inputZip} onKeyUp={this.checkEnter}/>
+          </div>
+        </div>
     );
   }
 }

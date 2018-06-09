@@ -1,0 +1,28 @@
+.favorites {
+  align-content: left;
+  background-color: transparent;
+}
+
+.favorites-container {
+  width: 10%;
+  min-width: 400px;
+  height: 600px;
+  display : flex;
+  background-color: yellow;
+  display: flex;
+  border-radius: 5%;
+  flex-direction: row;
+}
+
+.favorite-item {
+  align-self: center;
+  padding: 2%;
+  border: 1px yellow solid;
+}
+
+.home-btn {
+  padding-right: 40%;
+  padding-left: 40%;
+  padding-bottom: 0%;
+  background-color: red;
+}
