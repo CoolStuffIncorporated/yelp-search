@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Hover from './Hover.jsx';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 import axios from 'axios';
+import { Favorite, FavoriteBorder } from '@material-ui/icons';
 
 class Favorites extends Component {
   constructor(props) {
