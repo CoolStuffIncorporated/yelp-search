@@ -1,13 +1,18 @@
 .search {
   padding-bottom: 3%;
   background: url("./assets/food_pattern.png") $yellow;
+  position: relative;
 }
 
 .search-fields {
+  position: relative;
+  z-index: 100;
   display: block;
   margin: -5% auto 0;
   width: 20%;
   select {
+    position: relative;
+    z-index: 100;
     text-align: center;
     text-align-last: center;
     color: $black;
@@ -21,6 +26,8 @@
     }
   }
   #zip {
+    position: relative;
+    z-index: 100;
     text-transform: uppercase;
     text-align: center;
     caret-color: $white;

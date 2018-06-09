@@ -1,9 +1,11 @@
 .display {
     align-content: center;
     background-color: transparent;
+    z-index: 100;
 }
 
 .display-container {
+    z-index: 100;
     width: 550px;
     min-width: 550px;
     height: 700px;
