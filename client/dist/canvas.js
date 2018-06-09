@@ -40,7 +40,7 @@ function drawImageRot(img, x, y, width, height, deg){
   c.translate(-(x + width / 2), -(y + height / 2));
 }
 
-let dampening = .9, shrinkage = .9;
+let dampeningX = .9, dampeningY = .85, shrinkage = .9;
 
 function Food(name, imgSrc, size, x, y, dx, dy) {
   this.name = name;
@@ -61,12 +61,12 @@ function Food(name, imgSrc, size, x, y, dx, dy) {
     drawImageRot(this.image, this.x, this.y, this.width, this.height, this.deg);
     this.dy += this.gravity;
     if (this.y + this.height > canvas.height) {
-      this.dy = -this.dy * dampening;
+      this.dy = -this.dy * dampeningY;
       this.height *= shrinkage;
       this.width *= shrinkage;
     }
     if (this.x + this.width > canvas.width || this.x < 0) {
-      this.dx = -this.dx * dampening;
+      this.dx = -this.dx * dampeningX;
       this.height *= shrinkage;
       this.width *= shrinkage;
     }
