@@ -35,10 +35,12 @@ const c = canvas.getContext('2d');
 
 
 function init() {
-  const randV = () => Math.random() * 10 + 5;
-  console.log(canvas.width);
+  const randV = () => {
+    let v = Math.random() * 10 + 5;
+    return Math.random() > 0.5 ? v : -v;
+  }
   const randX = () => Math.random() * canvas.width;
-  const randY = () => Math.random() * canvas.height;
+  const randY = () => Math.random() * 200 - 200;
   // const foodMaker = 
   let bacon = new Food('bacon', 'assets/food_icons/bacon.png', 80, 80, randX(), randY(), randV(), randV());
   let pizza = new Food('pizza', 'assets/food_icons/pizza.png', 80, 80, randX(), randY(), randV(), randV());
