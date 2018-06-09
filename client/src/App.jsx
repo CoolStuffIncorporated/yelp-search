@@ -74,7 +74,7 @@ class App extends Component {
       // if (!this.state.restaurant) return <div className="progress"><div className="indeterminate">LOADING</div></div>;
       if (!this.state.restaurant) return <div className="loading"><img src=".\assets\loader-2_food.gif" /></div>;
       return (
-        <div>
+        <div id="container">
           <Search getRestaurants={this.getRestaurants} />
           <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} />
         </div>

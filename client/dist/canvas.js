@@ -12,7 +12,7 @@ const c = canvas.getContext('2d');
 
 // let bacon = new Image;
 // bacon.onload = () => {
-//   c.drawImage(bacon,100,500, 60, 60);
+//   c.drawImage(bacon,100,100, 60, 60);
 // };
 // bacon.src = 'assets/food_icons/bacon.png';
 
@@ -47,7 +47,9 @@ function init() {
   let foodItems = foodMaker(['bacon', 'pizza', 'hamburger', 'hotdog', 'taco', 'mushroom', 'milkshake', 'toast', 'cookie', 'ketchup']);
   setInterval(() => {
     c.clearRect(0, 0, canvas.width, canvas.height);
-    foodItems.forEach(item => item.draw())
+    foodItems.forEach(item => item.draw());
+    let bacon = new Image;bacon.onload = () => c.drawImage(bacon,610,50, 60, 60);
+    bacon.src = 'assets/food_icons/bacon.png'; // test bacon
   }, 20);
 }
 
@@ -61,6 +63,7 @@ function drawImageRot(img, x, y, width, height, deg){
 }
 
 let dampening = .9;
+let shrinkage = .9;
 
 function Food(name, imgSrc, width, height, x, y, dx, dy) {
   this.name = name;
@@ -83,13 +86,13 @@ function Food(name, imgSrc, width, height, x, y, dx, dy) {
     this.dy += this.gravity;
     if (this.y + this.height > canvas.height) {
       this.dy = -this.dy * dampening;
-      this.height *= .9;
-      this.width *= .9;
+      this.height *= shrinkage;
+      this.width *= shrinkage;
     }
     if (this.x + this.width > canvas.width || this.x < -this.width) {
       this.dx = -this.dx * dampening;
-      this.height *= .9;
-      this.width *= .9;
+      this.height *= shrinkage;
+      this.width *= shrinkage;
     }
     this.x += this.dx;
     this.y += this.dy;
