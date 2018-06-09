@@ -29,6 +29,7 @@ class Search extends Component {
     return (
         <div className="search">
           <img className="yelp-logo" src={imgPath} />
+          <canvas></canvas>
           <div className="search-fields">
           <select className="browser-default" onChange={this.inputFood}>
             {this.state.foodTypes.map(foodType => <option key={foodType}>{foodType}</option>)}

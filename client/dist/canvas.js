@@ -1,3 +1,7 @@
+setTimeout(() => {
+
+
+
 let edgeLeft = 0, edgeRight = window.innerWidth, edgeTop = 0, edgeBottom = window.innerHeight;
 
 const canvas = document.querySelector('canvas');
@@ -74,6 +78,8 @@ function Food(name, imgSrc, width, height, x, y, dx, dy) {
 
 }
 
-// init();
+init();
 
-setTimeout(init, 3000);
+// setTimeout(init, 2000);
+
+}, 3000);
