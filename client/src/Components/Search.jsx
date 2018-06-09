@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
 
 const suggestions = [
   { label: 'bakery' },
@@ -198,7 +199,7 @@ class Search extends React.Component {
               onChange: this.handleChange,
             }}
           />
-          <input
+          <Input
             theme={{
               container: classes.container,
             }}
