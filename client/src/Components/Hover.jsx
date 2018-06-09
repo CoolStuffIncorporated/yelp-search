@@ -10,8 +10,8 @@ class Hover extends Component {
     return (
       <div>
         {this.props.url}
-      </div> 
-    )
+      </div>
+    );
   }
 }
 
