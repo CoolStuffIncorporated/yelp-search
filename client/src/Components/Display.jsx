@@ -36,6 +36,11 @@ class Display extends Component {
   render() {
     let {restaurant, addFave} = this.props;
     let imgPath = `./assets/yelp_stars/${restaurant.rating}.png`;
+    const Rating = (props) => (
+      <CSSTransition timeout={300} classNames="example">
+      <div className="rating"><img src={imgPath} /></div>
+      </CSSTransition>
+    );
     return (
       <div className="display">
       <div className="display-container">
@@ -55,13 +60,7 @@ class Display extends Component {
             <span>Address: {restaurant.location.display_address.join(', ')}</span>
           </div>
         }
-        <CSSTransition
-              timeout={300} 
-              classNames="example"
-            >
-        <div className="rating"><img src={imgPath} /></div>
-        </CSSTransition>
-
+        <Rating />
         <div className="display-btns">
           <button className="waves-effects waves-light red btn skip-btn" onClick={this.props.nextRestaurant}>Skip</button>
           <button className="waves-effects waves-light red btn show-info-btn" onClick={() => this.showInfo() }>{!this.state.showInfo ? 'Contact Info' : 'Tasty Pics'}</button>
