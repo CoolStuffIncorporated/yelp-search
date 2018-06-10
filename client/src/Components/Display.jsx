@@ -13,9 +13,12 @@ class Display extends Component {
     // this.skipRestaurant = this.skipRestaurant.bind(this); // implement later
     this.showInfo = this.showInfo.bind(this);
   }
+  componentDidMount() {
+    console.log('mounted Display');
+  }
   nextPhoto() {
-    if (this.state.photoIndex === 2) this.setState({photoIndex: 0})
-    else this.setState({photoIndex: ++this.state.photoIndex});
+    let photoIndex = this.state.photoIndex === this.props.restaurant.photos.length - 1 ? 0 : ++this.state.photoIndex;
+    this.setState({photoIndex});
   }
 
   saveRestaurant(fave) {

@@ -30,6 +30,7 @@ class App extends Component {
   }
   componentDidMount() {
     // setTimeout(() => this.getRestaurants('burgers', 10017), 1000); // for displaying loading bar
+    console.log('mounted App');
     this.getRestaurants('burgers', 10017);
     this.getFaves();
   }
@@ -49,7 +50,7 @@ class App extends Component {
   getRestaurants(term, loc, user = 'anonymous') { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
     this.setState({term, loc});
     axios.get('/restaurants', {params: {user, term, loc}})
-      .then(({data}) => {console.log(data); return data})
+      .then(({data}) => data)
       .then(({restaurants, offset}) => this.setState({restaurants, offset}))
       .then(() => this.setState({restaurantID: this.state.restaurants[this.state.index].id}))
       .then(() => this.getRestaurant(this.state.restaurantID))

@@ -12,6 +12,9 @@ class Favorites extends Component {
     this.onHover = this.onHover.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
+  componentDidMount() {
+    console.log('mounted Favorites');
+  }
 
   onHover () {
     this.setState({
