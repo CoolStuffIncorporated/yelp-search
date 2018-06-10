@@ -8,7 +8,7 @@ import Search from './Components/Search.jsx';
 import Display from './Components/Display.jsx';
 import Favorites from './Components/Favorites.jsx';
 import { business, data } from './dummydata';
-import './AppTransitions.css';
+// import './AppTransitions.scss';
 
 const businessIds = data.businesses.map(business => business.id); // dummy data for now
 
@@ -73,7 +73,6 @@ class App extends Component {
 
   render() {
     let FoodSwiper = (props) => {
-      // if (!this.state.restaurant) return <div className="progress"><div className="indeterminate">LOADING</div></div>;
       if (!this.state.restaurant) return <div className="loading"><img src=".\assets\loader-2_food.gif" /></div>;
       return (
         <div id="container">
@@ -84,25 +83,15 @@ class App extends Component {
     }
     let Faves = (props) => <Favorites favorites={this.state.favorites} getFaves={this.getFaves} />;
     return (
-      <TransitionGroup>
-        <CSSTransition classNames="example" timeout={{ enter: 500, exit: 300 }}>
       <div className="app">
         <Route exact path="/" render={FoodSwiper} />
         <Route path="/favorites" render={Faves} />
       </div>
-      </CSSTransition>
-      </TransitionGroup>
     )
   }
 }
 
 ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
-
-
-
-{/* <Favorites favorites={this.state.favorites} /> */}
-{/* <Display restaurant={this.state.restaurant} /> */}
-
 
 
 

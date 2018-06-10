@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import axios from 'axios';
 
 class Display extends Component {
@@ -10,7 +11,6 @@ class Display extends Component {
       showInfo: false
     }
     this.saveRestaurant = this.saveRestaurant.bind(this);
-    // this.skipRestaurant = this.skipRestaurant.bind(this); // implement later
     this.showInfo = this.showInfo.bind(this);
   }
   nextPhoto() {
@@ -55,15 +55,19 @@ class Display extends Component {
             <span>Address: {restaurant.location.display_address.join(', ')}</span>
           </div>
         }
+        <CSSTransition
+              timeout={300} 
+              classNames="example"
+            >
         <div className="rating"><img src={imgPath} /></div>
+        </CSSTransition>
+
         <div className="display-btns">
           <button className="waves-effects waves-light red btn skip-btn" onClick={this.props.nextRestaurant}>Skip</button>
           <button className="waves-effects waves-light red btn show-info-btn" onClick={() => this.showInfo() }>{!this.state.showInfo ? 'Contact Info' : 'Tasty Pics'}</button>
           <button className="waves-effects waves-light red btn save-btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
         </div>
         <div className="description">
-          {/* <p>{restaurant.location.display_address[0]}</p>
-          <p>{restaurant.display_phone}</p> */}
         </div>
       </div>
       </div>
