@@ -23,7 +23,7 @@ const init = () => {
 }
 
 const drawImageRot = (img, x, y, width, height, deg) => {
-  var rad = deg * Math.PI / 180;
+  var rad = deg * Math.PI/180;
   c.translate(x + width/2, y + height/2);
   c.rotate(rad);
   c.drawImage(img, -width/2, -height/2, width, height);
