@@ -29,6 +29,7 @@ class App extends Component {
     this.nextRestaurant = this.nextRestaurant.bind(this);
   }
   componentDidMount() {
+    // setTimeout(() => this.getRestaurants('burgers', 10017), 1000); // for displaying loading bar
     this.getRestaurants('burgers', 10017);
     this.getFaves();
   }
@@ -70,9 +71,10 @@ class App extends Component {
 
   render() {
     let FoodSwiper = (props) => {
-      if (!this.state.restaurant) return <div className="progress"><div className="indeterminate">LOADING</div></div>;
+      // if (!this.state.restaurant) return <div className="progress"><div className="indeterminate">LOADING</div></div>;
+      if (!this.state.restaurant) return <div className="loading"><img src=".\assets\loader-2_food.gif" /></div>;
       return (
-        <div>
+        <div id="container">
           <Search getRestaurants={this.getRestaurants} />
           <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} />
         </div>

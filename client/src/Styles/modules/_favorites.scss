@@ -1,0 +1,59 @@
+
+.favorites-container {
+    display : flex;
+    border-radius: 5%;
+    background-color: $yellow;
+    flex-wrap: wrap;
+    align-items: stretch;
+    align-content: center;
+    justify-content: center;
+    box-shadow: 7px 4px 15px 5px $black;
+    div {
+        justify-content: center;
+        align-content: center;
+        align-self: center;
+        text-align: center;
+        padding: 10px;
+    }
+    h4 {
+        text-align: center;
+        color: $white;
+    }
+    img {
+        width: 250px;
+        height: 250px;
+        overflow: hidden;
+        object-fit: cover;
+        align-self: center;
+        // padding-top: 4%;
+        // padding-left: 5%;
+        // padding-right: 5%;
+        box-shadow: 8px 3px 10px $black;
+    }
+    section {
+        color: $white;
+        font-size: 90%;
+    }
+    span {
+        color: $white;
+        font-size: 90%;
+        font-weight: bold;
+        text-align: center;
+    }
+    a {
+        font-weight: bold;
+        font-size: 90%;
+    }
+    button {
+        font-weight: bold;
+        font-size: 90%;
+    }
+}
+  
+.home-btn {
+    align-content: center;
+    padding-top: 1%;
+    padding-left: 1%;
+    background-color: transparent;
+}
+  

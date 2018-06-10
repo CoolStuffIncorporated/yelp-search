@@ -4,7 +4,7 @@
   "description": "Tinder for food",
   "main": "index.js",
   "scripts": {
-    "start": "npm run webpack -- -w & nodemon --ignore src/ --ignore dist/ server/index.js",
+    "start": "webpack -d --watch; node server/index.js; node-sass --include-path scss ./client/src/main.scss",
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "start:dev": "npm run webpack -- -w & nodemon --ignore src/ --ignore dist/ server/index.js",
     "server-dev": "nodemon server/index.js",
@@ -62,6 +62,8 @@
     "react-dom": "^16.4.0",
     "react-router-dom": "^4.2.2",
     "request": "^2.87.0",
+    "sass": "^1.5.1",
+    "scss": "^0.2.4",
     "supertest": "^3.1.0",
     "yelp-fusion": "^2.0.3"
   },
