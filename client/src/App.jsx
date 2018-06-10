@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import Search from './Components/Search.jsx';
 import Display from './Components/Display.jsx';
 import Favorites from './Components/Favorites.jsx';
 import { business, data } from './dummydata';
+// import './AppTransitions.scss';
 
 const businessIds = data.businesses.map(business => business.id); // dummy data for now
 
@@ -72,7 +74,6 @@ class App extends Component {
 
   render() {
     let FoodSwiper = (props) => {
-      // if (!this.state.restaurant) return <div className="progress"><div className="indeterminate">LOADING</div></div>;
       if (!this.state.restaurant) return <div className="loading"><img src=".\assets\loader-2_food.gif" /></div>;
       return (
         <div id="container">
@@ -92,12 +93,6 @@ class App extends Component {
 }
 
 ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
-
-
-
-{/* <Favorites favorites={this.state.favorites} /> */}
-{/* <Display restaurant={this.state.restaurant} /> */}
-
 
 
 
