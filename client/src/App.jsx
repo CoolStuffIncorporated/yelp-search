@@ -74,20 +74,31 @@ class App extends Component {
 
   render() {
     let FoodSwiper = (props) => {
+      // console.log('food props', props.location.key)
       if (!this.state.restaurant) return <div className="loading"><img src=".\assets\loader-2_food.gif" /></div>;
       return (
+        // <TransitionGroup>
+        // <CSSTransition key={props.location.key} timeout={300} classNames='example'>
         <div id="container">
           <Search getRestaurants={this.getRestaurants} />
           <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} />
         </div>
+    //     </CSSTransition>
+    // </TransitionGroup>
       )
     }
     let Faves = (props) => <Favorites favorites={this.state.favorites} getFaves={this.getFaves} />;
+    // console.log('main prop', this.props);
+    console.log('main loc', window.location.pathname);
     return (
+      <TransitionGroup>
+      <CSSTransition key={window.location.pathname} timeout={300} classNames='mainTransition' unmountOnExit appear>
       <div className="app">
         <Route exact path="/" render={FoodSwiper} />
         <Route path="/favorites" render={Faves} />
       </div>
+      </CSSTransition>
+    </TransitionGroup>
     )
   }
 }

@@ -45,6 +45,8 @@ class Display extends Component {
       </CSSTransition>
     );
     return (
+
+
       <div className="display">
       <div className="display-container">
         <div className="faves-btn"><NavLink to="/favorites">
@@ -73,6 +75,8 @@ class Display extends Component {
         </div>
       </div>
       </div>
+
+
     );
   }
 }

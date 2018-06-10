@@ -2,18 +2,21 @@
 .favorites-container {
     display : flex;
     border-radius: 5%;
-    background-color: $yellow;
+    background: url("./assets/food_pattern.png") $yellow;
     flex-wrap: wrap;
     align-items: stretch;
     align-content: center;
     justify-content: center;
     box-shadow: 7px 4px 15px 5px $black;
+    li {
+        padding: 30px;
+    }
     div {
         justify-content: center;
         align-content: center;
         align-self: center;
         text-align: center;
-        padding: 10px;
+        padding: 5px;
     }
     h4 {
         text-align: center;
@@ -25,17 +28,18 @@
         overflow: hidden;
         object-fit: cover;
         align-self: center;
-        // padding-top: 4%;
-        // padding-left: 5%;
-        // padding-right: 5%;
         box-shadow: 8px 3px 10px $black;
     }
+    h4 {
+        color: $red;
+        text-shadow: 2px 2px 3px $gray, 2px 2px 8px $white;
+    }
     section {
-        color: $white;
         font-size: 90%;
     }
     span {
-        color: $white;
+        color: $red;
+        text-shadow: 1px 1px 3px $gray, 2px 2px 8px $white;
         font-size: 90%;
         font-weight: bold;
         text-align: center;

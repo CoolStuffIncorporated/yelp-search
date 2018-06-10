@@ -1,29 +1,37 @@
-.example-appear {
+.mainTransition-appear {
   opacity: 0.01;
 }
 
-.example-appear.example-appear-active {
+.mainTransition-appear.mainTransition-appear-active {
   opacity: 1;
   transition: opacity 500ms ease-in;
 }
 
 
-.example-enter {
+.mainTransition-enter {
   opacity: 0.01;
+  // height: 0;
+  // width: 0;
 }
 
-.example-enter.example-enter-active {
+.mainTransition-enter.mainTransition-enter-active {
   opacity: 1;
-  transition: opacity 500ms ease-in;
+  height: 100%;
+  width: 100%;
+  transition: opacity 300ms ease-in;
 }
 
 
-.example-exit {
+.mainTransition-exit {
   opacity: 1;
+  height: 100%;
+  width: 100%;
 }
 
 
-.example-exit.example-exit-active {
+.mainTransition-exit.mainTransition-exit-active {
   opacity: 0.01;
+  height: 0;
+  width: 0;
   transition: opacity 300ms ease-in;
 } 
