@@ -33,7 +33,7 @@ class Favorites extends Component {
     return (
       <div className="favorites">
         <div className="home-btn"><NavLink to="/">
-        <button className="waves-effects waves-light red btn">Home</button>
+        <button className="waves-effects waves-light red btn"><i class="fas fa-home"></i> Home</button>
         </NavLink></div>
         <ul className="favorites-container">
 

@@ -67,9 +67,13 @@ class Display extends Component {
         }
         <Rating />
         <div className="display-btns">
-          <button className="waves-effects waves-light red btn skip-btn" onClick={this.props.nextRestaurant}>Skip</button>
-          <button className="waves-effects waves-light red btn show-info-btn" onClick={() => this.showInfo() }>{!this.state.showInfo ? 'Contact Info' : 'Tasty Pics'}</button>
-          <button className="waves-effects waves-light red btn save-btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
+          <button className="waves-effects waves-light red btn skip-btn" onClick={this.props.nextRestaurant}><i class="far fa-times-circle"></i> Skip</button>
+          <button className="waves-effects waves-light red btn show-info-btn" onClick={() => this.showInfo() }>
+          {!this.state.showInfo ?
+          <span><i class="fas fa-info-circle"></i> Info</span> :
+          <span><i class="fas fa-utensils"></i> Pics</span>}
+          </button>
+          <button className="waves-effects waves-light red btn save-btn" onClick={() => this.saveRestaurant(restaurant)}><i class="fas fa-heart"></i> Save</button>
         </div>
         <div className="description">
         </div>
