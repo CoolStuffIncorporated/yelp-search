@@ -51,25 +51,25 @@ node_modules
 .flooignore
 
 ## API keys
-server/env/config.js
-server/env/config.example.js
-credentials.tar.gz
+# server/env/config.js
+# server/env/config.example.js
+# credentials.tar.gz
 
 # Travis client.travis.yml
 codecov.yml
 
 # Webpack
-client/dist/bundle.js
-client/dist/0.bundle.js
-client/dist/main.css
-client/dist/vendors~main.bundle.js
+# client/dist/bundle.js
+# client/dist/0.bundle.js
+# client/dist/main.css
+# client/dist/vendors~main.bundle.js
 
 # Yelp-Fusion examples
 yelp-node-examples/
 
 # Fonts
-client/dist/*.woff2
-client/dist/*.woff
+# client/dist/*.woff2
+# client/dist/*.woff
 
 # HTTPS
 server/env/server.cert
