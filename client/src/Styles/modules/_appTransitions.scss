@@ -7,31 +7,24 @@
   transition: opacity 500ms ease-in;
 }
 
-
 .mainTransition-enter {
   opacity: 0.01;
-  // height: 0;
-  // width: 0;
+  transform: scale(0);
 }
 
 .mainTransition-enter.mainTransition-enter-active {
   opacity: 1;
-  height: 100%;
-  width: 100%;
+  transform: scale(1);
   transition: opacity 300ms ease-in;
 }
 
-
 .mainTransition-exit {
   opacity: 1;
-  height: 100%;
-  width: 100%;
+  // transform: scale(1);
 }
-
 
 .mainTransition-exit.mainTransition-exit-active {
   opacity: 0.01;
-  height: 0;
-  width: 0;
+  transform: scale(0);
   transition: opacity 300ms ease-in;
 } 
