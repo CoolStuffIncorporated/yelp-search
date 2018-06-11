@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // const Schema = mongoose.schema;
 mongoose.Promise = global.Promise;
 
-const FavoriteTestSchema = new mongoose.Schema({
+const FavoriteSchema = new mongoose.Schema({
   id: { type: String, required: true },
   name: { type: String, required: true },
   alias: { type: String, required: true },
@@ -33,6 +33,6 @@ const FavoriteTestSchema = new mongoose.Schema({
   // could also build a validator to forbid any entries where
   // "is_closed": true
 });
-const FavoriteTest = mongoose.model('FavoriteTest', FavoriteTestSchema);
+const Favorite = mongoose.model('Favorite', FavoriteSchema);
 
-module.exports = FavoriteTest;
+module.exports = Favorite;

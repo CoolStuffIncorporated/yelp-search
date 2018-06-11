@@ -9,7 +9,6 @@ const {
   log, succ, errc, warc, infoc,
 } = require('../chalkpresets');
 
-
 // EXPRESS SETUP
 // uncomment for https
 const https = require('https');
