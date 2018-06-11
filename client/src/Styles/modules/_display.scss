@@ -21,6 +21,8 @@
         padding: 10px;
     }
     h2 {
+        padding: 0;
+        margin-top: 0;
         text-align: center;
         color: $white;
         text-shadow: 2px 2px 1px $black;
@@ -37,11 +39,28 @@
         overflow: hidden;
         box-shadow: 8px 3px 10px rgba(0,0,0,0.5);
         transition: transform 1s;
-        // &.clicked {
-        //     transform: scale(1.05, 1.05);
-        //     transition: transform 1s;
-        //     transform-origin: center;
-        // }
+        &:hover {
+            transform: scale(1.05, 1.05);
+            transition: transform 1s;
+            transform-origin: center;
+        }
+    }
+    .faves-btn {
+        align-self: flex-end;
+        width: 80px;
+        height: 80px;
+
+        img {
+            margin-top: -10px;
+            max-width: 90px;
+            max-height: 90px;
+            transition: all .5s;
+            &:hover {
+                transform-origin: top;
+                transform: scaleY(1.1);
+                transition: all .5s;
+            }
+        }
     }
     .info-btns {
         width: 350px;

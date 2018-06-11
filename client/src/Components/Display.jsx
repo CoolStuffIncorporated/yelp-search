@@ -50,7 +50,8 @@ class Display extends Component {
       <div className="display">
       <div className="display-container">
         <div className="faves-btn"><NavLink to="/favorites">
-        <button className="waves-effects waves-light red btn">Faves</button>
+        <img src="./assets/faves_bookmark.png"/>
+        {/* <button className="waves-effects waves-light red btn">Faves</button> */}
         </NavLink></div>
         <h2>{restaurant.name}</h2>
         { !this.state.showInfo 
@@ -67,13 +68,13 @@ class Display extends Component {
         }
         <Rating />
         <div className="display-btns">
-          <button className="waves-effects waves-light red btn skip-btn" onClick={this.props.nextRestaurant}><i class="far fa-times-circle"></i> Skip</button>
+          <button className="waves-effects waves-light red btn skip-btn" onClick={this.props.nextRestaurant}><i className="far fa-times-circle"></i> Skip</button>
           <button className="waves-effects waves-light red btn show-info-btn" onClick={() => this.showInfo() }>
           {!this.state.showInfo ?
-          <span><i class="fas fa-info-circle"></i> Info</span> :
-          <span><i class="fas fa-utensils"></i> Pics</span>}
+          <span><i className="fas fa-info-circle"></i> Info</span> :
+          <span><i className="fas fa-utensils"></i> Pics</span>}
           </button>
-          <button className="waves-effects waves-light red btn save-btn" onClick={() => this.saveRestaurant(restaurant)}><i class="fas fa-heart"></i> Save</button>
+          <button className="waves-effects waves-light red btn save-btn" onClick={() => this.saveRestaurant(restaurant)}><i className="far fa-star"></i> Save</button>
         </div>
         <div className="description">
         </div>

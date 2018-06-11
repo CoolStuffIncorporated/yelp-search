@@ -29,7 +29,6 @@ class Favorites extends Component {
   }
   
     render () {
-      // console.log(this.props.favorites)
     return (
       <div className="favorites">
         <div className="home-btn"><NavLink to="/">
