@@ -56,7 +56,7 @@ node_modules
 # credentials.tar.gz
 
 # Travis client.travis.yml
-codecov.yml
+# codecov.yml
 
 # Webpack
 # client/dist/bundle.js
