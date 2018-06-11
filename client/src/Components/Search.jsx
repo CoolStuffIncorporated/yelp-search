@@ -6,26 +6,30 @@ class Search extends Component {
     super(props);
     this.state = {
       foodTypes ,
-      zip: null,
+      zip: 10017,
       foodType: 'burgers',
     };
     this.inputZip = this.inputZip.bind(this);
     this.inputFood = this.inputFood.bind(this);
     this.checkEnter = this.checkEnter.bind(this);
+    this.checkEnterFood = this.checkEnterFood.bind(this);
   }
   componentDidMount() {
     console.log('mounted Search');
     var input = document.getElementById("foodInput");
-    new Awesomplete(input, {list: "#mylist", filter: Awesomplete.FILTER_STARTSWITH, minChars: 1});
+    new Awesomplete(input, {list: "#mylist", filter: Awesomplete.FILTER_STARTSWITH, minChars: 1, autoFirst: true});
   }
   inputZip(e) {
     this.setState({ zip: e.target.value });
   }
   checkEnter(e) {
     if (e.key === 'Enter') {
-      console.log(`Getting restaurants of: ${this.state.foodType}, ${this.state.zip}`);
+      // console.log(`Getting restaurants of: ${this.state.foodType}, ${this.state.zip}`);
       this.props.getRestaurants(this.state.foodType, this.state.zip);
     }
+  }
+  checkEnterFood(e) {
+    if (e.key === 'Enter') this.setState({ foodType: e.target.value }, () => this.props.getRestaurants(this.state.foodType, this.state.zip))
   }
   inputFood(e) {
     this.setState({ foodType: e.target.value });
@@ -41,7 +45,7 @@ class Search extends Component {
             {this.state.foodTypes.map(foodType => <option key={foodType}>{foodType}</option>)}
           </select> */}
 
-          <input id="foodInput" placeholder="Yummy Food!" onChange={this.inputFood} />
+          <input id="foodInput" placeholder="Yummy Food!" onChange={this.inputFood} onKeyUp={this.checkEnterFood}/>
             <select id="mylist">
               {this.state.foodTypes.map(foodType => <option key={foodType}>{foodType}</option>)}
             </select>
