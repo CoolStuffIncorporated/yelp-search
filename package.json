@@ -4,9 +4,9 @@
   "description": "Tinder for food",
   "main": "index.js",
   "scripts": {
-    "start": "webpack -d --watch; node server/index.js; node-sass --include-path scss ./client/src/main.scss",
+    "start": "node server/index.js",
+    "start:dev": "webpack -d --watch & node server/index.js & node-sass --include-path scss ./client/src/main.scss",
     "webpack": "./node_modules/webpack/bin/webpack.js",
-    "start:dev": "npm run webpack -- -w & nodemon --ignore src/ --ignore dist/ server/index.js",
     "server-dev": "nodemon server/index.js",
     "react-dev": "webpack -d --watch",
     "sass-dev": "node-sass -w ./client/src/main.scss -o ./client/dist/",
@@ -14,7 +14,8 @@
     "watch-css": "nodemon -e scss -x \"npm run build-css\"",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "standard": "standard index.js",
-    "test": "ava spec/mongo-ava-spec.js"
+    "test": "ava spec/mongo-ava-spec.js",
+    "deploy": "gcloud app deploy"
   },
   "author": "CoolStuffIncorporated",
   "license": "ISC",

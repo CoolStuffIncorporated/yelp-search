@@ -59,17 +59,17 @@ credentials.tar.gz
 codecov.yml
 
 # Webpack
-client/dist/bundle.js
-client/dist/0.bundle.js
-client/dist/main.css
-client/dist/vendors~main.bundle.js
+# client/dist/bundle.js
+# client/dist/0.bundle.js
+# client/dist/main.css
+# client/dist/vendors~main.bundle.js
 
 # Yelp-Fusion examples
 yelp-node-examples/
 
 # Fonts
-client/dist/*.woff2
-client/dist/*.woff
+# client/dist/*.woff2
+# client/dist/*.woff
 
 # HTTPS
 server/env/server.cert
