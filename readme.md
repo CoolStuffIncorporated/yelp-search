@@ -4,59 +4,37 @@
 ## Specs
 User should be able to:
 - arrive on landing page and search restaurants by location
-- be presented with randomized (or sorted by popularity) restaurant profiles
+- be presented with nearby restaurant profiles
 - read a description of the restaurant profile
-- swipe through a restaurant's pictures
-- swipe right to add restaurants to faves
-- swipe left to dislike restaurant and remove it from searches forever
-- click to access faves
+- browse through a restaurant's pictures
+- add restaurants to faves
+- dislike restaurant and remove it from searches forever
+- access faves
+- pick up their last search term & location pair where they left off
 
-aStack: MERN + axios
-
-Documentation: Charlie + Rose
-
-* Specs + User stories
-
-* Code explanations
-
-Tasks:
-
-* Find API endpoints and exact queries to use to get
-
-* Determine SCRUM roles
-
-* Fill out project backlog
-
-* Finalize project design
-
-* Test yelp fusion npm package
-
-* Create React components
-
-* Add react-router-dom routing to React components
-
-* Link and test database
+## Stack + libraries
+- MongoDB
+- Express
+- ReactJS + react-router-dom + react-transition-groups
+- NodeJS
+- Sass
+- Axios
+- HTML Canvas API
+- FontAwesome
+- Materialize CSS
+- Awesomplete
+- Ava & Supertest & MongoDB Memory Server
+- Travis
+- Google Cloud
+- Docker
+- Yelp-fusion node wrapper
+- Chalk
 
 Useful Links
 
 Waffleboard Invite: [https://waffle.io/CoolStuffIncorporated/yelp-search/join](https://waffle.io/CoolStuffIncorporated/yelp-search/join)
 
-Git Repository: [https://github.com/CoolStuffIncorporated/yelp-search](https://github.com/CoolStuffIncorporated/yelp-search)
-
-Scrum Roles:
-
-* Rose - Product Owner
-
-* Charles - Scrum Master
-
-* Nick - Dev Team
-
-* Alon - Dev Team
-
-[[TOC]]
-
 ## Yelp Fusion v3 API notes
-
 
 #### Authentication
 
@@ -86,74 +64,21 @@ Alternatively, use the promise-based [yelp-fusion NPM package](https://www.npmjs
 
 * Earlier version of API required Oauth for authentication - this is **now deprecated**. New API released in late 2017 and is significantly different. Make sure you’re googling for the right version!
 
-    * API now supports **GraphQL**
+* API now supports **GraphQL** ( but with caveats )
 
 ### Business Detail Search (/businesses/search)
 
 This endpoint returns up to 1000 businesses based on the provided search criteria.
-
-```javascript
-    {
-  "total": 8228,
-  "businesses": [
-    {
-      "rating": 4,
-      "price": "$",
-      "phone": "+14152520800",
-      "id": "E8RJkjfdcwgtyoPMjQ_Olg",
-      "alias": "four-barrel-coffee-san-francisco",
-      "is_closed": false,
-      "categories": [
-        {
-          "alias": "coffee",
-          "title": "Coffee & Tea"
-        }
-      ],
-      "review_count": 1738,
-      "name": "Four Barrel Coffee",
-      "url": "https://www.yelp.com/biz/four-barrel-coffee-san-francisco",
-      "coordinates": {
-        "latitude": 37.7670169511878,
-        "longitude": -122.42184275
-      },
-      "image_url": "http://s3-media2.fl.yelpcdn.com/bphoto/MmgtASP3l_t4tPCL1iAsCg/o.jpg",
-      "location": {
-        "city": "San Francisco",
-        "country": "US",
-        "address2": "",
-        "address3": "",
-        "state": "CA",
-        "address1": "375 Valencia St",
-        "zip_code": "94103"
-      },
-      "distance": 1604.23,
-      "transactions": ["pickup", "delivery"]
-    },
-    // ...
-  ],
-  "region": {
-    "center": {
-      "latitude": 37.767413217936834,
-      "longitude": -122.42820739746094
-    }
-  }
-}
-```
-
+See the `dummyData.js` file for examples of what's returned.
 
 ### Mongoose Schema Notes
 
-* Presently saving most fields returned by calls to Business Detail (businesses/search) endpoint
+**Faves** Database - contains the full restaurant object of each restaurant saved by the user
+**Search** Database -- contains the snapshot of where the user currently is in each search term:
+e.g. if a user searches "burgers" at "10017" and swipes through 4 restaurants, their offset is 4, and they'll start up on the 5th restaurant next time they do the same food-location search.
 
-* If user swipes right on a restaurant, that restaurant is saved to another favorites database. Most important information to store (for now):
-
-    * restaurant unique identifier
-
-    * restaurant name
-
-    * restaurant website
-
-    * array of photos for that restaurant (usually contains three urls that **may or may not be of food**)
+### Sass
+The import functionality of Sass works like ES6 modules. `.scss` files are to `main.scss` and `main.css` what `.jsx` files are to `app.jsx` and `bundle.js`. You can write regular css in `.scss` files, but do try to harness the extended functionality of Sass to organize your styling and speed up your workflow: https://sass-lang.com/guide
 
 ### **### package.json, Webpack notes**
 
@@ -165,7 +90,7 @@ This endpoint returns up to 1000 businesses based on the provided search criteri
 
 * Run `npm run react:dev` to start webpack in watch and debug mode
 
-* Tentative plans to add **react-router-dom** with **BrowserRouter** for navigation
+* Run `npm run watch-css` to bundle your Sass files into `main.css`
 
 * Basic terminal logging done in** ****chalk**
 
@@ -234,7 +159,7 @@ MongoClient.connect(uri, function(err, client) {
 
 ### Stretch Goals
 
-* Multiple user login
+* Multiple user login using OAuth
 
 * Request user location on page load
 
@@ -246,17 +171,15 @@ MongoClient.connect(uri, function(err, client) {
 
     * [Get HTTPS for Free](https://gethttpsforfree.com)
 
-* "Hates" database for storing restaurants users have swiped left on
-
 * More detailed information saved on favorites page
 
-* GraphQL
+* Machine learning to learn the user's habits and what they like, in order to give suggestions
 
 ### Git Workflow
 
 * Master branch push access restricted to admin
 
-* Team works off of dev branch and submits pull requests to master as necessary
+* Team works off of their personal branches and submit pull requests to dev; dev is merged to master which autodeploys
 
 * Branches made for individual features
 
@@ -267,5 +190,3 @@ MongoClient.connect(uri, function(err, client) {
 ### Travis CI
 
 Using Travis CI and .travis.yml to do continuous deploys to AWS (eventually)
-
-Still figuring out how encryption works - they seem to have a different syntax for using travis encrypt if you’re an organization
