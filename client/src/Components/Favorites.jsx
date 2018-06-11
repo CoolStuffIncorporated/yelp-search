@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Hover from './Hover.jsx';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
 import axios from 'axios';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 class Favorites extends Component {
   constructor(props) {
@@ -11,6 +12,9 @@ class Favorites extends Component {
     }
     this.onHover = this.onHover.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+  }
+  componentDidMount() {
+    console.log('mounted Favorites');
   }
 
   onHover () {
@@ -25,15 +29,16 @@ class Favorites extends Component {
   }
   
     render () {
-      // console.log(this.props.favorites)
     return (
       <div className="favorites">
         <div className="home-btn"><NavLink to="/">
-        <button className="waves-effects waves-light red btn">Home</button>
+        <button className="waves-effects waves-light red btn"><i class="fas fa-home"></i> Home</button>
         </NavLink></div>
         <ul className="favorites-container">
-          {this.props.favorites.map((favorite) => {
-              return ( 
+
+          {this.props.favorites.map((favorite, i) => {
+              return (
+
                 <li key={favorite.id} className="favorite-item" onMouseEnter={() => {this.onHover()}} onMouseLeave={() => {this.onHover()}}>
                   <div className="favorite-img">
                     <img src={favorite.image_url} width="100px"/>
@@ -52,7 +57,7 @@ class Favorites extends Component {
                   </div>
                 </li>
               )
-          })}
+            })}
       </ul>
      </div>
     )

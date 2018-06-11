@@ -12,6 +12,9 @@ class Search extends Component {
     this.inputFood = this.inputFood.bind(this);
     this.checkEnter = this.checkEnter.bind(this);
   }
+  componentDidMount() {
+    console.log('mounted Search');
+  }
   inputZip(e) {
     this.setState({ zip: e.target.value });
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import axios from 'axios';
 
 class Display extends Component {
@@ -10,12 +11,14 @@ class Display extends Component {
       showInfo: false
     }
     this.saveRestaurant = this.saveRestaurant.bind(this);
-    // this.skipRestaurant = this.skipRestaurant.bind(this); // implement later
     this.showInfo = this.showInfo.bind(this);
   }
+  componentDidMount() {
+    console.log('mounted Display');
+  }
   nextPhoto() {
-    if (this.state.photoIndex === 2) this.setState({photoIndex: 0})
-    else this.setState({photoIndex: ++this.state.photoIndex});
+    let photoIndex = this.state.photoIndex === this.props.restaurant.photos.length - 1 ? 0 : ++this.state.photoIndex;
+    this.setState({photoIndex});
   }
 
   saveRestaurant(fave) {
@@ -36,11 +39,19 @@ class Display extends Component {
   render() {
     let {restaurant, addFave} = this.props;
     let imgPath = `./assets/yelp_stars/${restaurant.rating}.png`;
+    const Rating = (props) => (
+      <CSSTransition timeout={300} classNames="example">
+      <div className="rating"><img src={imgPath} /></div>
+      </CSSTransition>
+    );
     return (
+
+
       <div className="display">
       <div className="display-container">
         <div className="faves-btn"><NavLink to="/favorites">
-        <button className="waves-effects waves-light red btn">Faves</button>
+        <img src="./assets/faves_bookmark.png"/>
+        {/* <button className="waves-effects waves-light red btn">Faves</button> */}
         </NavLink></div>
         <h2>{restaurant.name}</h2>
         { !this.state.showInfo 
@@ -55,18 +66,22 @@ class Display extends Component {
             <span>Address: {restaurant.location.display_address.join(', ')}</span>
           </div>
         }
-        <div className="rating"><img src={imgPath} /></div>
+        <Rating />
         <div className="display-btns">
-          <button className="waves-effects waves-light red btn skip-btn" onClick={this.props.nextRestaurant}>Skip</button>
-          <button className="waves-effects waves-light red btn show-info-btn" onClick={() => this.showInfo() }>{!this.state.showInfo ? 'Contact Info' : 'Tasty Pics'}</button>
-          <button className="waves-effects waves-light red btn save-btn" onClick={() => this.saveRestaurant(restaurant)}>Save</button>
+          <button className="waves-effects waves-light red btn skip-btn" onClick={this.props.nextRestaurant}><i className="far fa-times-circle"></i> Skip</button>
+          <button className="waves-effects waves-light red btn show-info-btn" onClick={() => this.showInfo() }>
+          {!this.state.showInfo ?
+          <span><i className="fas fa-info-circle"></i> Info</span> :
+          <span><i className="fas fa-utensils"></i> Pics</span>}
+          </button>
+          <button className="waves-effects waves-light red btn save-btn" onClick={() => this.saveRestaurant(restaurant)}><i className="far fa-star"></i> Save</button>
         </div>
         <div className="description">
-          {/* <p>{restaurant.location.display_address[0]}</p>
-          <p>{restaurant.display_phone}</p> */}
         </div>
       </div>
       </div>
+
+
     );
   }
 }

@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import Search from './Components/Search.jsx';
 import Display from './Components/Display.jsx';
 import Favorites from './Components/Favorites.jsx';
 import { business, data } from './dummydata';
+// import './AppTransitions.scss';
 
 const businessIds = data.businesses.map(business => business.id); // dummy data for now
 
@@ -30,6 +32,7 @@ class App extends Component {
   }
   componentDidMount() {
     // setTimeout(() => this.getRestaurants('burgers', 10017), 1000); // for displaying loading bar
+    console.log('mounted App');
     this.getRestaurants('burgers', 10017);
     this.getFaves();
   }
@@ -49,7 +52,7 @@ class App extends Component {
   getRestaurants(term, loc, user = 'anonymous') { //@params: term('string'), loc('integer zipcode'), default params of tacos10017
     this.setState({term, loc});
     axios.get('/restaurants', {params: {user, term, loc}})
-      .then(({data}) => {console.log(data); return data})
+      .then(({data}) => data)
       .then(({restaurants, offset}) => this.setState({restaurants, offset}))
       .then(() => this.setState({restaurantID: this.state.restaurants[this.state.index].id}))
       .then(() => this.getRestaurant(this.state.restaurantID))
@@ -71,32 +74,36 @@ class App extends Component {
 
   render() {
     let FoodSwiper = (props) => {
-      // if (!this.state.restaurant) return <div className="progress"><div className="indeterminate">LOADING</div></div>;
+      // console.log('food props', props.location.key)
       if (!this.state.restaurant) return <div className="loading"><img src=".\assets\loader-2_food.gif" /></div>;
       return (
+        // <TransitionGroup>
+        // <CSSTransition key={props.location.key} timeout={300} classNames='example'>
         <div id="container">
           <Search getRestaurants={this.getRestaurants} />
           <Display restaurant={this.state.restaurant} getFaves={this.getFaves} nextRestaurant={this.nextRestaurant} />
         </div>
+    //     </CSSTransition>
+    // </TransitionGroup>
       )
     }
     let Faves = (props) => <Favorites favorites={this.state.favorites} getFaves={this.getFaves} />;
+    // console.log('main prop', this.props);
+    console.log('main loc', window.location.pathname);
     return (
+      <TransitionGroup>
+      <CSSTransition key={window.location.pathname} timeout={300} classNames='mainTransition' unmountOnExit appear>
       <div className="app">
         <Route exact path="/" render={FoodSwiper} />
         <Route path="/favorites" render={Faves} />
       </div>
+      </CSSTransition>
+    </TransitionGroup>
     )
   }
 }
 
 ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
-
-
-
-{/* <Favorites favorites={this.state.favorites} /> */}
-{/* <Display restaurant={this.state.restaurant} /> */}
-
 
 
 
