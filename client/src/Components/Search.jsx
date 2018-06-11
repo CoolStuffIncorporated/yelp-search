@@ -34,9 +34,14 @@ class Search extends Component {
           <img className="yelp-logo" src={imgPath} />
           <canvas></canvas>
           <div className="search-fields">
-          <select className="browser-default" onChange={this.inputFood}>
+          {/* <select className="browser-default" onChange={this.inputFood}>
             {this.state.foodTypes.map(foodType => <option key={foodType}>{foodType}</option>)}
-          </select>
+          </select> */}
+
+          <input class="awesomplete" list="mylist" placeholder="What are you craving?" onChange={this.inputFood} />
+            <datalist id="mylist">
+              {this.state.foodTypes.map(foodType => <option key={foodType}>{foodType}</option>)}
+            </datalist>
             <input id="zip" placeholder="your zip code" type="number" maxLength="5" min="10000" max="99999" onChange={this.inputZip} onKeyUp={this.checkEnter}/>
           </div>
         </div>
