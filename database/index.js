@@ -8,6 +8,8 @@ const {
   log, succ, errc, warc, infoc,
 } = require('../chalkpresets');
 
+const mlab = 'mongodb://rose:rose00@ds141320.mlab.com:41320/yelptemp';
+
 let config;
 try {
   config = require('../server/env/config.js').MONGO;
@@ -15,7 +17,7 @@ try {
   config = process.env.MONGO;
 }
 
-mongoose.connect(config || 'mongodb://localhost');
+mongoose.connect(config || mlab || 'mongodb://localhost');
 const db = mongoose.connection;
 db.on('error', (error) => {
   log(errc(`DB connection failed: ${error}`));
@@ -50,5 +52,5 @@ const addFave = fave => {
 };
 
 module.exports = {
-  db, getFaves, deleteFave, addFave, getOffset, updateOffset,
+  getFaves, deleteFave, addFave, getOffset, updateOffset,
 };
