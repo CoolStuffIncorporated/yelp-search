@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+let foodTypes = ['Asian fusion', 'barbeque', 'burgers', 'buffets', 'cafes', 'Cajun', 'chicken wings', 'Chinese', 'Greek', 'kebab', 'Mexican', 'pizza', 'sandwiches', 'Thai', 'soup', 'steak', 'waffles', 'vegan', 'tapas', 'hot dogs', 'salad', 'ramen', 'tacos', 'bakery', 'brewery', 'bubble tea', 'coffee', 'desserts', 'donuts', 'gelato', 'ice cream', 'poke', 'pretzels', 'chocolate', 'pasta', 'wineries', 'cheese', 'candy', 'halal', 'sushi'];
 
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      foodTypes: ['burgers', 'hot dogs', 'salad', 'ramen', 'tacos', 'bakery', 'brewery', 'bubble tea', 'coffee', 'desserts', 'donuts', 'gelato', 'ice cream', 'poke', 'pretzels', 'chocolate', 'pasta', 'wineries', 'cheese', 'candy', 'halal', 'sushi'],
+      foodTypes ,
       zip: null,
       foodType: 'burgers',
     };
@@ -14,6 +15,8 @@ class Search extends Component {
   }
   componentDidMount() {
     console.log('mounted Search');
+    var input = document.getElementById("foodInput");
+    new Awesomplete(input, {list: "#mylist", filter: Awesomplete.FILTER_STARTSWITH, minChars: 1});
   }
   inputZip(e) {
     this.setState({ zip: e.target.value });
@@ -38,10 +41,10 @@ class Search extends Component {
             {this.state.foodTypes.map(foodType => <option key={foodType}>{foodType}</option>)}
           </select> */}
 
-          <input class="awesomplete" list="mylist" placeholder="What are you craving?" onChange={this.inputFood} />
-            <datalist id="mylist">
+          <input id="foodInput" placeholder="Yummy Food!" onChange={this.inputFood} />
+            <select id="mylist">
               {this.state.foodTypes.map(foodType => <option key={foodType}>{foodType}</option>)}
-            </datalist>
+            </select>
             <input id="zip" placeholder="your zip code" type="number" maxLength="5" min="10000" max="99999" onChange={this.inputZip} onKeyUp={this.checkEnter}/>
           </div>
         </div>
