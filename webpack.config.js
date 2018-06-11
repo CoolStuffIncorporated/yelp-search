@@ -1,4 +1,5 @@
 const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const SRC_DIR = path.join(__dirname, '/client/src');
 const DIST_DIR = path.join(__dirname, '/client/dist');
@@ -31,7 +32,7 @@ module.exports = {
           'css-loader',
           'sass-loader',
           'style-loader',
-        ]
+        ],
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -43,4 +44,7 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new UglifyJsPlugin(),
+  ],
 };

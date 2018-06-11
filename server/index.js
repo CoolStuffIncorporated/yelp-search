@@ -41,7 +41,7 @@ app.get('/*', (req, res) => {
 
 // uncomment for http
 // app.listen(port, () => {
-//   log(succ(`Listening on ${port}!`));
+//   log(succ(`Port ${port} is lit fam 🔥 🔥 🔥`));
 // });
 
 // uncomment for https
