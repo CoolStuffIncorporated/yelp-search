@@ -1,23 +1,19 @@
-const chalk = require('chalk');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const morgan = require('morgan');
 const compression = require('compression');
-const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
-const {
-  getFaves, deleteFave, addFave, getOffset, updateOffset,
-} = require('../database');
 
+
+// import chalk logging
+const {
+  log, succ, errc, warc, infoc,
+} = require('./chalkpresets');
+
+// EXPRESS SETUP
 // const https = require('https'); uncomment for https
 // const fs = require('fs'); uncomment for https
-
-// chalk logging
-const log = console.log;
-const succ = chalk.bold.green.bgWhite; // use to log success
-const errc = chalk.bold.red.bgBlack; // UH OH
-const warc = chalk.underline.orange; // log concerning but non-breaking
-const infoc = chalk.blue.bgBlack; // log general information
+// be sure to also uncomment https.createServer at bottom of file
 
 const app = express();
 
@@ -28,12 +24,17 @@ app.use(bodyParser.json())
   .use((express.static(path.join(__dirname, '/../client/dist'))));
 
 /* FAVES ROUTES LINK TO DATABASE */
+// import mongoose helper methods
+const {
+  getFaves, deleteFave, addFave, getOffset, updateOffset,
+} = require('../database');
+
 app.get('/faves', (req, res) => {
   getFaves().then(faves => res.send(faves)).catch(err => res.sendStatus(404));
 });
 
 app.post('/faves', (req, res) => {
-  console.log(req.body);
+  log(succ(req.body));
   addFave(req.body.fave)
     .then(data => res.send(data))
     .catch(err => res.send(err));
@@ -44,6 +45,9 @@ app.delete('/faves', (req, res) => {
     .then(data => res.send(data))
     .catch(err => res.status(400).send(err));
 });
+
+// import yelp-fusion api helper methods
+const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
 
 // @params: req.query -> passed in from front end
 // axios.get('/restaurants, {params: {term, loc}}) call
@@ -58,6 +62,7 @@ app.get('/restaurants', (req, res) => {
   });
 });
 
+
 // input: id representing a specific restaurant
 // output: an array of pics, description for given restaurant
 app.get('/restaurant', (req, res) => {
@@ -67,7 +72,7 @@ app.get('/restaurant', (req, res) => {
 });
 
 app.put('/search', (req, res) => {
-  let {user, term, loc, offset} = req.body;
+  const {user, term, loc, offset} = req.body;
   updateOffset(user, term, loc, offset)
     .then(data => res.send(data))
     .catch(err => res.send(err));
@@ -84,7 +89,7 @@ app.get('/*', (req, res) => {
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  log(succ('listening on port 3000!'));
+  log(succ(`Port ${port} is lit fam 🔥 🔥 🔥`));
 });
 
 // uncomment for https
@@ -98,8 +103,9 @@ app.listen(port, () => {
 //     console.log(`Port ${port} is lit fam 🔥 🔥 🔥`);
 //   });
 
+module.exports = app;
+
+// rose test case
 // getRestaurants({term: 'tacos', loc: 10017})
 // .then(restaurants => console.log('success'))
 // .catch(err => console.log(err));
-
-module.exports = app;

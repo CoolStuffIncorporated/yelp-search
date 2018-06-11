@@ -48,7 +48,6 @@
     "webpack-cli": "^2.1.4"
   },
   "dependencies": {
-    "@material-ui/core": "^1.2.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",

@@ -1,13 +1,10 @@
 const mongoose = require('mongoose');
-const chalk = require('chalk');
-const mlabAlon = 'mongodb://teamthor1:teamthor1@ds141320.mlab.com:41320/yelp-dev' //temp database
+
 const mlab = 'mongodb://rose:rose00@ds141320.mlab.com:41320/yelptemp'
 
-const log = console.log;
-const succ = chalk.bold.green.bgWhite; // use to log success
-const errc = chalk.bold.red.bgBlack; // UH OH
-const warc = chalk.underline.orange; // log concerning but non-breaking
-const infoc = chalk.blue.bgBlack; // log general information
+const {
+  log, succ, errc, warc, infoc,
+} = require('../server/chalkpresets');
 
 let config;
 try {
@@ -16,9 +13,9 @@ try {
   config = process.env.MONGO;
 }
 
-mongoose.connect(process.env.MONGO || mlab || 'mongodb://localhost');
+mongoose.connect(config || mlab || 'mongodb://localhost');
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', (error) => log(errc(`DB connection failed: ${error}`)));
 db.once('open', () => log(succ('Connected to Mongo database successfully')));
 
 const FavoriteSchema = new mongoose.Schema({
@@ -38,9 +35,9 @@ const FavoriteSchema = new mongoose.Schema({
         is_overnight: Boolean,
         start: String,
         end: String,
-        day: Number
-      }
-    ]
+        day: Number,
+      },
+    ],
   }],
   rating: Number,
   transactions: [String],
@@ -63,16 +60,16 @@ const Favorite = mongoose.model('Favorite', FavoriteSchema);
 const Search = mongoose.model('Search', SearchSchema);
 
 const getOffset = (user, term, loc) => {
-  console.log('getting offset', user, term, loc);
+  log(infoc('getting offset', user, term, loc));
   return Search.findOne({user, term, loc})
     .then(data => {
       if (!data) {
-        let entry = new Search({user, term, loc, offset: 0});
-        entry.save().catch(err => console.log('error making new search', err))
+        const entry = new Search({user, term, loc, offset: 0});
+        entry.save().catch(err => log(errc('error making new search', err)))
         return 0; // TODO: error handling
-      } else return data.offset;
+      } return data.offset;
     })
-    .catch(err => console.error(err));  // TODO: proper error handling
+    .catch(err => console.error(err)); /* TODO: proper error handling */
 }
 
 const updateOffset = (user, term, loc, offset) => 
