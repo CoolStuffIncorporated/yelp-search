@@ -82,6 +82,13 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    button {
+        transition: all .5s;
+        &:hover {
+            color: $yellow;
+            transition: all .5s;
+        }
+    }
 }
 
 .skip-btn {
