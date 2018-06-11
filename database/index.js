@@ -15,7 +15,7 @@ try {
   config = process.env.MONGO;
 }
 
-mongoose.connect(process.env.MONGO || 'mongodb://localhost');
+mongoose.connect(config || 'mongodb://localhost');
 const db = mongoose.connection;
 db.on('error', (error) => {
   log(errc(`DB connection failed: ${error}`));

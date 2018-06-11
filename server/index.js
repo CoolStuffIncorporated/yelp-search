@@ -16,7 +16,12 @@ const fs = require('fs');
 
 const app = express();
 // define server port
-const port = process.env.PORT || 3000;
+let port;
+try {
+  port = require('../server/env/config.js').MONGO;
+} catch (err) {
+  port = 3000;
+}
 
 // import routing
 const router = require('./router.js');
@@ -41,7 +46,7 @@ app.get('/*', (req, res) => {
 
 // uncomment for http
 // app.listen(port, () => {
-//   log(succ(`Listening on ${port}!`));
+//   log(succ(`Port ${port} is lit fam 🔥 🔥 🔥`));
 // });
 
 // uncomment for https
@@ -51,7 +56,7 @@ https.createServer({
   key: fs.readFileSync(path.join(__dirname, './env/server.key')),
   cert: fs.readFileSync(path.join(__dirname, './env/server.cert')),
 }, app)
-  .listen(3000, () => {
+  .listen(port, () => {
     console.log(`Port ${port} is lit fam 🔥 🔥 🔥`);
   });
 

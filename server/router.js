@@ -7,10 +7,7 @@ const {
 
 const router = express.Router();
 
-// import yelp-fusion api-helpers
-const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
-
-// import db-helper methods
+// import db-helper methods for /faves route
 const {
   getFaves, deleteFave, addFave, getOffset, updateOffset,
 } = require('../database');
@@ -37,6 +34,9 @@ router.delete('/faves', (req, res) => {
     .catch(err => res.status(400).send(err));
 });
 
+
+// import yelp-fusion api-helpers
+const { getRestaurants, getRestaurantDetails } = require('./apiHelpers');
 
 // @params: req.query -> passed in from front end
 // axios.get('/restaurants, {params: {term, loc}}) call
