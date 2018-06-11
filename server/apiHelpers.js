@@ -1,9 +1,4 @@
-const axios = require('axios');
-const request = require('request');
 const yelp = require('yelp-fusion');
-const mongoose = require('mongoose');
-const express = require('express');
-const bodyParser = require('body-parser');
 const { API_TOKEN } = require('./env/config.js');
 const chalk = require('chalk');
 
@@ -50,38 +45,6 @@ module.exports = {
   getRestaurantDetails: getRestaurantDetails,
 };
 
-
 /* TEST CALLS */
 // getRestaurants({term: 'tacos', loc: 10017})
 // .then(businesses => console.log(businesses))  // shows an array of the businesses
-
-// //// teammates' removed code, saved below just in case
-// .then((response) => {
-//   const firstResult = response.jsonBody.businesses[0];
-//   const prettyJson = JSON.stringify(firstResult, null, 4);
-//   console.log(prettyJson);
-// })
-// .then(data => console.log(data.jsonBody))
-// .catch((e) => {
-//   console.log(e);
-// });
-
-// const getRestaurantDetails = (restaurantIdObj) => {
-//   client.search(restaurantIdObj)
-//     .then((response) => {
-//       const firstResult = response.jsonBody.businesses[0];
-//       const prettyJson = JSON.stringify(firstResult, null, 4);
-//       console.log(prettyJson);
-//     })
-//     .catch((e) => {
-//       console.log(e);
-//     });
-// };
-
-
-// const testId = 'SULHf6nGQ8sK0UpG1XU30w';
-// // // getRestaurantDetails(testId).then(data => console.log(data));
-// // // console.log(getRestaurantDetails(testId));
-// getRestaurantDetails(testId)
-//   .then(data => console.log(data))
-//   .catch(err => console.log(err));
