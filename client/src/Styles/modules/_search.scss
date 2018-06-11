@@ -11,9 +11,11 @@
   display: block;
   margin: -5% auto 0;
   width: 20%;
-  .awesomplete {
+  text-align: center;
+  #foodInput {
     position: relative;
     z-index: 100;
+    margin: 0 auto;
     text-align: center;
     text-align-last: center;
     color: $black;
@@ -31,7 +33,7 @@
   }
   #zip {
     position: relative;
-    z-index: 100;
+    z-index: 80;
     text-transform: uppercase;
     text-align: center;
     caret-color: $white;
